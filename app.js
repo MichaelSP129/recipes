@@ -121,8 +121,8 @@
       (ui.query ? '<button class="x" data-act="clearq" aria-label="Clear search">✕</button>' : "") + '</div>' +
       '<button class="btn' + (ui.showFilters || nf ? " on" : "") + '" data-act="filters">' + (nf ? "Filters (" + nf + ")" : "Filters") + (ui.showFilters ? " ▴" : "") + '</button></div>' +
       '<div class="pillwrap"><div class="pills" id="pills">' + (ui.view === "sections"
-        ? secs.map(function (x) { return '<a class="pill" data-jump="sec-' + esc(x.s.id) + '">' + esc(x.s.name) + '<b>' + x.items.length + '</b></a>'; }).join("")
-        : letters.map(function (g) { return '<a class="pill" data-jump="az-' + (g.L === "#" ? "num" : g.L.toLowerCase()) + '">' + g.L + '</a>'; }).join("")) + '</div></div>' +
+        ? secs.map(function (x) { return '<button type="button" class="pill" data-jump="sec-' + esc(x.s.id) + '" aria-label="Jump to ' + esc(x.s.name) + ', ' + x.items.length + ' recipes">' + esc(x.s.name) + '<b>' + x.items.length + '</b></button>'; }).join("")
+        : letters.map(function (g) { return '<button type="button" class="pill" data-jump="az-' + (g.L === "#" ? "num" : g.L.toLowerCase()) + '" aria-label="Jump to ' + g.L + '">' + g.L + '</button>'; }).join("")) + '</div></div>' +
       '</div></div>';
     if (ui.showFilters) {
       h += '<div class="filters">' + TAG_GROUPS.map(function (g) {
@@ -133,7 +133,7 @@
       }).join("") + '</div>';
     }
     var on = ui.query || nf;
-    h += '<div class="status">' + list.length + ' of ' + RECIPES.length + ' recipes' + (nf ? ' · ' + esc(ui.selTags.join(" + ")) : "") + (on ? ' · <a data-act="clearall">clear</a>' : "") + '</div>';
+    h += '<div class="status">' + list.length + ' of ' + RECIPES.length + ' recipes' + (nf ? ' · ' + esc(ui.selTags.join(" + ")) : "") + (on ? ' · <button type="button" class="linkbtn" data-act="clearall">clear</button>' : "") + '</div>';
     if (!list.length) h += '<div class="empty"><b>No matches.</b> Try fewer words or clear a tag.</div>';
     else if (ui.view === "sections") {
       h += secs.map(function (x) {
@@ -144,7 +144,7 @@
       h += letters.map(function (g) {
         return '<section class="sec" id="az-' + (g.L === "#" ? "num" : g.L.toLowerCase()) + '"><h2>' + g.L + ' <span>(' + g.items.length + ')</span></h2>' +
           g.items.map(function (r) {
-            return '<div class="azrow" data-open="' + esc(r.id) + '"><div class="t">' + esc(r.title) + '</div><div class="m">' + esc([r.category, groups(r).cuisine.join(" / ")].filter(Boolean).join(" · ")) + '</div></div>';
+            return '<a class="azrow" href="#/r/' + encodeURIComponent(r.id) + '" data-open="' + esc(r.id) + '"><span class="t">' + esc(r.title) + '</span><span class="m">' + esc([r.category, groups(r).cuisine.join(" / ")].filter(Boolean).join(" · ")) + '</span></a>';
           }).join("") + '</section>';
       }).join("");
     }
@@ -184,8 +184,8 @@
       if (r.ingredients.length > 1 || grp.section !== "Ingredients") h += '<div class="ing-sec">' + esc(grp.section) + '</div>';
       grp.items.forEach(function (it, ii) {
         var k = r.id + ":" + gi + ":" + ii, on = !!ui.checked[k], qty = scaleQty(it.quantity, m), qu = [qty, it.unit].filter(Boolean).join(" ");
-        h += '<div class="ing' + (on ? " on" : "") + '" data-tick="' + esc(k) + '" role="checkbox" aria-checked="' + on + '"><div class="box">' + (on ? "✓" : "") + '</div><div class="txt">' +
-          (qu ? '<span class="q">' + esc(qu) + '</span> ' : "") + esc(it.name) + (it.note ? '<span class="n">, ' + esc(it.note) + '</span>' : "") + '</div></div>';
+        h += '<button type="button" class="ing' + (on ? " on" : "") + '" data-tick="' + esc(k) + '" role="checkbox" aria-checked="' + on + '"><span class="box" aria-hidden="true">' + (on ? "✓" : "") + '</span><span class="txt">' +
+          (qu ? '<span class="q">' + esc(qu) + '</span> ' : "") + esc(it.name) + (it.note ? '<span class="n">, ' + esc(it.note) + '</span>' : "") + '</span></button>';
       });
     });
     return h;
@@ -222,7 +222,7 @@
     h += '<div class="block"><h2>Ingredients</h2>' + scaler(r) + tickCap(r) + ingList(r) + '</div>';
     // steps
     h += '<div class="block"><h2>Method</h2>' +
-      (r.steps || []).map(function (s, i) { return '<div class="step" data-act="cook" data-step="' + i + '"><div class="num">' + (i + 1) + '</div><div>' + esc(s) + '</div></div>'; }).join("") + '</div>';
+      (r.steps || []).map(function (s, i) { return '<button type="button" class="step" data-act="cook" data-step="' + i + '"><span class="num" aria-hidden="true">' + (i + 1) + '</span><span class="stxt">' + esc(s) + '</span></button>'; }).join("") + '</div>';
     if (rel.length) h += '<div class="block"><h2>Goes with / see also</h2>' + rel.map(function (x) {
       var o = BY_ID[x.id]; return '<button class="relbtn" data-open="' + esc(o.id) + '"><small>' + esc(x.relation) + ' · ' + esc(o.category) + '</small>' + esc(o.title) + ' →</button>';
     }).join("") + '</div>';
@@ -254,7 +254,23 @@
       '<div class="sheet-body" id="sheetbody">' + scaler(r) + tickCap(r) + ingList(r) + '</div></div>';
   }
   function cookStep() { var p = location.hash.split("/"); return p[3] === "cook" ? parseInt(p[4] || "0", 10) || 0 : -1; }
+  // Re-renders replace the DOM; put keyboard focus back on the same control (see #10).
+  function focusKey() {
+    var a = document.activeElement, d = a && a !== document.body && a.dataset;
+    if (!d) return null;
+    var k = d.tick ? ["tick", d.tick] : d.tag ? ["tag", d.tag] : d.view ? ["view", d.view] : d.act ? ["act", d.act] : null;
+    return k ? { k: k, inSheet: !!a.closest(".sheet") } : null;
+  }
+  function restoreFocus(f) {
+    if (!f) return;
+    var els = document.querySelectorAll("[data-" + f.k[0] + "]"), el = null;
+    for (var i = 0; i < els.length; i++) if (els[i].dataset[f.k[0]] === f.k[1] && !!els[i].closest(".sheet") === f.inSheet) { el = els[i]; break; }
+    if (el && !el.disabled) try { el.focus({ preventScroll: true }); } catch (e) { el.focus(); }
+  }
   function rerender(r) {
+    var f = focusKey(), out = rerender_(r); restoreFocus(f); return out;
+  }
+  function rerender_(r) {
     var st = cookStep();
     if (st >= 0) { var sb = document.getElementById("sheetbody"); ui.sheetScroll = sb ? sb.scrollTop : 0; return renderCook(r, st); }
     return renderDetail(r, true);
@@ -279,7 +295,12 @@
     var hsh = location.hash.replace(/^#\/?/, ""), parts = hsh.split("/");
     if (parts[0] === "r" && BY_ID[decodeURIComponent(parts[1] || "")]) {
       var r = BY_ID[decodeURIComponent(parts[1])];
-      if (parts[2] === "cook") return renderCook(r, parseInt(parts[3] || "0", 10) || 0);
+      if (parts[2] === "cook") {
+        var ae = document.activeElement, fromNav = ae && ae.closest && ae.closest(".cook-nav");
+        renderCook(r, parseInt(parts[3] || "0", 10) || 0);
+        if (fromNav) { var nb = document.querySelector(".cook-nav .primary"); if (nb) nb.focus({ preventScroll: true }); }
+        return;
+      }
       releaseWake(); ui.sheet = false;
       return renderDetail(r);
     }
@@ -295,22 +316,22 @@
     var t = e.target.closest("[data-open],[data-act],[data-view],[data-tag],[data-jump],[data-tick],[data-mult]");
     if (!t) return;
     var cur = currentRecipe();
-    if (t.dataset.open) { if (!cur) ui.homeScroll = window.scrollY; return go("#/r/" + encodeURIComponent(t.dataset.open)); }
-    if (t.dataset.view) { ui.view = t.dataset.view; LS.set("view", ui.view); return renderHome(); }
-    if (t.dataset.tag) { var tg = t.dataset.tag, i = ui.selTags.indexOf(tg); if (i >= 0) ui.selTags.splice(i, 1); else ui.selTags.push(tg); LS.set("selTags", ui.selTags); var y = scrollY; renderHome(); scrollTo(0, y); return; }
+    if (t.dataset.open) { e.preventDefault(); if (!cur) ui.homeScroll = window.scrollY; return go("#/r/" + encodeURIComponent(t.dataset.open)); }
+    if (t.dataset.view) { var fv = focusKey(); ui.view = t.dataset.view; LS.set("view", ui.view); renderHome(); return restoreFocus(fv); }
+    if (t.dataset.tag) { var tg = t.dataset.tag, i = ui.selTags.indexOf(tg); if (i >= 0) ui.selTags.splice(i, 1); else ui.selTags.push(tg); LS.set("selTags", ui.selTags); var y = scrollY, ft = focusKey(); renderHome(); scrollTo(0, y); return restoreFocus(ft); }
     if (t.dataset.jump) { e.preventDefault(); var el = document.getElementById(t.dataset.jump); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); return; }
     if (t.dataset.tick) { var k = t.dataset.tick; if (ui.checked[k]) delete ui.checked[k]; else ui.checked[k] = true; LS.set("checked", ui.checked); return rerender(cur); }
     if (t.dataset.mult) return setMult(cur, parseFloat(t.dataset.mult));
     var a = t.dataset.act;
-    if (a === "filters") { ui.showFilters = !ui.showFilters; return renderHome(); }
+    if (a === "filters") { var ff = focusKey(); ui.showFilters = !ui.showFilters; renderHome(); return restoreFocus(ff); }
     if (a === "clearq") { ui.query = ""; return renderHome(); }
-    if (a === "clearall") { ui.query = ""; ui.selTags = []; LS.set("selTags", []); return renderHome(); }
+    if (a === "clearall") { ui.query = ""; ui.selTags = []; LS.set("selTags", []); renderHome(); return restoreFocus({ k: ["act", "filters"], inSheet: false }); }
     if (a === "back") return go("#/");
     if (a === "cook") { var s = parseInt(t.dataset.step, 10); if (s < 0) return; requestWake(); return go("#/r/" + encodeURIComponent(cur.id) + "/cook/" + s); }
     if (a === "exitcook") { releaseWake(); ui.sheet = false; return go("#/r/" + encodeURIComponent(cur.id)); }
     if (a === "clearticks") { Object.keys(ui.checked).forEach(function (k) { if (k.indexOf(cur.id + ":") === 0) delete ui.checked[k]; }); LS.set("checked", ui.checked); return rerender(cur); }
-    if (a === "sheet" && cur) { ui.sheet = true; ui.sheetScroll = 0; return renderCook(cur, cookStep()); }
-    if (a === "closesheet" && cur) { ui.sheet = false; return renderCook(cur, cookStep()); }
+    if (a === "sheet" && cur) { ui.sheet = true; ui.sheetScroll = 0; renderCook(cur, cookStep()); return restoreFocus({ k: ["act", "closesheet"], inSheet: true }); }
+    if (a === "closesheet" && cur) { ui.sheet = false; renderCook(cur, cookStep()); return restoreFocus({ k: ["act", "sheet"], inSheet: false }); }
     if (a === "resetmult" && cur) return setMult(cur, 1);
     if (cur) {
       var base = baseServings(cur), m = getMult(cur);
