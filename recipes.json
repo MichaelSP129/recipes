@@ -141,8 +141,8 @@
               "name": "chicken drumsticks",
               "note": "optionally Frenched into lollipops",
               "fdc": 172373,
-              "g": 1045.2,
-              "gNote": "12 × 130 g raw (USDA drumstick); 33% bone removed (Canadian Nutrient File refuse); meat + skin record"
+              "g": 958.1,
+              "gNote": "11 × 130 g raw (USDA drumstick, mid-point of 10–12); 33% bone removed (Canadian Nutrient File refuse); meat + skin record"
             }
           ]
         },
@@ -308,7 +308,7 @@
         }
       ],
       "nutrition": {
-        "servings": 12,
+        "servings": 11,
         "per": "drumstick"
       }
     },
@@ -739,7 +739,7 @@
               "name": "black pepper",
               "note": "",
               "fdc": 170931,
-              "g": 2.3
+              "g": 1.72
             },
             {
               "quantity": "½",
@@ -781,7 +781,7 @@
               "name": "water or chicken stock",
               "note": "in the pot first (120 ml if burn-prone)",
               "fdc": 172884,
-              "g": 120,
+              "g": 100.0,
               "gNote": "stock (the higher-calorie option)"
             },
             {
@@ -1411,7 +1411,7 @@
               "name": "garlic",
               "note": "very finely crushed",
               "fdc": 169230,
-              "g": 6
+              "g": 4.5
             },
             {
               "quantity": "1",
@@ -1561,7 +1561,7 @@
       },
       "related": [],
       "nutrition": {
-        "servings": 3,
+        "servings": 3.5,
         "per": "serving"
       }
     },
@@ -1922,8 +1922,8 @@
               "name": "cornstarch",
               "note": "",
               "fdc": 169698,
-              "g": 48,
-              "gNote": "6 tbsp × 8 g"
+              "g": 44.0,
+              "gNote": "5½ tbsp × 8 g"
             },
             {
               "quantity": "2",
@@ -2028,7 +2028,7 @@
               "name": "pineapple chunks",
               "note": "reserve 2–3 tbsp juice",
               "fdc": 169124,
-              "g": 250,
+              "g": 225.0,
               "gNote": "fresh; canned in juice is similar"
             }
           ]
@@ -2059,7 +2059,7 @@
               "name": "ice-cold water",
               "note": "",
               "fdc": 173647,
-              "g": 474
+              "g": 414.75
             },
             {
               "quantity": "",
@@ -2089,7 +2089,7 @@
               "name": "white vinegar",
               "note": "",
               "fdc": 172237,
-              "g": 89
+              "g": 81.58
             },
             {
               "quantity": "5–6",
@@ -2097,7 +2097,7 @@
               "name": "sugar",
               "note": "",
               "fdc": 169655,
-              "g": 75
+              "g": 68.75
             },
             {
               "quantity": "4",
@@ -2210,9 +2210,9 @@
               "unit": "g",
               "name": "lean beef mince",
               "note": "10–15% fat is ideal",
-              "fdc": 174030,
+              "fdc": 171796,
               "g": 750,
-              "gNote": "90% lean raw record (10–15% fat)"
+              "gNote": "85% lean raw record (the fattier end of 10–15%)"
             },
             {
               "quantity": "1",
@@ -2519,8 +2519,8 @@
               "name": "flour or corn tortillas",
               "note": "",
               "fdc": 175037,
-              "g": 300,
-              "gNote": "10 × 30 g small flour tortillas (flour, the higher-calorie option)"
+              "g": 270.0,
+              "gNote": "9 × 30 g small flour tortillas (mid-point of 8–10; flour, the higher-calorie option)"
             },
             {
               "quantity": "",
@@ -2662,9 +2662,9 @@
               "unit": "kg",
               "name": "chuck steak or stewing beef",
               "note": "2.5–3 cm cubes",
-              "fdc": 171206,
+              "fdc": 169491,
               "g": 1000,
-              "gNote": "chuck for stew, raw"
+              "gNote": "chuck arm pot roast, lean and fat, raw (a fattier record than trimmed stew meat, so fat errs high)"
             },
             {
               "quantity": "2½–3",
@@ -2672,8 +2672,8 @@
               "name": "plain flour",
               "note": "",
               "fdc": 168894,
-              "g": 23.4,
-              "gNote": "3 tbsp × 7.8 g; counted in full"
+              "g": 21.45,
+              "gNote": "2¾ tbsp × 7.8 g"
             },
             {
               "quantity": "1½",
@@ -2689,7 +2689,7 @@
               "name": "black pepper",
               "note": "freshly cracked, divided",
               "fdc": 170931,
-              "g": 9.2
+              "g": 8.05
             },
             {
               "quantity": "2–3",
@@ -2993,7 +2993,7 @@
               "name": "honey",
               "note": "",
               "fdc": 169640,
-              "g": 14
+              "g": 10.5
             },
             {
               "quantity": "1",
@@ -3047,7 +3047,7 @@
               "name": "apple juice or water",
               "note": "only to loosen",
               "fdc": 167771,
-              "g": 10,
+              "g": 7.5,
               "gNote": "apple juice"
             }
           ]
@@ -3131,9 +3131,9 @@
               "unit": "kg",
               "name": "chuck roast",
               "note": "large cubes",
-              "fdc": 171206,
+              "fdc": 169491,
               "g": 1800,
-              "gNote": "chuck for stew, raw"
+              "gNote": "chuck arm pot roast, lean and fat, raw (a fattier record than trimmed stew meat, so fat errs high)"
             },
             {
               "quantity": "",
@@ -3246,7 +3246,7 @@
               "name": "brown sugar or honey",
               "note": "only if needed",
               "fdc": 168833,
-              "g": 9.2,
+              "g": 6.9,
               "gNote": "only if needed, counted"
             },
             {
@@ -3274,8 +3274,8 @@
               "name": "sturdy bread",
               "note": "sourdough, ciabatta or country loaf",
               "fdc": 172675,
-              "g": 720,
-              "gNote": "16 slices × 45 g assumed; french/sourdough record"
+              "g": 630.0,
+              "gNote": "14 slices × 45 g assumed (mid-point of 12–16, paired with 7 sandwiches); french/sourdough record"
             },
             {
               "quantity": "",
@@ -3292,7 +3292,7 @@
               "name": "mozzarella",
               "note": "shredded",
               "fdc": 170846,
-              "g": 300,
+              "g": 275.0,
               "gNote": "low-moisture"
             },
             {
@@ -3301,7 +3301,7 @@
               "name": "Colby Jack or mild cheddar",
               "note": "grated (provolone/white cheddar also good)",
               "fdc": 173416,
-              "g": 250
+              "g": 225.0
             },
             {
               "quantity": "",
@@ -3702,8 +3702,8 @@
               "name": "lamb chops",
               "note": "loin or rib, ~2.5 cm thick",
               "fdc": 172517,
-              "g": 1020,
-              "gNote": "12 chops × 85 g edible (about 115 g each with bone, ~25% bone assumed); loin chop record"
+              "g": 850.0,
+              "gNote": "10 chops × 85 g edible (mid-point of 8–12; about 115 g each with bone, ~25% bone assumed); loin chop record"
             }
           ]
         },
@@ -3741,7 +3741,7 @@
               "name": "fresh rosemary",
               "note": "finely chopped",
               "fdc": 173473,
-              "g": 2.6,
+              "g": 2.17,
               "gNote": "fresh"
             },
             {
@@ -4009,7 +4009,7 @@
               "name": "low-sodium soy sauce",
               "note": "start with 2",
               "fdc": 174277,
-              "g": 48,
+              "g": 40.0,
               "gNote": "regular soy record"
             },
             {
@@ -4250,7 +4250,7 @@
               "name": "onions",
               "note": "250–300 g, finely chopped",
               "fdc": 170000,
-              "g": 300
+              "g": 275.0
             },
             {
               "quantity": "150",
@@ -4283,7 +4283,7 @@
               "name": "tomato paste",
               "note": "or 1 medium tomato (120–150 g), chopped",
               "fdc": 170459,
-              "g": 24
+              "g": 20.0
             },
             {
               "quantity": "1–2",
@@ -4291,8 +4291,8 @@
               "name": "green chillies",
               "note": "optional, slit",
               "fdc": 170497,
-              "g": 20,
-              "gNote": "optional, counted; 2 small"
+              "g": 15.0,
+              "gNote": "optional, counted; 1½ small"
             }
           ]
         },
@@ -4348,7 +4348,7 @@
               "name": "ground black pepper",
               "note": "divided",
               "fdc": 170931,
-              "g": 3.45
+              "g": 2.88
             },
             {
               "quantity": "¼",
@@ -4682,7 +4682,7 @@
               "name": "Kashmiri chilli powder",
               "note": "to taste",
               "fdc": 170932,
-              "g": 1.8,
+              "g": 1.35,
               "gNote": "Kashmiri chilli is pure ground chilli: cayenne record"
             },
             {
@@ -4715,7 +4715,7 @@
               "name": "sugar",
               "note": "only if sharp",
               "fdc": 169655,
-              "g": 4.2,
+              "g": 3.15,
               "gNote": "only if sharp, counted"
             },
             {
@@ -4731,7 +4731,7 @@
               "name": "cream",
               "note": "start with 200 ml",
               "fdc": 170859,
-              "g": 250,
+              "g": 225.0,
               "gNote": "heavy cream record"
             },
             {
@@ -4740,7 +4740,7 @@
               "name": "cashews",
               "note": "optional, extra creamy",
               "fdc": 170162,
-              "g": 50,
+              "g": 40.0,
               "gNote": "optional, counted"
             }
           ]
@@ -5036,7 +5036,7 @@
               "name": "fresh lemon juice",
               "note": "",
               "fdc": 167747,
-              "g": 30.5
+              "g": 22.88
             },
             {
               "quantity": "1",
@@ -5198,7 +5198,7 @@
               "name": "garlic",
               "note": "chopped",
               "fdc": 169230,
-              "g": 24
+              "g": 21.0
             },
             {
               "quantity": "1–2",
@@ -5206,8 +5206,8 @@
               "name": "carrots",
               "note": "finely chopped (optional \"ultimate\" add-in)",
               "fdc": 170393,
-              "g": 122,
-              "gNote": "optional, counted; 2 medium"
+              "g": 91.5,
+              "gNote": "optional, counted; 1½ medium"
             }
           ]
         },
@@ -5228,7 +5228,7 @@
               "name": "ground turmeric",
               "note": "",
               "fdc": 172231,
-              "g": 4.5
+              "g": 3.75
             },
             {
               "quantity": "1",
@@ -5276,7 +5276,7 @@
               "name": "black pepper",
               "note": "to taste",
               "fdc": 170931,
-              "g": 2.3
+              "g": 1.72
             }
           ]
         },
@@ -5358,8 +5358,8 @@
               "name": "flour",
               "note": "GF swap: 1½ tbsp cornstarch",
               "fdc": 168894,
-              "g": 23.4,
-              "gNote": "3 tbsp × 7.8 g"
+              "g": 19.5,
+              "gNote": "2½ tbsp × 7.8 g"
             },
             {
               "quantity": "120",
@@ -5602,7 +5602,7 @@
               "name": "onions",
               "note": "about 750–900 g, thinly sliced",
               "fdc": 170000,
-              "g": 900
+              "g": 825.0
             },
             {
               "quantity": "5",
@@ -5640,8 +5640,8 @@
               "name": "cloves",
               "note": "",
               "fdc": 171321,
-              "g": 1.0,
-              "gNote": "10 × 0.1 g"
+              "g": 0.9,
+              "gNote": "9 × 0.1 g"
             },
             {
               "quantity": "2",
@@ -5658,7 +5658,7 @@
               "name": "cumin seeds",
               "note": "",
               "fdc": 170923,
-              "g": 3.15
+              "g": 2.62
             },
             {
               "quantity": "1",
@@ -5703,7 +5703,7 @@
               "name": "Kashmiri chilli powder",
               "note": "",
               "fdc": 170932,
-              "g": 13.25,
+              "g": 11.93,
               "gNote": "Kashmiri chilli is pure ground chilli: cayenne record"
             },
             {
@@ -5784,8 +5784,8 @@
               "name": "hot water or low-sodium stock",
               "note": "start with 300 ml",
               "fdc": 172884,
-              "g": 500,
-              "gNote": "chicken stock record (upper end)"
+              "g": 400.0,
+              "gNote": "chicken stock record (400 ml, mid-point)"
             },
             {
               "quantity": "2",
@@ -5801,7 +5801,7 @@
               "name": "lemon juice",
               "note": "to finish",
               "fdc": 167747,
-              "g": 30.5
+              "g": 22.88
             }
           ]
         },
@@ -5976,7 +5976,7 @@
               "name": "boneless chicken thighs",
               "note": "bite-size pieces",
               "fdc": 173627,
-              "g": 800
+              "g": 700.0
             },
             {
               "quantity": "1",
@@ -6002,7 +6002,7 @@
               "name": "chicken stock or water",
               "note": "stock best",
               "fdc": 172884,
-              "g": 250
+              "g": 200.0
             },
             {
               "quantity": "1½",
@@ -6019,7 +6019,7 @@
               "name": "light soy sauce",
               "note": "no fish sauce, so add gradually (or 1–2 tsp fish sauce if you have it)",
               "fdc": 174277,
-              "g": 24
+              "g": 20.0
             },
             {
               "quantity": "½–2",
@@ -6027,7 +6027,7 @@
               "name": "sugar",
               "note": "optional, taste first (the paste has palm sugar)",
               "fdc": 169655,
-              "g": 8.4,
+              "g": 5.25,
               "gNote": "optional, counted"
             },
             {
@@ -6371,9 +6371,9 @@
               "name": "panko breadcrumbs",
               "note": "",
               "fdc": 174928,
-              "g": 60,
+              "g": 45,
               "opt": true,
-              "gNote": "1 cup = 60 g"
+              "gNote": "¾ cup ≈ 45 g (mid-point of ½–1; 1 cup = 60 g)"
             },
             {
               "quantity": "1",
@@ -6409,7 +6409,7 @@
         "Rest 5–10 min before serving."
       ],
       "nutrition": {
-        "servings": 6,
+        "servings": 7,
         "per": "serving",
         "extra": [
           {
@@ -6531,7 +6531,7 @@
               "name": "tomato sauce or passata",
               "note": "",
               "fdc": 170054,
-              "g": 400
+              "g": 375.0
             },
             {
               "quantity": "125",
@@ -6548,7 +6548,7 @@
               "name": "brown sugar",
               "note": "",
               "fdc": 168833,
-              "g": 18.4
+              "g": 16.1
             },
             {
               "quantity": "1½",
@@ -6582,7 +6582,7 @@
               "name": "crushed fennel seeds",
               "note": "optional",
               "fdc": 171323,
-              "g": 1.0,
+              "g": 0.75,
               "gNote": "optional, counted"
             },
             {
@@ -6662,7 +6662,7 @@
               "name": "salt",
               "note": "then adjust",
               "fdc": 173468,
-              "g": 6
+              "g": 5.25
             },
             {
               "quantity": "",
@@ -6686,7 +6686,7 @@
               "name": "Parmesan",
               "note": "optional but recommended",
               "fdc": 171247,
-              "g": 70,
+              "g": 60.0,
               "gNote": "optional, counted"
             }
           ]
@@ -6709,7 +6709,7 @@
               "name": "mozzarella",
               "note": "grated or sliced",
               "fdc": 170846,
-              "g": 400,
+              "g": 375.0,
               "gNote": "low-moisture"
             },
             {
@@ -6718,7 +6718,7 @@
               "name": "Parmesan",
               "note": "grated",
               "fdc": 171247,
-              "g": 100
+              "g": 87.5
             }
           ]
         }
@@ -6803,7 +6803,7 @@
               "name": "fettuccine or tagliatelle",
               "note": "",
               "fdc": 169736,
-              "g": 400,
+              "g": 375.0,
               "gNote": "dry"
             }
           ]
@@ -6889,7 +6889,7 @@
               "name": "mushrooms",
               "note": "sliced (cremini/chestnut)",
               "fdc": 169251,
-              "g": 350
+              "g": 325.0
             },
             {
               "quantity": "1",
@@ -6906,7 +6906,7 @@
               "name": "garlic",
               "note": "finely minced",
               "fdc": 169230,
-              "g": 12
+              "g": 10.5
             }
           ]
         },
@@ -6936,8 +6936,8 @@
               "name": "whole milk",
               "note": "",
               "fdc": 322892,
-              "g": 206,
-              "gNote": "200 ml"
+              "g": 180.25,
+              "gNote": "175 ml"
             },
             {
               "quantity": "60–80",
@@ -6945,7 +6945,7 @@
               "name": "Parmesan",
               "note": "finely grated",
               "fdc": 171247,
-              "g": 80
+              "g": 70.0
             },
             {
               "quantity": "60–80",
@@ -6953,7 +6953,7 @@
               "name": "Pecorino Romano",
               "note": "optional, recommended",
               "fdc": 171249,
-              "g": 80,
+              "g": 70.0,
               "gNote": "optional, counted; Romano record"
             },
             {
@@ -6991,7 +6991,7 @@
               "name": "lemon juice or zest",
               "note": "optional",
               "fdc": 167747,
-              "g": 10,
+              "g": 7.5,
               "gNote": "optional, counted"
             },
             {
@@ -7152,7 +7152,7 @@
               "name": "garlic",
               "note": "minced",
               "fdc": 169230,
-              "g": 12,
+              "g": 10.5,
               "gNote": "4 cloves"
             },
             {
@@ -7206,7 +7206,7 @@
               "name": "Parmesan",
               "note": "freshly grated (¾ cup), plus extra",
               "fdc": 170848,
-              "g": 70
+              "g": 65.0
             },
             {
               "quantity": "1",
@@ -7362,7 +7362,7 @@
               "name": "garlic",
               "note": "finely minced",
               "fdc": 169230,
-              "g": 12
+              "g": 10.5
             },
             {
               "quantity": "250",
@@ -7542,7 +7542,7 @@
               "name": "garlic",
               "note": "minced",
               "fdc": 169230,
-              "g": 9
+              "g": 7.5
             },
             {
               "quantity": "1",
@@ -7558,7 +7558,7 @@
               "name": "Maggi Bolognese sauce",
               "note": "or the whole jar for a saucier result",
               "fdc": 171192,
-              "g": 500,
+              "g": 450.0,
               "gNote": "no Maggi record; closest generic: ready-to-serve pasta/marinara sauce"
             },
             {
@@ -7567,7 +7567,7 @@
               "name": "beef stock or water",
               "note": "only 50–75 ml for the 20-min version",
               "fdc": 172883,
-              "g": 150
+              "g": 125.0
             },
             {
               "quantity": "80–120",
@@ -7575,8 +7575,8 @@
               "name": "whole milk",
               "note": "",
               "fdc": 322892,
-              "g": 124,
-              "gNote": "120 ml"
+              "g": 103.33,
+              "gNote": "100 ml"
             },
             {
               "quantity": "½–1",
@@ -7584,7 +7584,7 @@
               "name": "Worcestershire sauce",
               "note": "",
               "fdc": 171610,
-              "g": 5.7
+              "g": 4.28
             },
             {
               "quantity": "",
@@ -7611,7 +7611,7 @@
               "name": "spaghetti",
               "note": "",
               "fdc": 169736,
-              "g": 350,
+              "g": 325.0,
               "gNote": "dry"
             }
           ]
@@ -7725,7 +7725,7 @@
               "name": "pasta",
               "note": "rigatoni, penne, fusilli or tagliatelle",
               "fdc": 169736,
-              "g": 400,
+              "g": 350.0,
               "gNote": "dry"
             },
             {
@@ -7768,7 +7768,7 @@
               "name": "cherry tomatoes",
               "note": "",
               "fdc": 170457,
-              "g": 350
+              "g": 300.0
             },
             {
               "quantity": "1",
@@ -7817,7 +7817,7 @@
               "name": "pasta water",
               "note": "as needed",
               "fdc": 173647,
-              "g": 120
+              "g": 90.0
             },
             {
               "quantity": "2–3",
@@ -7825,7 +7825,7 @@
               "name": "cream or mascarpone",
               "note": "optional",
               "fdc": 170859,
-              "g": 45,
+              "g": 37.5,
               "gNote": "optional, counted; heavy cream record"
             },
             {
@@ -7834,7 +7834,7 @@
               "name": "Parmesan",
               "note": "grated, plus extra to serve",
               "fdc": 171247,
-              "g": 50
+              "g": 40.0
             },
             {
               "quantity": "",
@@ -7945,7 +7945,7 @@
               "name": "red peppers",
               "note": "halved, deseeded (about 700–800 g)",
               "fdc": 170108,
-              "g": 800
+              "g": 750.0
             },
             {
               "quantity": "1",
@@ -7961,7 +7961,7 @@
               "name": "shallots",
               "note": "halved (about 80–100 g)",
               "fdc": 170499,
-              "g": 100
+              "g": 90.0
             },
             {
               "quantity": "40",
@@ -7969,7 +7969,7 @@
               "name": "cherry tomatoes",
               "note": "about 500–600 g",
               "fdc": 170457,
-              "g": 600
+              "g": 550.0
             },
             {
               "quantity": "30",
@@ -8022,8 +8022,8 @@
               "name": "pecorino romano",
               "note": "finely grated, plus 10–15 g to finish",
               "fdc": 171249,
-              "g": 75,
-              "gNote": "60 g plus 15 g to finish; Romano record"
+              "g": 67.5,
+              "gNote": "55 g plus 12.5 g to finish (mid-points); Romano record"
             },
             {
               "quantity": "5–6",
@@ -8031,7 +8031,7 @@
               "name": "fresh basil",
               "note": "4–5 leaves",
               "fdc": 172232,
-              "g": 6
+              "g": 5.5
             },
             {
               "quantity": "1",
@@ -8048,7 +8048,7 @@
               "name": "chilli flakes",
               "note": "optional",
               "fdc": 170932,
-              "g": 2
+              "g": 1.5
             },
             {
               "quantity": "15",
@@ -8064,7 +8064,7 @@
               "name": "fresh lemon juice",
               "note": "to taste",
               "fdc": 167747,
-              "g": 10
+              "g": 7.5
             }
           ]
         },
@@ -8077,7 +8077,7 @@
               "name": "rigatoni, penne or fusilli",
               "note": "",
               "fdc": 169736,
-              "g": 500,
+              "g": 450.0,
               "gNote": "dry"
             },
             {
@@ -8086,7 +8086,7 @@
               "name": "reserved pasta water",
               "note": "",
               "fdc": 173647,
-              "g": 240
+              "g": 180.0
             }
           ]
         }
@@ -8265,7 +8265,7 @@
               "name": "beef stock",
               "note": "",
               "fdc": 172883,
-              "g": 200
+              "g": 175.0
             },
             {
               "quantity": "150",
@@ -8314,7 +8314,7 @@
               "name": "salt",
               "note": "adjust at the end",
               "fdc": 173468,
-              "g": 6
+              "g": 4.5
             },
             {
               "quantity": "",
@@ -8331,7 +8331,7 @@
               "name": "balsamic vinegar",
               "note": "optional, replaces the wine's acidity",
               "fdc": 172241,
-              "g": 5.3
+              "g": 3.97
             }
           ]
         },
@@ -8344,7 +8344,7 @@
               "name": "spaghetti",
               "note": "",
               "fdc": 169736,
-              "g": 350,
+              "g": 325.0,
               "gNote": "dry"
             }
           ]
@@ -8711,7 +8711,7 @@
               "name": "sugar or honey",
               "note": "",
               "fdc": 169655,
-              "g": 15,
+              "g": 13.5,
               "gNote": "sugar"
             },
             {
@@ -8733,7 +8733,7 @@
               "name": "pizza sauce or passata",
               "note": "with a tiny pinch salt, pinch sugar, oregano, drizzle of oil",
               "fdc": 172880,
-              "g": 562.5,
+              "g": 468.75,
               "gNote": "1½ tbsp (about 22 g) × 25 pizzas"
             },
             {
@@ -8742,7 +8742,7 @@
               "name": "cheese",
               "note": "mozzarella or a mozzarella/mild cheddar mix",
               "fdc": 170846,
-              "g": 500,
+              "g": 437.5,
               "gNote": "20 g × 25 pizzas; low-moisture mozzarella"
             },
             {
@@ -8870,7 +8870,7 @@
               "name": "cold or cool water",
               "note": "up to 480–500 g total with Manitoba 0, added 10 g at a time",
               "fdc": 173647,
-              "g": 480
+              "g": 470.0
             },
             {
               "quantity": "8",
@@ -8886,7 +8886,7 @@
               "name": "instant dry yeast",
               "note": "5 g in warm Qatar kitchens",
               "fdc": 175043,
-              "g": 6,
+              "g": 5.5,
               "gNote": "instant yeast: active dry record used"
             },
             {
@@ -9260,7 +9260,7 @@
       },
       "related": [],
       "nutrition": {
-        "servings": 8,
+        "servings": 9,
         "per": "serving",
         "extra": [
           {
@@ -9761,7 +9761,7 @@
               "name": "lukewarm water",
               "note": "start with 300 ml",
               "fdc": 173647,
-              "g": 330
+              "g": 315.0
             },
             {
               "quantity": "",
@@ -10252,8 +10252,8 @@
               "name": "hot stock",
               "note": "",
               "fdc": 172884,
-              "g": 780,
-              "gNote": "3¼ cups chicken stock"
+              "g": 750.0,
+              "gNote": "3⅛ cups chicken stock"
             },
             {
               "quantity": "",
@@ -10481,7 +10481,7 @@
               "name": "lemon juice",
               "note": "start small",
               "fdc": 167747,
-              "g": 10
+              "g": 7.5
             },
             {
               "quantity": "",
@@ -10865,7 +10865,7 @@
               "name": "milk or cream",
               "note": "optional, to loosen",
               "fdc": 170859,
-              "g": 30,
+              "g": 22.5,
               "gNote": "optional, counted; heavy cream record"
             }
           ]
@@ -10879,7 +10879,7 @@
               "name": "Borden Colby/Monterey Jack slices",
               "note": "finely chopped",
               "fdc": 173416,
-              "g": 130,
+              "g": 115.0,
               "gNote": "colby record"
             },
             {
@@ -10888,7 +10888,7 @@
               "name": "sharp cheddar",
               "note": "grated, optional for punch",
               "fdc": 170899,
-              "g": 30,
+              "g": 25.0,
               "gNote": "optional, counted"
             },
             {
@@ -10897,8 +10897,8 @@
               "name": "processed burger slices",
               "note": "chopped, optional \"melt insurance\"",
               "fdc": 171290,
-              "g": 42,
-              "gNote": "optional, counted; 2 × 21 g"
+              "g": 31.5,
+              "gNote": "optional, counted; 1½ × 21 g"
             }
           ]
         }
@@ -10949,7 +10949,7 @@
       },
       "related": [],
       "nutrition": {
-        "servings": 8,
+        "servings": 10,
         "per": "burger (cheese spread only)"
       }
     },
@@ -11165,7 +11165,7 @@
               "name": "sour cream",
               "note": "recommended",
               "fdc": 171257,
-              "g": 24
+              "g": 18.0
             },
             {
               "quantity": "½–1",
@@ -11173,7 +11173,7 @@
               "name": "chipotle powder",
               "note": "start low",
               "fdc": 171319,
-              "g": 2.7,
+              "g": 2.03,
               "gNote": "no chipotle record; chili powder used"
             },
             {
@@ -11190,7 +11190,7 @@
               "name": "lemon or lime juice",
               "note": "",
               "fdc": 167747,
-              "g": 10
+              "g": 7.5
             },
             {
               "quantity": "",
@@ -11626,7 +11626,7 @@
               "name": "dried green peppercorns",
               "note": "rehydrated in hot water 10–15 min; half crushed (or ½ tsp green in brine)",
               "fdc": 170931,
-              "g": 5.8,
+              "g": 4.35,
               "gNote": "no green-peppercorn record; black pepper used"
             },
             {
@@ -11644,8 +11644,8 @@
               "name": "brandy or cognac",
               "note": "",
               "fdc": 174815,
-              "g": 57,
-              "gNote": "60 ml; 80-proof spirit record, counted in full though most alcohol cooks off (errs high; alcohol kcal aren't in P/C/F)"
+              "g": 52.25,
+              "gNote": "55 ml; 80-proof spirit record, counted in full though most alcohol cooks off (errs high; alcohol kcal aren't in P/C/F)"
             },
             {
               "quantity": "150",
@@ -12191,7 +12191,7 @@
         "Flip once and cook 1–2 min more until cooked through. Serve immediately."
       ],
       "nutrition": {
-        "servings": 12,
+        "servings": 14,
         "per": "pancake",
         "extra": [
           {
@@ -13483,14 +13483,6 @@
       "f": 2.77,
       "type": "SR Legacy"
     },
-    "174030": {
-      "name": "Beef, ground, 90% lean meat / 10% fat, raw",
-      "kcal": 176.0,
-      "p": 20.0,
-      "c": 0.0,
-      "f": 10.0,
-      "type": "SR Legacy"
-    },
     "174036": {
       "name": "Beef, ground, 80% lean meat / 20% fat, raw",
       "kcal": 254.0,
@@ -13594,6 +13586,22 @@
       "c": 4.67,
       "f": 3.2,
       "type": "Foundation"
+    },
+    "169491": {
+      "name": "Beef, chuck, arm pot roast, separable lean and fat, trimmed to 1/8\" fat, all grades, raw",
+      "kcal": 244.0,
+      "p": 19.2,
+      "c": 0.0,
+      "f": 18.0,
+      "type": "SR Legacy"
+    },
+    "171796": {
+      "name": "Beef, ground, 85% lean meat / 15% fat, raw",
+      "kcal": 215.0,
+      "p": 18.6,
+      "c": 0.0,
+      "f": 15.0,
+      "type": "SR Legacy"
     }
   }
 }
