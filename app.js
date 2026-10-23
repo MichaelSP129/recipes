@@ -214,7 +214,6 @@
       var o = BY_ID[x.id]; return '<button class="relbtn" data-open="' + esc(o.id) + '"><small>' + esc(x.relation) + ' · ' + esc(o.category) + '</small>' + esc(o.title) + ' →</button>';
     }).join("") + '</div>';
     if (r.tips && r.tips.length) h += '<div class="block"><h2>Tips &amp; variations</h2>' + r.tips.map(function (t) { return '<div class="tip">' + esc(t) + '</div>'; }).join("") + '</div>';
-    if (r.reviewNotes && r.reviewNotes.length) h += '<div class="block"><h2>Review notes</h2><div class="note"><b>How this final version was worked out</b>' + esc(r.reviewNotes.join(" ")) + '</div></div>';
     h += '</div>';
     app.innerHTML = h;
     document.title = r.title + " · Recipes";
