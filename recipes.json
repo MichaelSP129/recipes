@@ -122,6 +122,13 @@
         "amount": null,
         "text": "10–12 drumsticks"
       },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "10–12",
+          "unit": "drumsticks"
+        }
+      },
       "prepTime": "30–60 min air-dry + 1 h marinating (ideal 3–6 h)",
       "cookTime": "20–25 min indirect + 8–10 min direct + 5 min rest",
       "ingredients": [
@@ -273,6 +280,14 @@
       "servings": {
         "amount": "1.2",
         "text": "kg wings"
+      },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "1.2",
+          "unit": "kg wings",
+          "label": "For"
+        }
       },
       "prepTime": "1 h brine + 30–60 min drying + 30–45 min rest",
       "cookTime": "33–40 min",
@@ -502,6 +517,14 @@
         "amount": null,
         "text": "1 kg chicken breast"
       },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "1",
+          "unit": "kg chicken breast",
+          "label": "For"
+        }
+      },
       "prepTime": "",
       "cookTime": "7 min high pressure + 5 min natural release + 4–6 min sauté",
       "ingredients": [
@@ -710,6 +733,14 @@
       "servings": {
         "amount": "1.2",
         "text": "kg drumsticks"
+      },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "1.2",
+          "unit": "kg drumsticks",
+          "label": "For"
+        }
       },
       "prepTime": "2–4 h brine + 1–4 h drying + 30–45 min rest",
       "cookTime": "40–55 min",
@@ -924,6 +955,13 @@
       "servings": {
         "amount": "3–4",
         "text": "servings (500 g chicken)"
+      },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "3–4",
+          "unit": "servings"
+        }
       },
       "prepTime": "4 h minimum marinating (ideal 8–16 h, max ~24 h)",
       "cookTime": "20 min + 10–15 min at 220°C + 3–6 min grill",
@@ -1194,6 +1232,9 @@
         "amount": null,
         "text": "4 breasts or 6 fillets"
       },
+      "scale": {
+        "type": "batch"
+      },
       "prepTime": "1 h minimum marinating (3–4 h better) + 10 min rest after coating",
       "cookTime": "14–20 min at 190°C",
       "ingredients": [
@@ -1412,6 +1453,14 @@
       "servings": {
         "amount": null,
         "text": "600 g chicken"
+      },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "600",
+          "unit": "g chicken",
+          "label": "For"
+        }
       },
       "prepTime": "Velvet 15–20 min + marinate 15 min",
       "cookTime": "",
@@ -1653,6 +1702,10 @@
       "servings": {
         "amount": "4",
         "text": "4 generous servings (8–10 tacos, 750 g mince)"
+      },
+      "scale": {
+        "type": "servings",
+        "base": 4
       },
       "prepTime": "",
       "cookTime": "",
@@ -1997,6 +2050,14 @@
         "amount": "6",
         "text": "1 large family pie (about 6 servings)"
       },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "1",
+          "unit": "family pies",
+          "one": "family pie"
+        }
+      },
       "prepTime": "45–60 min cooling the filling",
       "cookTime": "Pressure cook 35 min + 10–15 min release + 10–20 min reduce; bake 15 min blind + 25–30 min",
       "ingredients": [
@@ -2204,6 +2265,14 @@
         "amount": null,
         "text": "per rack"
       },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "1",
+          "unit": "racks",
+          "one": "rack"
+        }
+      },
       "prepTime": "",
       "cookTime": "Wrapped 1–1.5 h (baby back) or 1.5–2 h (spare/St Louis) at 120–135°C + about 10 min + 10–15 min glazing",
       "ingredients": [
@@ -2331,6 +2400,13 @@
       "servings": {
         "amount": "7",
         "text": "6–8 sandwiches"
+      },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "6–8",
+          "unit": "sandwiches"
+        }
       },
       "prepTime": "",
       "cookTime": "Oven 3.5–4.5 h at 150–160°C, stovetop 3–4 h, or slow cooker 7–8 h low / 5–6 h high; broth reduction 10–20 min",
@@ -2535,6 +2611,14 @@
       "servings": {
         "amount": null,
         "text": "1.7 kg deboned lamb"
+      },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "1.7",
+          "unit": "kg deboned lamb",
+          "label": "For"
+        }
       },
       "prepTime": "1 h minimum marinating (overnight better) + 45–60 min out of the fridge",
       "cookTime": "3–4½ h covered at 160°C (150°C fan) + 20–30 min uncovered at 220°C + 15–20 min rest",
@@ -2766,6 +2850,13 @@
         "amount": "5",
         "text": "4–6 people (8–12 chops)"
       },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "4–6",
+          "unit": "servings"
+        }
+      },
       "prepTime": "30 min minimum marinating (ideal 2–4 h)",
       "cookTime": "7–10 min on the grill + 5 min rest",
       "ingredients": [
@@ -2930,6 +3021,13 @@
       "servings": {
         "amount": "5",
         "text": "4–6 servings (1.5 kg pork belly)"
+      },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "4–6",
+          "unit": "servings"
+        }
       },
       "prepTime": "20 min + 15–20 min drying",
       "cookTime": "Braise 2–2½ h (+20–30 min if needed) + brown and glaze about 30 min",
@@ -3140,6 +3238,13 @@
       "servings": {
         "amount": "5",
         "text": "5–6 servings"
+      },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "5–6",
+          "unit": "servings"
+        }
       },
       "prepTime": "",
       "cookTime": "Pressure cook 12–15 min + slow cook 3–4 h LOW",
@@ -3358,6 +3463,13 @@
       "servings": {
         "amount": "3",
         "text": "2–3 servings (500 g chicken; 3–4 with rice/naan)"
+      },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "2–3",
+          "unit": "servings"
+        }
       },
       "prepTime": "1 h minimum marinating (best 6–12 h)",
       "cookTime": "",
@@ -3618,6 +3730,13 @@
         "amount": "9",
         "text": "8–10 generous servings (2.5 kg butternut)"
       },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "8–10",
+          "unit": "servings"
+        }
+      },
       "prepTime": "",
       "cookTime": "30–40 min simmer (roasting adds 35–45 min)",
       "ingredients": [
@@ -3820,6 +3939,13 @@
       "servings": {
         "amount": "6",
         "text": "6–8 servings"
+      },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "6–8",
+          "unit": "servings"
+        }
       },
       "prepTime": "About 20 min",
       "cookTime": "60–90 min (depending on chickpeas)",
@@ -4079,6 +4205,13 @@
       "servings": {
         "amount": "9",
         "text": "8–10 generous servings"
+      },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "8–10",
+          "unit": "servings"
+        }
       },
       "prepTime": "20 min (+ optional marinating)",
       "cookTime": "2–2½ h + 20–30 min rest",
@@ -4379,6 +4512,10 @@
         "amount": "4",
         "text": "2 adults + 2 kids"
       },
+      "scale": {
+        "type": "servings",
+        "base": 4
+      },
       "prepTime": "",
       "cookTime": "",
       "ingredients": [
@@ -4535,6 +4672,13 @@
       "servings": {
         "amount": "7",
         "text": "6–8 servings (500 g pasta)"
+      },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "6–8",
+          "unit": "servings"
+        }
       },
       "prepTime": "",
       "cookTime": "30–40 min total; bake 15–20 min at 190°C + 5–10 min rest",
@@ -4749,6 +4893,13 @@
       "servings": {
         "amount": "9",
         "text": "8–10 portions"
+      },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "8–10",
+          "unit": "portions"
+        }
       },
       "prepTime": "",
       "cookTime": "Sauce 60–90 min + bake 45–50 min + rest 20–30 min",
@@ -4991,6 +5142,10 @@
         "amount": "4",
         "text": "servings"
       },
+      "scale": {
+        "type": "servings",
+        "base": 4
+      },
       "prepTime": "",
       "cookTime": "",
       "ingredients": [
@@ -5206,6 +5361,10 @@
         "amount": "4",
         "text": "servings"
       },
+      "scale": {
+        "type": "servings",
+        "base": 4
+      },
       "prepTime": "",
       "cookTime": "",
       "ingredients": [
@@ -5384,6 +5543,10 @@
         "amount": "4",
         "text": "servings"
       },
+      "scale": {
+        "type": "servings",
+        "base": 4
+      },
       "prepTime": "",
       "cookTime": "",
       "ingredients": [
@@ -5495,6 +5658,10 @@
       "servings": {
         "amount": "4",
         "text": "300–350 g spaghetti (about 4 servings)"
+      },
+      "scale": {
+        "type": "servings",
+        "base": 4
       },
       "prepTime": "",
       "cookTime": "30–60 min (or a 20-min fast finish)",
@@ -5657,6 +5824,10 @@
         "amount": "4",
         "text": "servings"
       },
+      "scale": {
+        "type": "servings",
+        "base": 4
+      },
       "prepTime": "",
       "cookTime": "Roast 20–30 min at 220°C",
       "ingredients": [
@@ -5813,6 +5984,10 @@
       "servings": {
         "amount": "4",
         "text": "generous portions"
+      },
+      "scale": {
+        "type": "servings",
+        "base": 4
       },
       "prepTime": "",
       "cookTime": "Roast 25–35 min at 190°C",
@@ -5984,6 +6159,10 @@
       "servings": {
         "amount": "4",
         "text": "300–350 g spaghetti (about 4 servings)"
+      },
+      "scale": {
+        "type": "servings",
+        "base": 4
       },
       "prepTime": "",
       "cookTime": "Simmer 45 min + 20–30 min (1½–2 h even better)",
@@ -6168,6 +6347,14 @@
         "amount": "2",
         "text": "small focaccia (20 cm tins)"
       },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "2",
+          "unit": "small focaccia",
+          "one": "small focaccia"
+        }
+      },
       "prepTime": "Pre-ferment 2–3 h + mixing 15 min + 30 min rest + 3 folds × 30 min + 20–40 min proof",
       "cookTime": "About 25 min at 200°C fan (until deep golden)",
       "ingredients": [
@@ -6321,6 +6508,14 @@
         "amount": "25",
         "text": "mini 10 cm pizzas (about 40 g each; 30 at 32–35 g)"
       },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "25",
+          "unit": "mini pizzas",
+          "one": "mini pizza"
+        }
+      },
       "prepTime": "60–90 min rise + 24–48 h fridge + 15–20 min ball rest",
       "cookTime": "Par-bake 2–3 min at 240–250°C; finish 5–7 min at 220–240°C",
       "ingredients": [
@@ -6444,6 +6639,14 @@
       "servings": {
         "amount": "4",
         "text": "4 large pizzas (300 g balls) or 5 medium (240–250 g)"
+      },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "4",
+          "unit": "large pizzas",
+          "one": "large pizza"
+        }
       },
       "prepTime": "About 4 h total (mix, knead, 1½–2 h bulk, 1½–2 h ball proof)",
       "cookTime": "6–9 min per pizza at 250–300°C",
@@ -6587,6 +6790,13 @@
       "servings": {
         "amount": "9",
         "text": "8–10 generous servings (23 cm skillet)"
+      },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "8–10",
+          "unit": "servings"
+        }
       },
       "prepTime": "",
       "cookTime": "20–25 min at 220°C + 10 min cooling",
@@ -6761,6 +6971,13 @@
         "amount": "10",
         "text": "10 naan (about 85–90 g dough each)"
       },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "10",
+          "unit": "naan"
+        }
+      },
       "prepTime": "15 min autolyse + 8–10 min knead + 1–1½ h rise + 20–30 min rest",
       "cookTime": "2–3 min per naan",
       "ingredients": [
@@ -6919,6 +7136,14 @@
         "amount": "2",
         "text": "2 large loaves (or 1 large round)"
       },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "2",
+          "unit": "loaves",
+          "one": "loaf"
+        }
+      },
       "prepTime": "10–12 min knead + 1–1½ h rise + 45–60 min proof",
       "cookTime": "35–45 min at 180°C",
       "ingredients": [
@@ -7058,6 +7283,13 @@
         "amount": "11",
         "text": "10–12 medium vetkoek"
       },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "10–12",
+          "unit": "vetkoek"
+        }
+      },
       "prepTime": "Knead 8–10 min + 60–90 min rise + 20–30 min second rise",
       "cookTime": "2–3 min per side at 170–180°C",
       "ingredients": [
@@ -7157,6 +7389,13 @@
       "servings": {
         "amount": "5",
         "text": "4–6 servings"
+      },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "4–6",
+          "unit": "servings"
+        }
       },
       "prepTime": "",
       "cookTime": "12–15 min + 10 min rest",
@@ -7263,6 +7502,14 @@
         "amount": null,
         "text": "1 kg potatoes"
       },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "1",
+          "unit": "kg potatoes",
+          "label": "For"
+        }
+      },
       "prepTime": "",
       "cookTime": "15–20 min boil",
       "ingredients": [
@@ -7359,6 +7606,15 @@
       "servings": {
         "amount": null,
         "text": "2 cups basmati"
+      },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "2",
+          "unit": "cups basmati",
+          "one": "cup basmati",
+          "label": "For"
+        }
       },
       "prepTime": "Soak 20–30 min",
       "cookTime": "About 15 min + 10 min rest (after building the base)",
@@ -7562,6 +7818,10 @@
         "amount": "4",
         "text": "servings (4 cobs)"
       },
+      "scale": {
+        "type": "servings",
+        "base": 4
+      },
       "prepTime": "10 min",
       "cookTime": "Grill 8–10 min / air fryer 12–15 min at 200°C / oven 20–25 min at 220°C fan",
       "ingredients": [
@@ -7754,6 +8014,13 @@
         "amount": "7",
         "text": "6–8 rolls"
       },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "6–8",
+          "unit": "rolls"
+        }
+      },
       "prepTime": "",
       "cookTime": "20–25 min onions + 25–35 min simmer",
       "ingredients": [
@@ -7898,6 +8165,13 @@
         "amount": "8–12",
         "text": "burgers"
       },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "8–12",
+          "unit": "burgers"
+        }
+      },
       "prepTime": "5–10 min",
       "cookTime": "No cooking; chill 30 min (1–2 h better)",
       "ingredients": [
@@ -8020,6 +8294,13 @@
       "servings": {
         "amount": "7",
         "text": "6–8 boerie rolls"
+      },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "6–8",
+          "unit": "rolls"
+        }
       },
       "prepTime": "",
       "cookTime": "45–60 min",
@@ -8147,6 +8428,14 @@
         "amount": null,
         "text": "about ½ cup"
       },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "½",
+          "unit": "cup",
+          "one": "cup"
+        }
+      },
       "prepTime": "5 min + 10–15 min rest",
       "cookTime": "",
       "ingredients": [
@@ -8252,6 +8541,14 @@
       "servings": {
         "amount": null,
         "text": "about 1 cup"
+      },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "1",
+          "unit": "cups",
+          "one": "cup"
+        }
       },
       "prepTime": "",
       "cookTime": "Roux 8–12 min + simmer about 3 min",
@@ -8404,6 +8701,14 @@
         "amount": "4",
         "text": "enough for 4–5 pizzas"
       },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "4–5",
+          "unit": "pizzas",
+          "label": "Enough for"
+        }
+      },
       "prepTime": "",
       "cookTime": "No cooking",
       "ingredients": [
@@ -8501,6 +8806,14 @@
       "servings": {
         "amount": "3",
         "text": "enough for 2–3 steaks"
+      },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "2–3",
+          "unit": "steaks",
+          "label": "Enough for"
+        }
       },
       "prepTime": "",
       "cookTime": "",
@@ -8623,6 +8936,14 @@
       "servings": {
         "amount": null,
         "text": "1 bowl (500 g yoghurt)"
+      },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "500",
+          "unit": "g yoghurt",
+          "label": "For"
+        }
       },
       "prepTime": "10–15 min cucumber draining",
       "cookTime": "No cooking; chill 1 h minimum (ideal 3–4 h)",
@@ -8759,6 +9080,14 @@
         "amount": "6",
         "text": "6 small ramekins"
       },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "6",
+          "unit": "ramekins",
+          "one": "ramekin"
+        }
+      },
       "prepTime": "20–30 min infusing",
       "cookTime": "30–40 min at 160°C + 1 h cooling + 4 h (ideally overnight) chilling",
       "ingredients": [
@@ -8868,6 +9197,13 @@
       "servings": {
         "amount": "14",
         "text": "12–16 medium pancakes"
+      },
+      "scale": {
+        "type": "batch",
+        "yield": {
+          "amount": "12–16",
+          "unit": "pancakes"
+        }
       },
       "prepTime": "5–10 min rest",
       "cookTime": "3–5 min per batch",
@@ -8986,6 +9322,9 @@
       "servings": {
         "amount": "1",
         "text": "batch"
+      },
+      "scale": {
+        "type": "batch"
       },
       "prepTime": "3–5 min knead",
       "cookTime": "No cooking",
