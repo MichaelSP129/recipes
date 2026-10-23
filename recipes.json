@@ -6964,7 +6964,7 @@
       ],
       "servings": {
         "amount": "4",
-        "text": "4 large pizzas (300 g balls) or 5 medium (240–250 g)"
+        "text": "4 large pizzas (about 330 g balls) or 5 medium (about 265 g)"
       },
       "scale": {
         "type": "batch",
@@ -7053,7 +7053,7 @@
         "Check the texture. If it's still dry or tears, add water 10 g at a time (usually about 20 g extra for Manitoba 0).",
         "Add the salt and olive oil (oil gradually if mixing by hand). Knead 8–10 min by hand or 5–7 min in a mixer until smooth, elastic and slightly tacky.",
         "Bulk rise covered at room temperature (ideally 24–27°C) for 1½–2 hours, until slightly risen and relaxed; it doesn't need to double. Check after 75–90 min in a warm kitchen.",
-        "Divide into 4 × 300 g or 5 × 240–250 g and shape tight balls. Place in lightly oiled covered containers or on a tray.",
+        "Divide into 4 × 325–335 g or 5 × 260–270 g (weigh the whole dough and divide it evenly) and shape tight balls. Place in lightly oiled covered containers or on a tray.",
         "Ball proof 1½–2 hours until puffy, relaxed and stretchable without springing back.",
         "Meanwhile preheat the oven as hot as possible (250–300°C) with a steel or stone for 45–60 min.",
         "Stretch the dough by hand (no rolling pin), top lightly with sauce, cheese and toppings, and bake 6–9 min until the base is firm, the rim browned and the slice folds without cracking."
@@ -7079,7 +7079,7 @@
         },
         {
           "step": 4,
-          "text": "300 g",
+          "text": "325–335 g",
           "fixed": true
         },
         {
@@ -7089,7 +7089,7 @@
         },
         {
           "step": 4,
-          "text": "240–250 g",
+          "text": "260–270 g",
           "fixed": true
         }
       ],
