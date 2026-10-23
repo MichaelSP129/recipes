@@ -28,7 +28,9 @@ eq(api.stepParts(rj, 6, 2).unscaled, false, "Rogan Josh step 7 fully linked, no 
 eq(strip(api.stepParts(R["roasted-pepper-ricotta-pasta"], 3, 2).html), R["roasted-pepper-ricotta-pasta"].steps[3].replace("240 ml", "480 ml"), "10 g salt per litre fixed, 240 ml pasta water scales");
 eq(strip(api.stepParts(R["mexican-corn-ribs"], 3, 2).html), R["mexican-corn-ribs"].steps[3], "¾ tsp Tajín per cob fixed");
 eq(strip(api.stepParts(R["mini-party-pizza-bases"], 4, 2).html), R["mini-party-pizza-bases"].steps[4], "mini pizza ball weights fixed");
-eq(strip(api.stepParts(R["skillet-naan"], 5, 2).html), R["skillet-naan"].steps[5].replace("10 balls", "20 balls"), "naan: count scales, 85-90 g each fixed");
+eq(strip(api.stepParts(R["skillet-naan"], 5, 2).html), R["skillet-naan"].steps[5].replace("10 balls", "20 balls").replace("1 kg", "2 kg"), "naan: count and total scale, 100 g each fixed");
+eq(strip(api.stepParts(R["focaccia"], 5, 2).html), R["focaccia"].steps[5], "focaccia: 2 tsp oil per tin fixed");
+eq(strip(api.stepParts(R["focaccia"], 8, 3).html), R["focaccia"].steps[8], "focaccia: 1 tsp oil per tin fixed");
 eq(strip(api.stepParts(R["harira"], 4, 0.5).html), R["harira"].steps[4].replace("1.3 L", "0.65 L"), "decimal litres scale");
 eq(strip(api.stepParts(R["creamy-pesto-pasta"], 0, 2).html), R["creamy-pesto-pasta"].steps[0].replace("1 cup", "2 cups"), "cup/cups follows the amount");
 eq(strip(api.stepParts(R["chicken-bacon-mushroom-alfredo"], 0, 0.5).html), R["chicken-bacon-mushroom-alfredo"].steps[0].replace("1½ cups", "¾ cup"), "cups -> cup below 1");
