@@ -21,21 +21,29 @@
     if (!m || (!m[1] && !m[2])) return null;
     return (m[1] ? parseFloat(m[1]) : 0) + (m[2] ? FRAC[m[2]] : 0);
   }
+  // Amounts below 1 snap to the nearest ⅛ or ⅓, 1–10 to the nearest ¼ or ⅓ (see #5).
+  // "≈" marks anything that moved more than 5% when rounded; below 1/16 it's "pinch".
+  var FR_SMALL = [[0, ""], [1 / 8, "⅛"], [1 / 4, "¼"], [1 / 3, "⅓"], [3 / 8, "⅜"], [1 / 2, "½"], [5 / 8, "⅝"], [2 / 3, "⅔"], [3 / 4, "¾"], [7 / 8, "⅞"], [1, ""]];
+  var FR_BIG = [[0, ""], [1 / 4, "¼"], [1 / 3, "⅓"], [1 / 2, "½"], [2 / 3, "⅔"], [3 / 4, "¾"], [1, ""]];
   function fmt(v) {
     if (v >= 100) return String(Math.round(v / 5) * 5);
     if (v >= 10) return String(Math.round(v));
-    var step = v < 1 ? 8 : 4, r = Math.round(v * step) / step;
-    if (r === 0) return "⅛";
-    var whole = Math.floor(r), frac = r - whole;
-    var g = { "0.125": "⅛", "0.25": "¼", "0.375": "⅜", "0.5": "½", "0.625": "⅝", "0.75": "¾", "0.875": "⅞" }[String(frac)] || "";
-    return whole === 0 ? (g || "0") : whole + g;
+    if (v < 3 / 32) return v >= 3 / 64 ? (Math.abs(v - 1 / 16) / v > 0.05 ? "≈" : "") + "1/16" : "pinch";
+    var whole = Math.floor(v), f = v - whole, best = null;
+    (whole ? FR_BIG : FR_SMALL).forEach(function (c) { if (!best || Math.abs(c[0] - f) < Math.abs(best[0] - f)) best = c; });
+    if (best[0] === 1) { whole++; best = [0, ""]; }
+    var r = whole + best[0], s = whole ? whole + best[1] : best[1];
+    return (Math.abs(r - v) / v > 0.05 ? "≈" : "") + s;
   }
   function scaleQty(q, m) {
     if (!q || m === 1) return q;
     var parts = String(q).split(/\s*[–-]\s*/), nums = parts.map(parseNum);
     if (nums.some(function (n) { return n === null; })) return q;
     if (String(q).indexOf(".") >= 0) return nums.map(function (n) { var v = n * m; return String(v >= 10 ? Math.round(v) : Math.round(v * 100) / 100); }).join("–");
-    return nums.map(function (n) { return fmt(n * m); }).join("–");
+    var out = nums.map(function (n) { return fmt(n * m); }), approx = out.some(function (x) { return x.charAt(0) === "≈"; });
+    out = out.map(function (x) { return x.replace("≈", ""); });
+    if (out.length === 2 && out[0] === out[1]) out = [out[0]];
+    return (approx ? "≈" : "") + out.join("–");
   }
   // Scaling model (see #3): "servings" recipes step by whole servings; everything else
   // (kg of wings, 25 mini pizzas, 3–4 servings ranges, sauces) scales as a batch: ½×, 1×, 1½×, 2×, 3×.
@@ -196,7 +204,8 @@
     (r.ingredients || []).forEach(function (grp, gi) {
       if (r.ingredients.length > 1 || grp.section !== "Ingredients") h += '<div class="ing-sec">' + esc(grp.section) + '</div>';
       grp.items.forEach(function (it, ii) {
-        var k = r.id + ":" + gi + ":" + ii, on = !!ui.checked[k], qty = scaleQty(it.quantity, m), qu = [qty, it.unit].filter(Boolean).join(" ");
+        var k = r.id + ":" + gi + ":" + ii, on = !!ui.checked[k], qty = scaleQty(it.quantity, m),
+          qu = qty === "pinch" ? "a pinch" : [qty, it.unit].filter(Boolean).join(" ");
         h += '<div class="ing' + (on ? " on" : "") + '" data-tick="' + esc(k) + '" role="checkbox" aria-checked="' + on + '"><div class="box">' + (on ? "✓" : "") + '</div><div class="txt">' +
           (qu ? '<span class="q">' + esc(qu) + '</span> ' : "") + esc(it.name) + (it.note ? '<span class="n">, ' + esc(it.note) + '</span>' : "") + '</div></div>';
       });
@@ -217,7 +226,7 @@
     }
     if (m !== 1) h += '<button class="linkbtn" data-act="resetmult">Reset</button>';
     h += '</div>';
-    if (m !== 1) h += '<div class="scap">Scaled from ' + esc(servLabel(r)) + '. Amounts are rounded.</div>';
+    if (m !== 1) h += '<div class="scap">Scaled from ' + esc(servLabel(r)) + '. Amounts are rounded; ≈ marks a bigger rounding.</div>';
     return h;
   }
 
