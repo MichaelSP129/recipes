@@ -1,0 +1,38 @@
+# PR checks (see #12): the service-worker cache VERSION must change whenever the
+# app shell changes, otherwise installed phones keep serving the old app.
+name: checks
+on:
+  pull_request:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  sw-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: App shell changed => sw.js VERSION bumped
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -eu
+          ver() { sed -n 's/^var VERSION = "\(.*\)";.*/\1/p' | head -1; }
+          base_ver=$(git show "$BASE:sw.js" | ver)
+          head_ver=$(ver < sw.js)
+          shell=$(git diff --name-only "$BASE"...HEAD -- index.html app.js app.css manifest.webmanifest apple-touch-icon.png favicon.png icons/ sw.js)
+          echo "VERSION: base=$base_ver head=$head_ver"
+          echo "App-shell files changed:"; echo "${shell:-  (none)}"
+          if [ -z "$head_ver" ]; then echo "::error file=sw.js::Couldn't read var VERSION = \"...\"; from sw.js"; exit 1; fi
+          if [ -n "$shell" ] && [ "$base_ver" = "$head_ver" ]; then
+            echo "::error file=sw.js::App-shell files changed but VERSION is still \"$head_ver\". Bump var VERSION in sw.js so installed apps pick up the update."
+            exit 1
+          fi
+          echo "OK"
+      - name: JSON is valid
+        run: python3 -c "import json; json.load(open('recipes.json')); json.load(open('manifest.webmanifest')); print('OK')"
+      - name: Unit tests (if present)
+        run: |
+          set -e
+          for t in tests/*.test.js; do [ -e "$t" ] || continue; echo "node $t"; node "$t"; done
