@@ -1,21 +1,18 @@
 // Macros (#14): node tests/macros.test.js
-// Loads the macros helpers from app.js and checks the data in recipes.json.
+// Loads app.js (tests/load-app.js) and checks the macros helpers and the data in recipes.json.
 var fs = require("fs"), path = require("path");
 var root = path.join(__dirname, "..");
-var src = fs.readFileSync(path.join(root, "app.js"), "utf8");
 var data = JSON.parse(fs.readFileSync(path.join(root, "recipes.json"), "utf8"));
-var a = src.indexOf("  // ---------- macros (#14) ----------"), b = src.indexOf("  // ---------- cook mode + wake lock ----------");
-if (a < 0 || b < a) throw new Error("macros section not found in app.js");
-var api = new Function("FOODS", "ui", "esc", "fmt", "getMult", "multLabel",
-  src.slice(a, b) + "\nreturn { macCalc: macCalc, macPer100: macPer100, macRound: macRound, macPanel: macPanel };")(
-  data.foods, { bw: {}, macOpen: false }, function (s) { return String(s); }, String, function () { return 1; }, String);
+// app.js runs in a vm sandbox (tests/load-app.js) with recipes.json loaded through its own setData()
+var app = require("./load-app")({ data: data });
+var api = { macCalc: app.get("macCalc"), macPer100: app.get("macPer100"), macRound: app.get("macRound"), macPanel: app.get("macPanel") };
 
 var pass = 0, fail = 0;
 function ok(c, msg) { if (c) pass++; else { fail++; console.log("FAIL: " + msg); } }
 function near(x, y, tol) { return Math.abs(x - y) <= (tol || 1e-9) * Math.max(1, Math.abs(y)); }
 var K = ["kcal", "p", "c", "f"];
 var withNut = data.recipes.filter(function (r) { return r.nutrition; });
-ok(withNut.length >= 10, "at least 10 recipes have nutrition (" + withNut.length + ")");
+ok(withNut.length >= 50, "at least 50 recipes have nutrition (" + withNut.length + ")");
 
 // 1. data integrity: every ingredient is accounted for, every FDC ID has data
 withNut.forEach(function (r) {
@@ -37,7 +34,8 @@ Object.keys(data.foods).forEach(function (id) {
   // 4/4/9 sanity check on each energy-dense USDA record (catches typos). USDA uses food-specific factors, and
   // spices, leavening, vinegar and juices are off from 4/4/9 by design, so they're skipped.
   var est = 4 * f.p + 4 * f.c + 9 * f.f;
-  if (f.kcal >= 100 && !/^Spices|Vanilla extract|Leavening|Vinegar/.test(f.name)) ok(Math.abs(est - f.kcal) / f.kcal < 0.2, "FDC " + id + " " + f.name + ": kcal " + f.kcal + " vs 4/4/9 estimate " + Math.round(est));
+  // Alcoholic drinks: most of their energy is alcohol (7 kcal/g), which isn't in P/C/F. Cocoa powder is ~1/3 fibre.
+  if (f.kcal >= 100 && !/^Spices|Vanilla extract|Leavening|Vinegar|^Alcoholic|^Cocoa/.test(f.name)) ok(Math.abs(est - f.kcal) / f.kcal < 0.2, "FDC " + id + " " + f.name + ": kcal " + f.kcal + " vs 4/4/9 estimate " + Math.round(est));
 });
 
 // 2. Everyday Plate agreement (values copied from MichaelSP129/everyday-plate engine.js, per 100 g)
@@ -72,11 +70,28 @@ ok(cc.incomplete && cc.flag === "incomplete: olive oil", "missing FDC ID gives '
 ok(cc.missing.indexOf("olive oil") >= 0, "missing list names the item");
 var copy2 = JSON.parse(JSON.stringify(bol)); copy2.ingredients[0].items[0].fdc = 999999999;
 ok(api.macCalc(copy2, 1).flag === "incomplete: beef mince", "unknown FDC ID gives 'incomplete: beef mince'");
-var html = api.macPanel(copy); // ui/getMult stubs
+var html = api.macPanel(copy);
 ok(/Incomplete: olive oil/.test(html), "panel shows 'Incomplete: olive oil'");
 ok(!api.macCalc(bol, 1).incomplete, "bolognese itself is complete");
+// a synthetic recipe with an amount-less item is flagged and names it (no real recipe is incomplete any more)
+var syn = { id: "synthetic", nutrition: { servings: 2 }, ingredients: [{ items: [
+  { quantity: "100", unit: "g", name: "flour", fdc: 168894, g: 100 }, { quantity: "", unit: "", name: "olive oil", note: "", gNote: "no amount in the recipe" }] }] };
+var sc = api.macCalc(syn, 1);
+ok(sc.incomplete && sc.flag === "incomplete: olive oil", "synthetic recipe with no oil amount: 'incomplete: olive oil' (got '" + sc.flag + "')");
+ok(/Incomplete: olive oil/.test(api.macPanel(syn)), "synthetic recipe panel shows 'Incomplete: olive oil'");
+// focaccia uses the measured oil (#27): 10 tsp ≈ 45 g, complete
 var foc = data.recipes.filter(function (r) { return r.id === "focaccia"; })[0];
-ok(api.macCalc(foc, 1).flag === "incomplete: olive oil", "focaccia is flagged incomplete: olive oil (no amount in the recipe)");
+var fo = api.macCalc(foc, 1);
+ok(!fo.incomplete, "focaccia is complete (got '" + fo.flag + "')");
+var focOil = 0; foc.ingredients.forEach(function (g) { g.items.forEach(function (it) { if (/olive oil/.test(it.name) && it.fdc === 171413) focOil += it.g; }); });
+ok(Math.abs(focOil - 45) < 0.01, "focaccia olive oil totals 45 g (got " + focOil + ")");
+// every food recipe has nutrition, and none is incomplete
+var NONFOOD = /^Non-food$/;
+data.recipes.forEach(function (r) {
+  if (NONFOOD.test(r.category || "")) return;
+  ok(!!r.nutrition, r.id + " has nutrition");
+  if (r.nutrition) ok(!api.macCalc(r, 1).incomplete, r.id + " is complete (" + api.macCalc(r, 1).flag + ")");
+});
 // optional items are shown but not added
 var mac = data.recipes.filter(function (r) { return r.id === "mac-and-cheese"; })[0], mc = api.macCalc(mac, 1);
 ok(mc.optNames.length === 3 && mc.optional.kcal > 0, "mac & cheese: crunchy top listed as optional, not in total");
