@@ -1,9 +1,9 @@
 // Unit tests for scaling quantities inside method steps (#4). Run: node tests/steps.test.js
 "use strict";
 var fs = require("fs"), path = require("path");
-var src = fs.readFileSync(path.join(__dirname, "..", "app.js"), "utf8");
-var helpers = src.slice(src.indexOf("// ---------- helpers ----------"), src.indexOf("  function baseServings(r) {"));
-var api = new Function(helpers + "\nreturn { stepParts: stepParts };")();
+// app.js runs in a vm sandbox (tests/load-app.js); no slicing of the source by marker comments
+var app = require("./load-app")();
+var api = { stepParts: app.get("stepParts") };
 var data = JSON.parse(fs.readFileSync(path.join(__dirname, "..", "recipes.json"), "utf8"));
 var R = {}; data.recipes.forEach(function (r) { R[r.id] = r; });
 var strip = function (h) { return h.replace(/<[^>]+>/g, "").replace(/&#39;/g, "'").replace(/&quot;/g, '"').replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&"); };

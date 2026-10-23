@@ -382,6 +382,11 @@
   function currentRecipe() { var p = location.hash.replace(/^#\/?/, "").split("/"); return p[0] === "r" ? BY_ID[decodeURIComponent(p[1] || "")] || null : null; }
   window.addEventListener("hashchange", route);
 
+  // ---------- test hook ----------
+  // tests/load-app.js runs this file in a Node vm sandbox with window.__RECIPES_TEST__ set, and reads
+  // helpers by name, so tests don't break when code moves. Never set in the browser, so this is inert there.
+  if (window.__RECIPES_TEST__) window.__RECIPES_TEST__.get = function (name) { return eval(name); };
+
   // ---------- boot ----------
   load().then(function (d) {
     setData(d); route();
