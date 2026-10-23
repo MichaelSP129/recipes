@@ -1,14 +1,14 @@
 /* Michael's Recipes – plain JS PWA. Data lives in recipes.json. */
 (function () {
   "use strict";
-  var DATA = null, RECIPES = [], BY_ID = {}, SECTIONS = [], TAG_GROUPS = [];
+  var DATA = null, RECIPES = [], BY_ID = {}, SECTIONS = [], TAG_GROUPS = [], FOODS = {};
   var LS = {
     get: function (k, d) { try { var v = localStorage.getItem("mr:" + k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
     set: function (k, v) { try { localStorage.setItem("mr:" + k, JSON.stringify(v)); } catch (e) {} }
   };
   var ui = {
     query: "", view: LS.get("view", "sections"), selTags: LS.get("selTags", []), showFilters: false,
-    checked: LS.get("checked", {}), mult: LS.get("mult", {}), homeScroll: 0, sheet: false, sheetScroll: 0
+    checked: LS.get("checked", {}), mult: LS.get("mult", {}), bw: LS.get("bw", {}), macOpen: false, homeScroll: 0, sheet: false, sheetScroll: 0
   };
   var app = document.getElementById("app");
 
@@ -81,7 +81,7 @@
   // ---------- data ----------
   function setData(d) {
     if (Array.isArray(d)) d = { recipes: d };
-    DATA = d; RECIPES = d.recipes || []; BY_ID = {};
+    DATA = d; RECIPES = d.recipes || []; BY_ID = {}; FOODS = d.foods || {};
     RECIPES.forEach(function (r) { BY_ID[r.id] = r; });
     SECTIONS = d.sections && d.sections.length ? d.sections : [];
     // any category not listed gets its own section automatically
@@ -240,10 +240,85 @@
       var o = BY_ID[x.id]; return '<button class="relbtn" data-open="' + esc(o.id) + '"><small>' + esc(x.relation) + ' · ' + esc(o.category) + '</small>' + esc(o.title) + ' →</button>';
     }).join("") + '</div>';
     if (r.tips && r.tips.length) h += '<div class="block"><h2>Tips &amp; variations</h2>' + r.tips.map(function (t) { return '<div class="tip">' + esc(t) + '</div>'; }).join("") + '</div>';
+    if (r.category !== "Non-food") h += macPanel(r);
     h += '</div>';
     app.innerHTML = h;
     document.title = r.title + " · Recipes";
     window.scrollTo(0, keepScroll ? y : 0);
+  }
+
+  // ---------- macros (#14) ----------
+  // An estimate built from USDA FoodData Central records: recipes.json "foods" holds kcal/protein/carbs/fat per 100 g,
+  // keyed by FDC ID. Each ingredient stores its FDC ID ("fdc") and its weight in grams at 1x ("g", in the state it's
+  // weighed: raw meat, dry pasta). "opt": optional, shown separately and not in the total. "nc": deliberately not
+  // counted (to taste, garnish, no amount), and named. Anything else without data makes the total incomplete and is
+  // named; it's never counted as zero. nutrition.extra adds fat the method uses but the list doesn't quantify.
+  var MAC_KEYS = ["kcal", "p", "c", "f"];
+  function macZero() { return { kcal: 0, p: 0, c: 0, f: 0 }; }
+  function macRows(r, m, foods) {
+    var rows = [];
+    function add(name, fdc, g, extra) {
+      var row = { name: name, opt: !!extra.opt, note: extra.assumed ? extra.note : (extra.gNote || ""), assumed: !!extra.assumed };
+      if (extra.nc) row.nc = extra.nc;
+      else if (fdc && g > 0 && foods[fdc]) {
+        row.fdc = fdc; row.g = g * m; row.food = foods[fdc]; row.v = {};
+        MAC_KEYS.forEach(function (k) { row.v[k] = (Number(foods[fdc][k]) || 0) * row.g / 100; });
+      } else row.missing = fdc && g > 0 ? "no USDA data" : (extra.gNote || "no amount");
+      rows.push(row);
+    }
+    (r.ingredients || []).forEach(function (grp) { grp.items.forEach(function (it) { add(it.name, it.fdc, it.g, it); }); });
+    ((r.nutrition || {}).extra || []).forEach(function (e) { add(e.name, e.fdc, e.g, { note: e.note, assumed: true }); });
+    return rows;
+  }
+  function macCalc(r, m, foods) {
+    var nut = r.nutrition; if (!nut || !(nut.servings > 0)) return null;
+    m = m || 1; foods = foods || FOODS;
+    var rows = macRows(r, m, foods), batch = macZero(), opt = macZero(), missing = [], optNames = [];
+    rows.forEach(function (row) {
+      if (row.missing) return missing.push(row.name);
+      if (!row.v) return;
+      var into = row.opt ? opt : batch; if (row.opt) optNames.push(row.name);
+      MAC_KEYS.forEach(function (k) { into[k] += row.v[k]; });
+    });
+    var n = nut.servings * m, per = macZero(), optPer = macZero();
+    MAC_KEYS.forEach(function (k) { per[k] = batch[k] / n; optPer[k] = opt[k] / n; });
+    return { rows: rows, batch: batch, per: per, optional: opt, optPer: optPer, optNames: optNames, missing: missing,
+      incomplete: missing.length > 0, flag: missing.length ? "incomplete: " + missing.join(", ") : "", servings: n };
+  }
+  function macRound(v) { var o = {}; MAC_KEYS.forEach(function (k) { o[k] = Math.round(v[k]); }); return o; }
+  function macPer100(c, grams) { if (!c || !(grams > 0)) return null; var o = macZero(); MAC_KEYS.forEach(function (k) { o[k] = c.batch[k] / grams * 100; }); return o; }
+  function macGrid(v) {
+    v = macRound(v);
+    return '<div class="mac-grid"><div><b>' + v.kcal + '</b><span>kcal</span></div><div><b>' + v.p + ' g</b><span>protein</span></div>' +
+      '<div><b>' + v.c + ' g</b><span>carbs</span></div><div><b>' + v.f + ' g</b><span>fat</span></div></div>';
+  }
+  function macNum(v) { return v >= 10 ? String(Math.round(v)) : String(Math.round(v * 10) / 10); }
+  function macPanel(r) {
+    var nut = r.nutrition;
+    if (!nut) return '<section class="block mac" aria-labelledby="mac-h"><h2 id="mac-h">Macros</h2><p class="mac-none">Not worked out for this recipe yet.</p></section>';
+    var m = getMult(r), c = macCalc(r, m); if (!c) return "";
+    var per = nut.per || "serving", n = Math.round(c.servings * 100) / 100;
+    var h = '<section class="block mac" aria-labelledby="mac-h"><h2 id="mac-h">Macros <span class="est">Estimate</span></h2>' +
+      '<p class="mac-basis">Per ' + esc(per) + ' · 1 of ' + esc(fmt(n)) + (nut.basis ? ' (' + esc(nut.basis) + ')' : '') + '</p>' + macGrid(c.per);
+    if (c.incomplete) h += '<p class="mac-warn" role="note"><b>Incomplete: ' + esc(c.missing.join(", ")) + '.</b> No amount or USDA data for ' + (c.missing.length > 1 ? 'these' : 'this') + ', so the real numbers are higher.</p>';
+    if (c.optNames.length) h += '<p class="mac-opt">Optional extras aren\'t included: about +' + Math.round(c.optPer.kcal) + ' kcal per ' + esc(per) + ' if you use them all (' + esc(c.optNames.join(", ")) + ').</p>';
+    var bw = ui.bw[r.id], p100 = bw && bw.g > 0 ? macPer100(macCalc(r, bw.m || 1), bw.g) : null;
+    h += '<details class="mac-more"' + (ui.macOpen ? " open" : "") + '><summary>Per-ingredient breakdown</summary><div class="mac-scroll"><table class="mac-t"><thead><tr><th scope="col">Ingredient</th><th scope="col">g</th><th scope="col">kcal</th><th scope="col">P</th><th scope="col">C</th><th scope="col">F</th></tr></thead><tbody>';
+    c.rows.forEach(function (row) {
+      if (!row.v) return;
+      h += '<tr' + (row.opt ? ' class="opt"' : '') + '><th scope="row">' + esc(row.name) + (row.opt ? ' <i>(optional, not in total)</i>' : '') + (row.assumed ? ' <i>(assumed)</i>' : '') +
+        '<small><a href="https://fdc.nal.usda.gov/food-details/' + esc(row.fdc) + '/nutrients" target="_blank" rel="noopener">FDC ' + esc(row.fdc) + '</a> · ' + esc(row.food.name) + (row.note ? ' · ' + esc(row.note) : '') + '</small></th>' +
+        '<td>' + macNum(row.g) + '</td><td>' + Math.round(row.v.kcal) + '</td><td>' + macNum(row.v.p) + '</td><td>' + macNum(row.v.c) + '</td><td>' + macNum(row.v.f) + '</td></tr>';
+    });
+    var b = macRound(c.batch);
+    h += '</tbody><tfoot><tr><th scope="row">Whole batch' + (m !== 1 ? ' (×' + esc(multLabel(m)) + ')' : '') + '</th><td></td><td>' + b.kcal + '</td><td>' + b.p + '</td><td>' + b.c + '</td><td>' + b.f + '</td></tr></tfoot></table></div>';
+    var nc = c.rows.filter(function (row) { return row.nc; }), miss = c.rows.filter(function (row) { return row.missing; });
+    if (miss.length) h += '<p class="mac-warn">Missing (total incomplete): ' + esc(miss.map(function (row) { return row.name + " (" + row.missing + ")"; }).join("; ")) + '</p>';
+    if (nc.length) h += '<p class="mac-small">Not counted: ' + esc(nc.map(function (row) { return row.name + " (" + row.nc + ")"; }).join("; ")) + '</p>';
+    h += '<div class="mac-bw"><label for="mac-bw">Finished batch weight</label><input id="mac-bw" type="number" inputmode="numeric" min="1" step="1" data-bw placeholder="weigh it" value="' + (bw && bw.g > 0 ? esc(bw.g) : "") + '"> g' +
+      (p100 ? '<div class="mac-p100"><b>Per 100 g cooked</b>' + macGrid(p100) + '</div>' : '<p class="mac-small">Weigh the cooked batch (without the pot) to see macros per 100 g, so you can weigh your portion.</p>') + '</div>' +
+      '<p class="mac-small">USDA FoodData Central values, worked out from the ingredients as weighed (raw meat, dry pasta). Ranges use the upper amount and all cooking fat is counted, so errors run high. Grams for spoons and "1 onion" use USDA portion weights.</p></details></section>';
+    return h;
   }
 
   // ---------- cook mode + wake lock ----------
@@ -342,6 +417,14 @@
     if (e.key === "Escape") { if (ui.sheet) { ui.sheet = false; return renderCook(r, i); } go("#/r/" + p[2]); }
   });
   function currentRecipe() { var p = location.hash.replace(/^#\/?/, "").split("/"); return p[0] === "r" ? BY_ID[decodeURIComponent(p[1] || "")] || null : null; }
+  document.addEventListener("toggle", function (e) { if (e.target.classList && e.target.classList.contains("mac-more")) ui.macOpen = e.target.open; }, true);
+  document.addEventListener("change", function (e) {
+    if (!e.target.hasAttribute || !e.target.hasAttribute("data-bw")) return;
+    var cur = currentRecipe(); if (!cur) return;
+    var g = parseFloat(e.target.value);
+    if (g > 0) ui.bw[cur.id] = { g: Math.round(g), m: getMult(cur) }; else delete ui.bw[cur.id];
+    LS.set("bw", ui.bw); renderDetail(cur, true);
+  });
   window.addEventListener("hashchange", route);
 
   // ---------- boot ----------
