@@ -29,7 +29,12 @@ eq(strip(api.stepParts(R["roasted-pepper-ricotta-pasta"], 3, 2).html), R["roaste
 eq(strip(api.stepParts(R["mexican-corn-ribs"], 3, 2).html), R["mexican-corn-ribs"].steps[3], "¾ tsp Tajín per cob fixed");
 eq(strip(api.stepParts(R["mini-party-pizza-bases"], 4, 2).html), R["mini-party-pizza-bases"].steps[4], "mini pizza ball weights fixed");
 eq(strip(api.stepParts(R["skillet-naan"], 5, 2).html), R["skillet-naan"].steps[5].replace("10 balls", "20 balls").replace("1 kg", "2 kg"), "naan: count and total scale, 100 g each fixed");
-eq(strip(api.stepParts(R["focaccia"], 5, 2).html), R["focaccia"].steps[5], "focaccia: 2 tsp oil per tin fixed");
+// focaccia: the piece/tin count follows the batch, the oil per tin stays fixed
+[[0.5, "1 rough circle"], [1, "2 equal rough circles"], [1.5, "3 equal rough circles"], [2, "4 equal rough circles"], [3, "6 equal rough circles"]].forEach(function (c) {
+  var want = R["focaccia"].steps[5].replace("2 equal rough circles", c[1]);
+  eq(strip(api.stepParts(R["focaccia"], 5, c[0]).html), want, "focaccia step 6 at x" + c[0] + ": " + c[1] + ", 2 tsp oil per tin");
+  eq(api.stepParts(R["focaccia"], 5, c[0]).unscaled, false, "focaccia step 6 at x" + c[0] + " has no 1x note");
+});
 eq(strip(api.stepParts(R["focaccia"], 8, 3).html), R["focaccia"].steps[8], "focaccia: 1 tsp oil per tin fixed");
 eq(strip(api.stepParts(R["harira"], 4, 0.5).html), R["harira"].steps[4].replace("1.3 L", "0.65 L"), "decimal litres scale");
 eq(strip(api.stepParts(R["creamy-pesto-pasta"], 0, 2).html), R["creamy-pesto-pasta"].steps[0].replace("1 cup", "2 cups"), "cup/cups follows the amount");

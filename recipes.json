@@ -6598,13 +6598,19 @@
         "Mixer (paddle): medium speed 5 min, rest 5 min, then 5 min more, slowly adding the remaining water and the salt. By hand: slap-and-fold, adding the rest of the water and salt gradually, until smooth and strong.",
         "Cover and rest 30 min.",
         "Fold in the bowl: lift an edge to the middle at 3, 6, 9 and 12 o'clock. Cover 30 min. Repeat for at least 3 sets in total (set a timer).",
-        "After the last rest, tip out, divide in half and shape rough circles. Place in two parchment-lined 20 cm tins, each oiled with 2 tsp olive oil.",
+        "After the last rest, tip out and shape into 2 equal rough circles. Place each in a parchment-lined 20 cm tin oiled with 2 tsp olive oil.",
         "Drizzle each with 2 tsp oil and dimple with wet fingers. Cover and proof 20–40 min until soft and puffy.",
         "Preheat the oven to 200°C fan (a tray of water for steam is optional).",
         "Oil your fingers and dimple again. Scatter sea salt flakes and a final 1 tsp oil per tin (or press in tomatoes and confit garlic).",
-        "Bake about 25 min until deep golden with crisp edges and a lightly browned base. Cool on a rack. Best eaten fresh and warm; refresh in the oven the next day."
+        "Bake about 25 min until deep golden with crisp edges and a lightly browned base (with more than 2 tins, swap shelves halfway or bake in batches). Cool on a rack. Best eaten fresh and warm; refresh in the oven the next day."
       ],
       "stepQty": [
+        {
+          "step": 5,
+          "text": "2 equal rough circles",
+          "round": true,
+          "one": "1 rough circle"
+        },
         {
           "step": 5,
           "text": "2 tsp",
