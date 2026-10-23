@@ -307,6 +307,47 @@
     return h;
   }
 
+  // ---------- food safety (#7) ----------
+  // USDA FSIS safe minimum internal temperatures.
+  var FS_MIN = {
+    poultry: { c: 74, short: "poultry", label: "Chicken and other poultry (whole, pieces, minced)" },
+    ground: { c: 71, short: "minced meat", label: "Minced beef, lamb or pork, incl. sausages" },
+    whole: { c: 63, rest: 3, short: "whole cuts", label: "Whole cuts of beef, lamb or pork (steaks, chops, roasts, cubes)" },
+    fish: { c: 63, short: "fish", label: "Fish" }
+  };
+  function fsInfo(r) {
+    var fs = r.foodSafety; if (!fs || !fs.types || !fs.types.length) return null;
+    var mins = fs.types.filter(function (t) { return FS_MIN[t]; }).map(function (t) { return FS_MIN[t]; });
+    if (!mins.length) return null;
+    var main = mins[0];
+    var targets = (fs.targets || []).map(function (t) {
+      var lo = parseFloat(String(t.c).split(/[–-]/)[0]);
+      return { c: t.c, label: t.label || "", below: lo < main.c };
+    });
+    return { mins: mins, main: main, targets: targets, step: typeof fs.step === "number" ? fs.step : (r.steps || []).length - 1 };
+  }
+  function minText(m) { return m.c + "°C" + (m.rest ? " + " + m.rest + "-min rest" : ""); }
+  function fsPanel(r) {
+    var f = fsInfo(r); if (!f) return "";
+    return '<section class="block fs" aria-labelledby="fs-h"><h2 id="fs-h">Food safety</h2>' +
+      '<div class="fs-sub">USDA safe minimum internal temperature</div><ul class="fs-list">' +
+      f.mins.map(function (m) { return '<li><b>' + esc(minText(m)) + '</b><span>' + esc(m.label) + '</span></li>'; }).join("") +
+      '<li><b>74°C</b><span>Leftovers, reheated</span></li></ul>' +
+      f.targets.map(function (t) {
+        return t.below
+          ? '<div class="fs-chef"><b>Chef\'s doneness:</b> ' + esc(t.c) + '°C' + (t.label ? " " + esc(t.label) : "") + ' is below the ' + esc(minText(f.main)) + ' safe minimum.</div>'
+          : '<div class="fs-target"><b>Recipe target:</b> ' + esc(t.c) + '°C' + (t.label ? " " + esc(t.label) : "") + ' (at or above the ' + f.main.c + '°C minimum).</div>';
+      }).join("") +
+      '<p class="fs-note">The USDA minimum is the safe temperature. Check with a food thermometer in the thickest part, not touching bone.</p></section>';
+  }
+  function fsCook(r, i) {
+    var f = fsInfo(r); if (!f || i !== f.step) return "";
+    var chef = f.targets.filter(function (t) { return t.below; });
+    return '<div class="fs-cook" role="note">🌡 Safe minimum: <b>' + esc(minText(f.main)) + '</b> (' + esc(f.main.short) + ')' +
+      (chef.length ? '. ' + esc(chef.map(function (t) { return t.c + "°C"; }).join(", ")) + ' is chef\'s doneness, below the minimum.' : ".") +
+      ' Check with a thermometer.</div>';
+  }
+
   function renderDetail(r, keepScroll) {
     var y = window.scrollY, g = groups(r);
     var props = [["Makes", servLabel(r)], ["Prep", r.prepTime], ["Cook", r.cookTime]].filter(function (p) { return p[1]; });
@@ -321,7 +362,7 @@
     h += '<div class="block"><h2>Ingredients</h2>' + scaler(r) + tickCap(r) + ingList(r) + '</div>';
     // steps
     h += '<div class="block"><h2>Method</h2>' +
-      (r.steps || []).map(function (s, i) { return '<button type="button" class="step" data-act="cook" data-step="' + i + '"><span class="num" aria-hidden="true">' + (i + 1) + '</span><span class="stxt">' + stepHtml(r, i, getMult(r)) + '</span></button>'; }).join("") + '</div>';
+      (r.steps || []).map(function (s, i) { return '<button type="button" class="step" data-act="cook" data-step="' + i + '"><span class="num" aria-hidden="true">' + (i + 1) + '</span><span class="stxt">' + stepHtml(r, i, getMult(r)) + '</span></button>'; }).join("") + '</div>' + fsPanel(r);
     if (rel.length) h += '<div class="block"><h2>Goes with / see also</h2>' + rel.map(function (x) {
       var o = BY_ID[x.id]; return '<button class="relbtn" data-open="' + esc(o.id) + '"><small>' + esc(x.relation) + ' · ' + esc(o.category) + '</small>' + esc(o.title) + ' →</button>';
     }).join("") + '</div>';
@@ -379,7 +420,7 @@
     i = Math.max(0, Math.min(n - 1, i));
     app.innerHTML = '<div class="cook"><div class="cook-top"><div class="cook-title">' + esc(r.title) + '</div><div class="cook-btns"><button class="btn" data-act="sheet">☰ Ingredients</button><button class="btn" data-act="exitcook">✕ Exit</button></div></div>' +
       '<div class="bar"><div style="width:' + ((i + 1) / n * 100) + '%"></div></div>' +
-      '<div class="cook-body"><div class="cook-step-lbl">STEP ' + (i + 1) + ' / ' + n + '</div><div class="cook-text">' + stepHtml(r, i, getMult(r)) + '</div>' +
+      '<div class="cook-body"><div class="cook-step-lbl">STEP ' + (i + 1) + ' / ' + n + '</div><div class="cook-text">' + stepHtml(r, i, getMult(r)) + '</div>' + fsCook(r, i) +
       (i < n - 1 ? '<div class="cook-next"><b>Next:</b> ' + stepHtml(r, i + 1, getMult(r)) + '</div>' : "") + '</div>' +
       '<div class="wake" id="wake"></div>' +
       '<div class="cook-nav"><button class="btn" data-act="cook" data-step="' + (i - 1) + '"' + (i === 0 ? " disabled" : "") + '>← Back</button>' +

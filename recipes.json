@@ -235,6 +235,17 @@
         "Warm the glaze ingredients so they stay thin. Brush on in the last 1–2 min only and flip once.",
         "Check for 75°C internal, juices running clear. Rest 5 min."
       ],
+      "foodSafety": {
+        "types": [
+          "poultry"
+        ],
+        "step": 6,
+        "targets": [
+          {
+            "c": "75"
+          }
+        ]
+      },
       "tips": [
         "Lamb chop menu timing: start the chicken indirect → prep the lamb → crisp the chicken → rest it loosely covered → grill the lamb hot and fast → glaze both → serve.",
         "Upgrades: a light smoke (wood chips on gas) or a touch of fresh lemon just before serving."
@@ -469,6 +480,18 @@
         "Warm the glaze ingredients until smooth. Brush on during the final 3–4 minutes, turning once or twice.",
         "Rest 5 minutes. Finish with a light pinch of flaky sea salt."
       ],
+      "foodSafety": {
+        "types": [
+          "poultry"
+        ],
+        "step": 7,
+        "targets": [
+          {
+            "c": "85–90",
+            "label": "for crisp, tender wings"
+          }
+        ]
+      },
       "tips": [
         "A dry rub always tastes too salty off your finger. It's concentrated for 1.2 kg of meat.",
         "Oven option: bake at 200°C for 35–45 min on a wire rack over a tray.",
@@ -703,6 +726,12 @@
           "text": "1 tsp"
         }
       ],
+      "foodSafety": {
+        "types": [
+          "poultry"
+        ],
+        "step": 4
+      },
       "tips": [
         "With thighs (best): 1.2–1.5 kg, 1½ cups BBQ sauce, 60–80 ml liquid, 10 min high pressure (11–12 for large), 5 min rest, then 5–8 min reduction.",
         "Serve on toasted buns with slaw and pickles, in wraps, or over baked potatoes."
@@ -924,6 +953,18 @@
         "Warm the glaze and brush it on only during the final 3–5 min.",
         "Aim for 82–88°C internal near the thickest part, not touching the bone (about 85°C is ideal). Rest 5–10 minutes."
       ],
+      "foodSafety": {
+        "types": [
+          "poultry"
+        ],
+        "step": 7,
+        "targets": [
+          {
+            "c": "82–88",
+            "label": "for tender drumsticks"
+          }
+        ]
+      },
       "tips": [],
       "sourceChat": {
         "title": "Brining Drumsticks",
@@ -1211,6 +1252,11 @@
           "text": "1 tsp"
         }
       ],
+      "foodSafety": {
+        "types": [
+          "poultry"
+        ]
+      },
       "tips": [
         "Overcrowding is the #1 failure: it steams instead of browning.",
         "Keep the acid moderate in the marinade (vinegar + zest only). Lemon juice goes on at the end."
@@ -1424,6 +1470,17 @@
           "text": "2–3 tbsp"
         }
       ],
+      "foodSafety": {
+        "types": [
+          "poultry"
+        ],
+        "step": 6,
+        "targets": [
+          {
+            "c": "74"
+          }
+        ]
+      },
       "tips": [
         "Floury, pale coating = not enough oil spray. Spray more and continue.",
         "For burgers: make the fillets flatter and cook about 14–16 min total. Serve with a soft bun, mayo/pepper mayo, lettuce, cheese and pickles.",
@@ -1684,6 +1741,11 @@
         "Sauce: simmer everything except the slurry, then stir in the slurry slowly and cook until glossy and coating the back of a spoon.",
         "Wok toss on high heat: onion and peppers 1–2 min max, add the pineapple and sauce, toss in the chicken quickly (under 2 min) and serve immediately."
       ],
+      "foodSafety": {
+        "types": [
+          "poultry"
+        ]
+      },
       "tips": [
         "Cornstarch for the batter/marinade, potato starch for the sauce slurry (glossy, silky). If you only have one, cornstarch works for both.",
         "\"Tomato sauce\" here means ketchup. If using plain tomato sauce, add 1 extra tbsp sugar + 1 tsp vinegar per 6 tbsp.",
@@ -2030,6 +2092,11 @@
         "Warm the tortillas over a gas flame 15–20 seconds per side (or in a dry pan) and wrap them in a towel.",
         "Assemble: beef, cheese, lettuce, salsa, avocado, pickled onions, lime sauce, coriander and a squeeze of lime."
       ],
+      "foodSafety": {
+        "types": [
+          "ground"
+        ]
+      },
       "tips": [
         "Use freshly grated cheese; it melts better than pre-shredded.",
         "Don't overcook the mince after the stock goes in. Add a splash more stock if it gets dry.",
@@ -2268,6 +2335,11 @@
           "text": "1–2 tsp"
         }
       ],
+      "foodSafety": {
+        "types": [
+          "whole"
+        ]
+      },
       "tips": [
         "Stovetop instead: cover and simmer 1½–2 h until tender, then uncovered 15–25 min to thicken.",
         "Use freshly cracked pepper, not fine powder (it tastes dusty and harsh). Keep the tomato to 1 tbsp paste.",
@@ -2405,6 +2477,12 @@
         "Unwrap carefully (hot juices), put back on the grill unwrapped and let the surface tighten about 10 min.",
         "Brush on a thin layer of glaze, cook 5–7 min, then an optional second thin layer for 5–7 min. 1–2 light coats is enough."
       ],
+      "foodSafety": {
+        "types": [
+          "whole"
+        ],
+        "step": 4
+      },
       "tips": [
         "Homemade glaze: 120 ml ketchup, 1 tbsp brown sugar, 1 tbsp honey, 1 tbsp cider vinegar, 1 tsp Worcestershire, ½ tsp smoked paprika, ¼ tsp garlic powder, black pepper, plus 1–2 tsp water. Warm until smooth.",
         "Sharper glaze: 4 tbsp BBQ sauce, 1 tbsp honey, 2 tsp cider vinegar, 1 tsp Dijon, 1 tsp Worcestershire."
@@ -2620,6 +2698,12 @@
           "text": "1 tsp"
         }
       ],
+      "foodSafety": {
+        "types": [
+          "whole"
+        ],
+        "step": 3
+      },
       "tips": [
         "Cook to tenderness, not a temperature: 200°F internal doesn't guarantee it's shreddable.",
         "Use sturdy bread that holds up to dipping. Don't over-shred into mush."
@@ -2849,6 +2933,12 @@
         "Raise to 220°C conventional / 210°C fan and roast uncovered 20–30 min until dark, glossy and caramelised.",
         "Rest 15–20 min. Slice thickly or pull into chunks and spoon over the pan juices."
       ],
+      "foodSafety": {
+        "types": [
+          "whole"
+        ],
+        "step": 5
+      },
       "tips": [
         "Why it was tough last time: it was pulled at a \"done\" temperature. For this style, tenderness is the endpoint, not internal temperature.",
         "Leg is leaner: keep it at 150–160°C, make sure there's liquid in the pan, check earlier, and stop once it's soft.",
@@ -3026,6 +3116,22 @@
         "Target 57°C for medium-rare or 63°C for medium. Remove slightly early.",
         "Rest at least 5 min, loosely tented with foil."
       ],
+      "foodSafety": {
+        "types": [
+          "whole"
+        ],
+        "step": 6,
+        "targets": [
+          {
+            "c": "57",
+            "label": "medium-rare"
+          },
+          {
+            "c": "63",
+            "label": "medium"
+          }
+        ]
+      },
       "tips": [
         "Very fatty chops: extra lemon zest. Thick chops (>3 cm): finish on indirect heat before glazing.",
         "More tender: add 1 tbsp Greek yoghurt to the marinade. For kids: slightly less garlic.",
@@ -3246,6 +3352,12 @@
           "text": "2 tbsp"
         }
       ],
+      "foodSafety": {
+        "types": [
+          "whole"
+        ],
+        "step": 2
+      },
       "tips": [
         "What happened on the day: at 2 h the fat was soft but the meat strands were still firm, so it needed another 20–30 min. Don't glaze until it's soft all the way through.",
         "Crackling: pat the rind dry, rub with oil and plenty of salt, and roast at 220°C for 25–40 min until puffed.",
@@ -3501,6 +3613,11 @@
           "text": "½–1 tsp"
         }
       ],
+      "foodSafety": {
+        "types": [
+          "whole"
+        ]
+      },
       "tips": [
         "No-tomato version: skip the tomato paste and use tamarind paste 1–2 tsp (or vinegar 1–1½ tsp) to balance.",
         "If you add potatoes in the slow cooker they soften long before the beef: take them out and return them for the last 20–30 min.",
@@ -3776,6 +3893,11 @@
           "text": "1 tsp"
         }
       ],
+      "foodSafety": {
+        "types": [
+          "poultry"
+        ]
+      },
       "tips": [
         "Sauce too thick and tangy (like ganache)? Add hot water 50 ml at a time, 1 tbsp butter and ¼ tsp salt, then ¼ tsp sugar only if it's still sharp. Simmer 10 min on low.",
         "Don't boil hard after the cream goes in; it can split.",
@@ -4307,6 +4429,11 @@
           "text": "1 tbsp"
         }
       ],
+      "foodSafety": {
+        "types": [
+          "whole"
+        ]
+      },
       "tips": [
         "Harira thickens as it sits. Reheat with a splash of water/broth and re-check the seasoning.",
         "Add lemon to the bowls, not the pot, unless you're serving it all at once.",
@@ -4662,6 +4789,11 @@
           "text": "½ tsp"
         }
       ],
+      "foodSafety": {
+        "types": [
+          "whole"
+        ]
+      },
       "tips": [
         "Watery curry: the onions weren't deep enough or too much liquid went in early. Start at 300 ml.",
         "Split yogurt: the heat was too high. Keep it low and add the yogurt gradually.",
@@ -4840,6 +4972,11 @@
           "text": "½–1 tbsp"
         }
       ],
+      "foodSafety": {
+        "types": [
+          "poultry"
+        ]
+      },
       "tips": [
         "Paste guide (50 g pack): kid-friendly 1½ tbsp, medium 2–2½ tbsp, hot 3 tbsp+.",
         "Don't slow-cook for hours: coconut milk splits, breast dries out and the aromatics dull. Use thighs and a short simmer.",
@@ -5312,6 +5449,11 @@
         "Cover with tented foil and bake 25 min. Uncover and bake 20–25 min until bubbling and golden (optional grill 2–4 min).",
         "Rest at least 20–30 min before cutting."
       ],
+      "foodSafety": {
+        "types": [
+          "ground"
+        ]
+      },
       "tips": [
         "Make the meat sauce a day ahead for better flavour. It can be assembled ahead and refrigerated; add 10–15 min to the covered bake if baking from cold."
       ],
@@ -5549,6 +5691,11 @@
           "text": "150 ml"
         }
       ],
+      "foodSafety": {
+        "types": [
+          "poultry"
+        ]
+      },
       "tips": [
         "Never boil after the cheese goes in (it goes grainy).",
         "Variations: ½ tsp chilli flakes with the garlic; smoked bacon; ½ tsp Worcestershire in the cream."
@@ -5738,6 +5885,11 @@
           "text": "½ cup"
         }
       ],
+      "foodSafety": {
+        "types": [
+          "poultry"
+        ]
+      },
       "tips": [
         "If it splits (oil pooling, hard bubbling): take it off the heat 2–3 min, whisk in 2–3 tbsp warm pasta water, milk or cream, or blitz 5–10 sec with a hand blender. Still oily? Whisk in 1 tbsp cold butter off the heat. Don't reboil once the cheese is in.",
         "Upgrades: 200 g mushrooms browned after the bacon; ½ cup dry white wine reduced after the onion."
@@ -6047,6 +6199,11 @@
           "text": "1–2 tbsp"
         }
       ],
+      "foodSafety": {
+        "types": [
+          "ground"
+        ]
+      },
       "tips": [
         "Don't add oregano, paprika, bay leaf or extra tomato on top of the jar sauce. It already has its own seasoning.",
         "If it's too thin (it went \"soup\" on the night), keep it uncovered over medium heat for longer before adding the pasta. Use less stock when you're short on time.",
@@ -6613,6 +6770,11 @@
           "text": "½ cup"
         }
       ],
+      "foodSafety": {
+        "types": [
+          "ground"
+        ]
+      },
       "tips": [
         "The finished sauce should be thick, rich and meaty rather than watery or heavily tomato-based."
       ],
@@ -8855,6 +9017,11 @@
           "text": "1 tbsp"
         }
       ],
+      "foodSafety": {
+        "types": [
+          "ground"
+        ]
+      },
       "tips": [
         "The preferred \"traditional braai\" version is just onions, butter, oil, salt and pepper with plenty of time: no sugar, balsamic, garlic or herbs.",
         "Roll: lightly toasted white roll, thin smear of butter, boerewors, onions. Put out chutney, mustard and cheddar so guests can add their own."

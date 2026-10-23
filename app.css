@@ -153,3 +153,15 @@ button{font:inherit;color:inherit}
 .sq{font-weight:700;color:var(--accent)}
 .sqnote{display:block;font-size:13px;line-height:1.35;color:var(--muted);margin-top:4px;font-style:italic}
 .cook-text .sqnote{font-size:15px;margin-top:10px}
+
+/* food safety (#7) */
+.fs{background:var(--subtle);border:1px solid var(--border);border-radius:var(--radius);padding:14px 14px 4px}
+.fs-sub{font-size:13px;color:var(--muted);margin:0 0 8px}
+.fs-list{list-style:none;margin:0 0 10px;padding:0}
+.fs-list li{display:flex;gap:10px;align-items:baseline;padding:6px 0;border-top:1px solid var(--border)}
+.fs-list li:first-child{border-top:0}
+.fs-list b{flex:none;min-width:8.4em;font-variant-numeric:tabular-nums}
+.fs-chef,.fs-target{font-size:15px;padding:8px 10px;border-radius:10px;margin:6px 0;background:var(--card);border:1px solid var(--border)}
+.fs-chef{border-left:4px solid var(--accent)}
+.fs-note{font-size:14px;color:var(--muted);margin:10px 0}
+.fs-cook{font-size:15px;margin-top:18px;padding:10px 12px;border-radius:12px;background:var(--subtle);border:1px solid var(--border)}
