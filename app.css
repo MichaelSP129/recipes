@@ -165,3 +165,34 @@ button{font:inherit;color:inherit}
 .fs-chef{border-left:4px solid var(--accent)}
 .fs-note{font-size:14px;color:var(--muted);margin:10px 0}
 .fs-cook{font-size:15px;margin-top:18px;padding:10px 12px;border-radius:12px;background:var(--subtle);border:1px solid var(--border)}
+
+/* macros (#14) */
+.mac h2 .est{display:inline-block;vertical-align:middle;margin-left:6px;font-size:11px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--accent);border:1px solid var(--accent);border-radius:999px;padding:1px 8px}
+.mac-basis{margin:0 0 8px;font-size:14px;color:var(--muted)}
+.mac-none{margin:0;color:var(--muted);font-size:14px}
+.mac-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.mac-grid div{background:var(--subtle);border:1px solid var(--border);border-radius:12px;padding:8px 6px;text-align:center}
+.mac-grid b{display:block;font-size:19px;font-variant-numeric:tabular-nums}
+.mac-grid span{font-size:12px;color:var(--muted)}
+.mac-warn{background:var(--accent-soft);border-radius:12px;padding:10px 12px;margin:10px 0 0;font-size:14px}
+.mac-opt,.mac-small{font-size:13px;color:var(--muted);margin:10px 0 0}
+.mac-more{margin-top:10px}
+.mac-more summary{cursor:pointer;min-height:44px;display:flex;align-items:center;color:var(--accent);font-weight:600}
+.mac-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.mac-t{width:100%;border-collapse:collapse;font-size:13px;font-variant-numeric:tabular-nums}
+.mac-t th,.mac-t td{padding:7px 4px;border-bottom:1px solid var(--border);vertical-align:top}
+.mac-t td{text-align:right;white-space:nowrap}
+.mac-t thead th{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);text-align:right}
+.mac-t thead th:first-child,.mac-t tbody th,.mac-t tfoot th{text-align:left}
+.mac-t tbody th{font-weight:500}
+.mac-t th i{font-style:normal;color:var(--muted);font-size:12px}
+.mac-t th small{display:block;font-size:11px;color:var(--faint);font-weight:400}
+.mac-t th small a{color:var(--muted)}
+.mac-t tr.opt{opacity:.7}
+.mac-t tfoot th,.mac-t tfoot td{font-weight:700;border-bottom:0}
+.mac-bw{margin-top:12px;font-size:14px}
+.mac-bw label{margin-right:6px}
+.mac-bw input{width:96px;font-size:16px;padding:8px 10px;border-radius:10px;border:1px solid var(--border-strong);background:var(--card);color:var(--text)}
+.mac-p100{margin-top:10px}
+.mac-p100>b{display:block;margin-bottom:6px;font-size:14px}
