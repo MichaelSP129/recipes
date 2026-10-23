@@ -6529,6 +6529,41 @@
         "Meanwhile preheat the oven as hot as possible (250–300°C) with a steel or stone for 45–60 min.",
         "Stretch the dough by hand (no rolling pin), top lightly with sauce, cheese and toppings, and bake 6–9 min until the base is firm, the rim browned and the slice folds without cracking."
       ],
+      "stepQty": [
+        {
+          "step": 0,
+          "text": "460 g"
+        },
+        {
+          "step": 1,
+          "text": "10 g",
+          "fixed": true
+        },
+        {
+          "step": 1,
+          "text": "20 g"
+        },
+        {
+          "step": 4,
+          "text": "4 ×",
+          "round": true
+        },
+        {
+          "step": 4,
+          "text": "300 g",
+          "fixed": true
+        },
+        {
+          "step": 4,
+          "text": "5 ×",
+          "round": true
+        },
+        {
+          "step": 4,
+          "text": "240–250 g",
+          "fixed": true
+        }
+      ],
       "tips": [
         "Schedule: 0:00 mix → 0:15 salt + oil, knead → 0:30–2:15 bulk → 2:15 ball → 2:15–4:00 proof → 4:00 bake.",
         "Max proofing temperature is about 28–30°C. Don't proof outside at 35°C; it overproofs fast. An oven with only the light on works if it stays under 30°C.",
