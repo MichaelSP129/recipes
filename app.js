@@ -119,7 +119,7 @@
       '<div class="top"><div class="top-inner">' +
       '<div class="searchrow"><div class="search"><input id="q" type="search" inputmode="search" autocomplete="off" placeholder="Search recipes or ingredients" aria-label="Search recipes or ingredients" value="' + esc(ui.query) + '">' +
       (ui.query ? '<button class="x" data-act="clearq" aria-label="Clear search">✕</button>' : "") + '</div>' +
-      '<button class="btn' + (ui.showFilters || nf ? " on" : "") + '" data-act="filters">' + (ui.showFilters ? "Hide filters" : nf ? "Filters (" + nf + ")" : "Filters") + '</button></div>' +
+      '<button class="btn' + (ui.showFilters || nf ? " on" : "") + '" data-act="filters">' + (nf ? "Filters (" + nf + ")" : "Filters") + (ui.showFilters ? " ▴" : "") + '</button></div>' +
       '<div class="pillwrap"><div class="pills" id="pills">' + (ui.view === "sections"
         ? secs.map(function (x) { return '<a class="pill" data-jump="sec-' + esc(x.s.id) + '">' + esc(x.s.name) + '<b>' + x.items.length + '</b></a>'; }).join("")
         : letters.map(function (g) { return '<a class="pill" data-jump="az-' + (g.L === "#" ? "num" : g.L.toLowerCase()) + '">' + g.L + '</a>'; }).join("")) + '</div></div>' +
