@@ -107,16 +107,39 @@
   }
 
   // ---------- filtering ----------
-  function filtered() {
-    var q = ui.query.trim().toLowerCase(), words = q ? q.split(/\s+/) : [];
+  // Selected tags are grouped by filter group (Protein, Cuisine, Method, Good for):
+  // OR within a group, AND between groups (see #9).
+  function groupKeyOf(t) {
+    for (var i = 0; i < TAG_GROUPS.length; i++) if (TAG_GROUPS[i].tags.indexOf(t) >= 0) return TAG_GROUPS[i].key;
+    return "_" + t; // unknown tag: its own group
+  }
+  function selByGroup() {
+    var out = {};
+    ui.selTags.forEach(function (t) { var k = groupKeyOf(t); (out[k] = out[k] || []).push(t); });
+    return out;
+  }
+  function tagsMatch(r, sel, skipKey) {
+    var tags = allTags(r);
+    return Object.keys(sel).every(function (k) {
+      return k === skipKey || sel[k].some(function (t) { return tags.indexOf(t) >= 0; });
+    });
+  }
+  function filtered(skipKey) {
+    var q = ui.query.trim().toLowerCase(), words = q ? q.split(/\s+/) : [], sel = selByGroup();
     return RECIPES.filter(function (r) {
       var tags = allTags(r);
-      if (ui.selTags.some(function (t) { return tags.indexOf(t) < 0; })) return false;
+      if (!tagsMatch(r, sel, skipKey)) return false;
       if (!words.length) return true;
       var hay = [r.title, r.cuisine, r.category, tags.join(" "), (r.tags || []).join(" "),
         (r.ingredients || []).map(function (g) { return g.items.map(function (i) { return i.name; }).join(" "); }).join(" ")].join(" ").toLowerCase();
       return words.every(function (w) { return hay.indexOf(w) >= 0; });
     }).sort(function (a, b) { return a.title.localeCompare(b.title); });
+  }
+
+  function selLabel() {
+    var sel = selByGroup();
+    return TAG_GROUPS.map(function (g) { return g.key; }).concat(Object.keys(sel).filter(function (k) { return k.charAt(0) === "_"; }))
+      .filter(function (k) { return sel[k]; }).map(function (k) { return sel[k].join(" or "); }).join(" · ");
   }
 
   // ---------- views ----------
@@ -142,15 +165,18 @@
         : letters.map(function (g) { return '<a class="pill" data-jump="az-' + (g.L === "#" ? "num" : g.L.toLowerCase()) + '">' + g.L + '</a>'; }).join("")) + '</div></div>' +
       '</div></div>';
     if (ui.showFilters) {
-      h += '<div class="filters">' + TAG_GROUPS.map(function (g) {
+      h += '<div class="filters"><div class="fhint">Any tag within a group, all groups together. Numbers show matches.</div>' + TAG_GROUPS.map(function (g) {
         var tags = g.tags.filter(function (t) { return counts[t]; });
+        // live count: recipes you'd see with this tag, given the search and the other groups' selections
+        var pool = filtered(g.key);
         return '<div class="fgroup"><div class="lbl">' + esc(g.label) + '</div><div class="chips">' + tags.map(function (t) {
-          return '<button class="chip' + (ui.selTags.indexOf(t) >= 0 ? " on" : "") + '" data-tag="' + esc(t) + '">' + esc(t) + '<small>' + counts[t] + '</small></button>';
+          var n = pool.filter(function (r) { return allTags(r).indexOf(t) >= 0; }).length, on = ui.selTags.indexOf(t) >= 0;
+          return '<button class="chip' + (on ? " on" : "") + (!n && !on ? " none" : "") + '" data-tag="' + esc(t) + '" aria-pressed="' + on + '">' + esc(t) + '<small>' + n + '</small></button>';
         }).join("") + '</div></div>';
       }).join("") + '</div>';
     }
     var on = ui.query || nf;
-    h += '<div class="status">' + list.length + ' of ' + RECIPES.length + ' recipes' + (nf ? ' · ' + esc(ui.selTags.join(" + ")) : "") + (on ? ' · <a data-act="clearall">clear</a>' : "") + '</div>';
+    h += '<div class="status">' + list.length + ' of ' + RECIPES.length + ' recipes' + (nf ? ' · ' + esc(selLabel()) : "") + (on ? ' · <a data-act="clearall">clear</a>' : "") + '</div>';
     if (!list.length) h += '<div class="empty"><b>No matches.</b> Try fewer words or clear a tag.</div>';
     else if (ui.view === "sections") {
       h += secs.map(function (x) {
