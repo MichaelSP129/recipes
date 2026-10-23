@@ -37,11 +37,20 @@
     if (String(q).indexOf(".") >= 0) return nums.map(function (n) { var v = n * m; return String(v >= 10 ? Math.round(v) : Math.round(v * 100) / 100); }).join("–");
     return nums.map(function (n) { return fmt(n * m); }).join("–");
   }
-  function baseServings(r) {
-    if (!r.servings || !r.servings.amount) return null;
-    var p = String(r.servings.amount).split(/\s*[–-]\s*/).map(parseNum);
-    if (p.some(function (n) { return n === null; })) return null;
-    return p.reduce(function (a, b) { return a + b; }, 0) / p.length;
+  // Scaling model (see #3): "servings" recipes step by whole servings; everything else
+  // (kg of wings, 25 mini pizzas, 3–4 servings ranges, sauces) scales as a batch: ½×, 1×, 1½×, 2×, 3×.
+  var BATCH = [0.5, 1, 1.5, 2, 3];
+  function scaleInfo(r) {
+    if (r.scale && (r.scale.type === "servings" ? r.scale.base > 0 : r.scale.type === "batch")) return r.scale;
+    // fallback for recipes without a "scale" field: a single whole number of servings, otherwise a batch
+    var s = r.servings || {}, n = parseNum(s.amount == null ? "" : s.amount);
+    if (n && n === Math.round(n) && /serv|portion|people/i.test(s.text || "")) return { type: "servings", base: n };
+    return { type: "batch" };
+  }
+  function yieldText(y, m) {
+    var amt = scaleQty(y.amount, m), v = parseNum(String(amt).split(/\s*[–-]\s*/).pop());
+    var unit = y.one && v !== null && v <= 1 ? y.one : y.unit;
+    return (y.label || "Makes") + " " + amt + " " + unit;
   }
   function servLabel(r) {
     var s = r.servings || {}, t = s.text || "";
@@ -170,7 +179,11 @@
       (rel.length ? '<div class="rel">↔ ' + esc(rel.map(function (x) { return BY_ID[x.id].title; }).join(" · ")) + '</div>' : "") + '</button>';
   }
 
-  function getMult(r) { return ui.mult[r.id] || 1; }
+  function getMult(r) {
+    var m = ui.mult[r.id] || 1, sc = scaleInfo(r);
+    if (sc.type === "servings") return Math.max(1, Math.round(sc.base * m)) / sc.base;
+    return BATCH.reduce(function (best, p) { return Math.abs(p - m) < Math.abs(best - m) ? p : best; }, 1);
+  }
   function setMult(r, m) { if (Math.abs(m - 1) < 0.001) delete ui.mult[r.id]; else ui.mult[r.id] = m; LS.set("mult", ui.mult); rerender(r); }
 
   function ingCounts(r) {
@@ -195,12 +208,12 @@
     return '<div class="tickcap"><span>' + c.done + ' of ' + c.total + ' ticked</span>' + (c.done ? '<button class="linkbtn" data-act="clearticks">Clear ticks</button>' : "") + '</div>';
   }
   function scaler(r) {
-    var m = getMult(r), base = baseServings(r), h = '<div class="scaler">';
-    if (base !== null) {
-      var st = Math.max(1, Math.round(base * m));
-      h += '<span class="slbl">Servings</span><button class="btn round" data-act="minus" aria-label="Fewer servings"' + (st <= 1 ? " disabled" : "") + '>−</button><div class="val">' + esc(scaleQty(r.servings.amount, m)) + '</div><button class="btn round" data-act="plus" aria-label="More servings">+</button>';
+    var m = getMult(r), sc = scaleInfo(r), h = '<div class="scaler">';
+    if (sc.type === "servings") {
+      var st = Math.round(sc.base * m);
+      h += '<span class="slbl">Servings</span><button class="btn round" data-act="minus" aria-label="Fewer servings"' + (st <= 1 ? " disabled" : "") + '>−</button><div class="val" aria-live="polite">' + st + '</div><button class="btn round" data-act="plus" aria-label="More servings">+</button>';
     } else {
-      h += '<span class="slbl">Batch</span><button class="btn round" data-act="pminus" aria-label="Smaller batch"' + (m <= 0.5 ? " disabled" : "") + '>−</button><div class="val">×' + multLabel(m) + '</div><button class="btn round" data-act="pplus" aria-label="Bigger batch"' + (m >= 3 ? " disabled" : "") + '>+</button>';
+      h += '<span class="slbl">' + (sc.yield ? esc(yieldText(sc.yield, m)) : "Batch") + '</span><button class="btn round" data-act="pminus" aria-label="Smaller batch"' + (m <= BATCH[0] ? " disabled" : "") + '>−</button><div class="val" aria-live="polite">×' + multLabel(m) + '</div><button class="btn round" data-act="pplus" aria-label="Bigger batch"' + (m >= BATCH[BATCH.length - 1] ? " disabled" : "") + '>+</button>';
     }
     if (m !== 1) h += '<button class="linkbtn" data-act="resetmult">Reset</button>';
     h += '</div>';
@@ -313,12 +326,11 @@
     if (a === "closesheet" && cur) { ui.sheet = false; return renderCook(cur, cookStep()); }
     if (a === "resetmult" && cur) return setMult(cur, 1);
     if (cur) {
-      var base = baseServings(cur), m = getMult(cur);
-      if (a === "plus" || a === "minus") { var st = Math.max(1, Math.round(base * m)) + (a === "plus" ? 1 : -1); return setMult(cur, Math.max(1, st) / base); }
-      var P = [0.5, 2 / 3, 1, 1.5, 2, 3], idx = 0;
-      P.forEach(function (p, j) { if (Math.abs(p - m) < Math.abs(P[idx] - m)) idx = j; });
-      if (a === "pplus") return setMult(cur, P[Math.min(P.length - 1, idx + 1)]);
-      if (a === "pminus") return setMult(cur, P[Math.max(0, idx - 1)]);
+      var sc = scaleInfo(cur), m = getMult(cur);
+      if ((a === "plus" || a === "minus") && sc.type === "servings") { var st = Math.round(sc.base * m) + (a === "plus" ? 1 : -1); return setMult(cur, Math.max(1, st) / sc.base); }
+      var idx = BATCH.indexOf(m);
+      if (a === "pplus") return setMult(cur, BATCH[Math.min(BATCH.length - 1, idx + 1)]);
+      if (a === "pminus") return setMult(cur, BATCH[Math.max(0, idx - 1)]);
     }
     if (a === "reload") return location.reload();
   });

@@ -93,7 +93,7 @@ button{font:inherit;color:inherit}
 .block h2{font-size:19px;margin:0 0 4px;display:flex;align-items:center;justify-content:space-between;gap:8px}
 .block .cap{font-size:14px;color:var(--muted);margin-bottom:10px}
 .scaler{display:flex;align-items:center;gap:8px;background:var(--subtle);border:1px solid var(--border);border-radius:var(--radius);padding:6px 8px 6px 14px;margin:8px 0 4px}
-.scaler .slbl{font-weight:600;margin-right:auto}
+.scaler .slbl{font-weight:600;margin-right:auto;min-width:0;line-height:1.25}
 .scaler .val{font-size:20px;font-weight:700;min-width:54px;text-align:center}
 .scap{font-size:13px;color:var(--muted);margin:2px 2px 0}
 .linkbtn{border:0;background:none;color:var(--accent);font-weight:600;font-size:15px;min-height:44px;padding:0 6px;cursor:pointer}
