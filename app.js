@@ -61,7 +61,9 @@
       var vals = parts.map(function (n) { return n * m; });
       out = (vals.some(function (v) { return Math.abs(v - Math.round(v)) > 0.01; }) ? "≈" : "") + vals.map(function (v) { return Math.max(1, Math.round(v)); }).join("–");
     } else out = scaleQty(q, m);
-    return out + mm[2];
+    var rest = mm[2], last = parseNum(String(out).replace("≈", "").split(/\s*[–-]\s*/).pop());
+    if (last !== null && /^\s*cups?$/.test(rest)) rest = rest.replace(/cups?/, last > 1 ? "cups" : "cup");
+    return out + rest;
   }
   function stepParts(r, i, m) {
     var s = String((r.steps || [])[i] || ""), hits = [];
