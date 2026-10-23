@@ -317,7 +317,7 @@
     if (nc.length) h += '<p class="mac-small">Not counted: ' + esc(nc.map(function (row) { return row.name + " (" + row.nc + ")"; }).join("; ")) + '</p>';
     h += '<div class="mac-bw"><label for="mac-bw">Finished batch weight</label><input id="mac-bw" type="number" inputmode="numeric" min="1" step="1" data-bw placeholder="weigh it" value="' + (bw && bw.g > 0 ? esc(bw.g) : "") + '"> g' +
       (p100 ? '<div class="mac-p100"><b>Per 100 g cooked</b>' + macGrid(p100) + '</div>' : '<p class="mac-small">Weigh the cooked batch (without the pot) to see macros per 100 g, so you can weigh your portion.</p>') + '</div>' +
-      '<p class="mac-small">USDA FoodData Central values, worked out from the ingredients as weighed (raw meat, dry pasta). Ranges use the upper amount and all cooking fat is counted, so errors run high. Grams for spoons and "1 onion" use USDA portion weights.</p></details></section>';
+      '<p class="mac-small">USDA FoodData Central values, worked out from the ingredients as weighed (raw meat, dry pasta). Ranges use the mid-point (paired ranges move together) and servings match the recipe, but cooking fats and fattier meat records are counted in full, so fat errs high. Grams for spoons and "1 onion" use USDA portion weights.</p></details></section>';
     return h;
   }
 

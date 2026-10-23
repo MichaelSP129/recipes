@@ -96,6 +96,17 @@ data.recipes.forEach(function (r) {
 var mac = data.recipes.filter(function (r) { return r.id === "mac-and-cheese"; })[0], mc = api.macCalc(mac, 1);
 ok(mc.optNames.length === 3 && mc.optional.kcal > 0, "mac & cheese: crunchy top listed as optional, not in total");
 
+// mid-points, not upper amounts (PR #26 review): paired ranges move together, fats and fattier meat records in full
+function rec(id) { return data.recipes.filter(function (r) { return r.id === id; })[0]; }
+function item(r, name) { var f = null; r.ingredients.forEach(function (g) { g.items.forEach(function (it) { if (it.name === name) f = it; }); }); return f; }
+var melt = rec("shredded-beef-melt");
+ok(item(melt, "sturdy bread").g === 630 && melt.nutrition.servings === 7, "shredded beef melt: 14 slices (mid of 12–16) for 7 sandwiches");
+ok(item(melt, "chuck roast").fdc === 169491, "chuck roast uses the pot-roast lean-and-fat record");
+ok(item(rec("beef-tacos"), "lean beef mince").fdc === 171796, "beef tacos mince uses the 85/15 record");
+ok(item(rec("harira"), "neutral oil").g === 42, "harira oil still counted at the upper amount (fat)");
+ok(item(rec("sticky-lamb-chops"), "lamb chops").g === 850, "lamb chops: 10 chops (mid of 8–12)");
+ok(rec("pancakes").nutrition.servings === 14 && rec("mac-and-cheese").nutrition.servings === 7, "servings follow the recipe's own servings / mid-point");
+
 // 5. per 100 g
 var p = api.macPer100(s4, 1000);
 K.forEach(function (k) { ok(near(p[k], s4.batch[k] / 10), "per 100 g " + k); });
