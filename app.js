@@ -8,7 +8,7 @@
   };
   var ui = {
     query: "", view: LS.get("view", "sections"), selTags: LS.get("selTags", []), showFilters: false,
-    checked: LS.get("checked", {}), mult: LS.get("mult", {}), homeScroll: 0
+    checked: LS.get("checked", {}), mult: LS.get("mult", {}), homeScroll: 0, sheet: false, sheetScroll: 0
   };
   var app = document.getElementById("app");
 
@@ -64,11 +64,6 @@
     });
     return out.sort(function (a, b) { return a.relation === b.relation ? 0 : a.relation === "goes with" ? -1 : 1; });
   }
-  function chatLabel(r) {
-    var c = r.sourceChat || {};
-    if (c.mergedFrom && c.mergedFrom.length) return c.mergedFrom.map(function (x) { return x.title + " (" + x.date + ")"; }).join(" + ");
-    return c.title ? c.title + (c.date ? " (" + c.date + ")" : "") : "";
-  }
   function toast(html, ms) {
     var t = document.getElementById("toast"); t.innerHTML = html; t.hidden = false;
     clearTimeout(toast._t); if (ms !== 0) toast._t = setTimeout(function () { t.hidden = true; }, ms || 3000);
@@ -101,7 +96,7 @@
       var tags = allTags(r);
       if (ui.selTags.some(function (t) { return tags.indexOf(t) < 0; })) return false;
       if (!words.length) return true;
-      var hay = [r.title, (r.sourceChat || {}).title, r.cuisine, r.category, tags.join(" "), (r.tags || []).join(" "),
+      var hay = [r.title, r.cuisine, r.category, tags.join(" "), (r.tags || []).join(" "),
         (r.ingredients || []).map(function (g) { return g.items.map(function (i) { return i.name; }).join(" "); }).join(" ")].join(" ").toLowerCase();
       return words.every(function (w) { return hay.indexOf(w) >= 0; });
     }).sort(function (a, b) { return a.title.localeCompare(b.title); });
@@ -119,15 +114,15 @@
     });
     var counts = {}; RECIPES.forEach(function (r) { allTags(r).forEach(function (t) { counts[t] = (counts[t] || 0) + 1; }); });
     var nf = ui.selTags.length;
-    var h = '<div class="wrap"><div class="top"><div class="top-inner">' +
-      '<div class="brand"><h1>Michael\'s Recipes</h1><span class="count">' + RECIPES.length + ' recipes</span></div>' +
-      '<div class="searchrow"><div class="search"><input id="q" type="search" inputmode="search" autocomplete="off" placeholder="Search recipes, ingredients, tags…" value="' + esc(ui.query) + '">' +
+    var h = '<div class="wrap"><div class="head"><div class="brand"><h1>Michael\'s Recipes</h1><span class="count">' + RECIPES.length + ' recipes</span></div>' +
+      '<div class="seg"><button data-view="sections" class="' + (ui.view === "sections" ? "on" : "") + '">By section</button><button data-view="az" class="' + (ui.view === "az" ? "on" : "") + '">A–Z index</button></div></div>' +
+      '<div class="top"><div class="top-inner">' +
+      '<div class="searchrow"><div class="search"><input id="q" type="search" inputmode="search" autocomplete="off" placeholder="Search recipes or ingredients" aria-label="Search recipes or ingredients" value="' + esc(ui.query) + '">' +
       (ui.query ? '<button class="x" data-act="clearq" aria-label="Clear search">✕</button>' : "") + '</div>' +
       '<button class="btn' + (ui.showFilters || nf ? " on" : "") + '" data-act="filters">' + (ui.showFilters ? "Hide filters" : nf ? "Filters (" + nf + ")" : "Filters") + '</button></div>' +
-      '<div class="seg"><button data-view="sections" class="' + (ui.view === "sections" ? "on" : "") + '">By section</button><button data-view="az" class="' + (ui.view === "az" ? "on" : "") + '">A–Z index</button></div>' +
-      '<div class="pills">' + (ui.view === "sections"
+      '<div class="pillwrap"><div class="pills" id="pills">' + (ui.view === "sections"
         ? secs.map(function (x) { return '<a class="pill" data-jump="sec-' + esc(x.s.id) + '">' + esc(x.s.name) + '<b>' + x.items.length + '</b></a>'; }).join("")
-        : letters.map(function (g) { return '<a class="pill" data-jump="az-' + (g.L === "#" ? "num" : g.L.toLowerCase()) + '">' + g.L + '</a>'; }).join("")) + '</div>' +
+        : letters.map(function (g) { return '<a class="pill" data-jump="az-' + (g.L === "#" ? "num" : g.L.toLowerCase()) + '">' + g.L + '</a>'; }).join("")) + '</div></div>' +
       '</div></div>';
     if (ui.showFilters) {
       h += '<div class="filters">' + TAG_GROUPS.map(function (g) {
@@ -161,6 +156,11 @@
       var nq = document.getElementById("q"); nq.focus(); try { nq.setSelectionRange(pos, pos); } catch (e) {}
     });
     q.addEventListener("keydown", function (e) { if (e.key === "Enter") q.blur(); });
+    var pl = document.getElementById("pills");
+    if (pl) {
+      var fade = function () { pl.parentNode.classList.toggle("end", pl.scrollLeft + pl.clientWidth >= pl.scrollWidth - 4); };
+      pl.addEventListener("scroll", fade, { passive: true }); fade();
+    }
   }
   function card(r) {
     var g = groups(r), rel = relatedOf(r);
@@ -171,44 +171,57 @@
   }
 
   function getMult(r) { return ui.mult[r.id] || 1; }
-  function setMult(r, m) { if (Math.abs(m - 1) < 0.001) delete ui.mult[r.id]; else ui.mult[r.id] = m; LS.set("mult", ui.mult); renderDetail(r, true); }
+  function setMult(r, m) { if (Math.abs(m - 1) < 0.001) delete ui.mult[r.id]; else ui.mult[r.id] = m; LS.set("mult", ui.mult); rerender(r); }
 
-  function renderDetail(r, keepScroll) {
-    var y = window.scrollY, m = getMult(r), g = groups(r), base = baseServings(r);
-    var servTarget = base !== null ? Math.max(1, Math.round(base * m)) : null;
-    var props = [["Section", r.category], ["Cuisine", r.cuisine], ["Method", g.method.join(", ")],
-      ["Tags", g.protein.concat(g.flags).join(", ")], ["Makes", servLabel(r)], ["Prep", r.prepTime], ["Cook", r.cookTime], ["From chat", chatLabel(r)]]
-      .filter(function (p) { return p[1]; });
+  function ingCounts(r) {
     var total = 0, done = 0;
     (r.ingredients || []).forEach(function (grp, gi) { grp.items.forEach(function (it, ii) { total++; if (ui.checked[r.id + ":" + gi + ":" + ii]) done++; }); });
-    var presets = [0.5, 2 / 3, 1, 1.5, 2, 3];
-    var rel = relatedOf(r);
-    var h = '<div class="wrap"><div class="dtop"><div class="dtop-inner"><button class="btn" data-act="back">← Recipes</button>' +
-      '<button class="btn primary" data-act="cook" data-step="0">▶ Cook mode</button></div></div>' +
-      '<div class="dhead"><h1>' + esc(r.title) + '</h1></div>' +
-      '<dl class="props">' + props.map(function (p) { return '<dt>' + esc(p[0]) + '</dt><dd>' + esc(p[1]) + '</dd>'; }).join("") + '</dl>';
-    // scale
-    h += '<div class="block"><h2>Scale</h2><div class="cap">' + (m === 1 ? "Original quantities" : "Scaled ×" + multLabel(m) + ". Amounts are rounded; season and time by eye.") + '</div><div class="scaler">';
-    if (servTarget !== null) {
-      h += '<button class="btn round" data-act="minus"' + (servTarget <= 1 ? " disabled" : "") + '>−</button><div class="val">' + esc(scaleQty(r.servings.amount, m)) + '</div><button class="btn round" data-act="plus">+</button>';
-    } else {
-      h += '<button class="btn round" data-act="pminus"' + (m <= 0.5 ? " disabled" : "") + '>−</button><div class="val">×' + multLabel(m) + '</div><button class="btn round" data-act="pplus"' + (m >= 3 ? " disabled" : "") + '>+</button>';
-    }
-    h += '</div><div class="cap" style="margin-top:6px">Original recipe makes: ' + esc(servLabel(r)) + '</div><div class="chips">' +
-      presets.map(function (p) { return '<button class="chip' + (Math.abs(m - p) < 0.01 ? " on" : "") + '" data-mult="' + p + '">×' + multLabel(p) + '</button>'; }).join("") + '</div></div>';
-    // ingredients
-    h += '<div class="block"><h2>Ingredients' + (done ? ' <button class="btn" data-act="clearticks" style="font-size:13px;padding:6px 10px">Clear ticks</button>' : "") + '</h2><div class="cap">' + done + ' of ' + total + ' ticked</div>';
+    return { total: total, done: done };
+  }
+  function ingList(r) {
+    var m = getMult(r), h = "";
     (r.ingredients || []).forEach(function (grp, gi) {
       if (r.ingredients.length > 1 || grp.section !== "Ingredients") h += '<div class="ing-sec">' + esc(grp.section) + '</div>';
       grp.items.forEach(function (it, ii) {
         var k = r.id + ":" + gi + ":" + ii, on = !!ui.checked[k], qty = scaleQty(it.quantity, m), qu = [qty, it.unit].filter(Boolean).join(" ");
-        h += '<div class="ing' + (on ? " on" : "") + '" data-tick="' + esc(k) + '"><div class="box">' + (on ? "✓" : "") + '</div><div class="txt">' +
+        h += '<div class="ing' + (on ? " on" : "") + '" data-tick="' + esc(k) + '" role="checkbox" aria-checked="' + on + '"><div class="box">' + (on ? "✓" : "") + '</div><div class="txt">' +
           (qu ? '<span class="q">' + esc(qu) + '</span> ' : "") + esc(it.name) + (it.note ? '<span class="n">, ' + esc(it.note) + '</span>' : "") + '</div></div>';
       });
     });
+    return h;
+  }
+  function tickCap(r) {
+    var c = ingCounts(r);
+    return '<div class="tickcap"><span>' + c.done + ' of ' + c.total + ' ticked</span>' + (c.done ? '<button class="linkbtn" data-act="clearticks">Clear ticks</button>' : "") + '</div>';
+  }
+  function scaler(r) {
+    var m = getMult(r), base = baseServings(r), h = '<div class="scaler">';
+    if (base !== null) {
+      var st = Math.max(1, Math.round(base * m));
+      h += '<span class="slbl">Servings</span><button class="btn round" data-act="minus" aria-label="Fewer servings"' + (st <= 1 ? " disabled" : "") + '>−</button><div class="val">' + esc(scaleQty(r.servings.amount, m)) + '</div><button class="btn round" data-act="plus" aria-label="More servings">+</button>';
+    } else {
+      h += '<span class="slbl">Batch</span><button class="btn round" data-act="pminus" aria-label="Smaller batch"' + (m <= 0.5 ? " disabled" : "") + '>−</button><div class="val">×' + multLabel(m) + '</div><button class="btn round" data-act="pplus" aria-label="Bigger batch"' + (m >= 3 ? " disabled" : "") + '>+</button>';
+    }
+    if (m !== 1) h += '<button class="linkbtn" data-act="resetmult">Reset</button>';
     h += '</div>';
+    if (m !== 1) h += '<div class="scap">Scaled from ' + esc(servLabel(r)) + '. Amounts are rounded.</div>';
+    return h;
+  }
+
+  function renderDetail(r, keepScroll) {
+    var y = window.scrollY, g = groups(r);
+    var props = [["Makes", servLabel(r)], ["Prep", r.prepTime], ["Cook", r.cookTime]].filter(function (p) { return p[1]; });
+    var tagList = [].concat(g.cuisine, g.method, g.protein, g.flags).filter(function (t, i, a) { return t && a.indexOf(t) === i; });
+    var rel = relatedOf(r);
+    var h = '<div class="wrap"><div class="dtop"><div class="dtop-inner"><button class="btn" data-act="back">← Recipes</button>' +
+      '<button class="btn primary" data-act="cook" data-step="0">▶ Cook mode</button></div></div>' +
+      '<div class="dhead"><h1>' + esc(r.title) + '</h1>' +
+      (props.length ? '<dl class="props">' + props.map(function (p) { return '<dt>' + esc(p[0]) + '</dt><dd>' + esc(p[1]) + '</dd>'; }).join("") + '</dl>' : "") +
+      (tagList.length ? '<div class="tags dtags">' + tagList.map(function (t) { return '<span class="tag">' + esc(t) + '</span>'; }).join("") + '</div>' : "") + '</div>';
+    // ingredients (with compact scaler)
+    h += '<div class="block"><h2>Ingredients</h2>' + scaler(r) + tickCap(r) + ingList(r) + '</div>';
     // steps
-    h += '<div class="block"><h2>Method <button class="btn" data-act="cook" data-step="0" style="font-size:13px;padding:6px 10px">Cook mode</button></h2>' +
+    h += '<div class="block"><h2>Method</h2>' +
       (r.steps || []).map(function (s, i) { return '<div class="step" data-act="cook" data-step="' + i + '"><div class="num">' + (i + 1) + '</div><div>' + esc(s) + '</div></div>'; }).join("") + '</div>';
     if (rel.length) h += '<div class="block"><h2>Goes with / see also</h2>' + rel.map(function (x) {
       var o = BY_ID[x.id]; return '<button class="relbtn" data-open="' + esc(o.id) + '"><small>' + esc(x.relation) + ' · ' + esc(o.category) + '</small>' + esc(o.title) + ' →</button>';
@@ -236,16 +249,28 @@
   }
   document.addEventListener("visibilitychange", function () { if (wantWake && document.visibilityState === "visible" && !wakeLock) requestWake(); });
 
+  function sheetHtml(r) {
+    return '<div class="sheet-bg" data-act="closesheet"></div><div class="sheet" role="dialog" aria-label="Ingredients"><div class="sheet-head"><h2>Ingredients</h2><button class="btn" data-act="closesheet">Done</button></div>' +
+      '<div class="sheet-body" id="sheetbody">' + scaler(r) + tickCap(r) + ingList(r) + '</div></div>';
+  }
+  function cookStep() { var p = location.hash.split("/"); return p[3] === "cook" ? parseInt(p[4] || "0", 10) || 0 : -1; }
+  function rerender(r) {
+    var st = cookStep();
+    if (st >= 0) { var sb = document.getElementById("sheetbody"); ui.sheetScroll = sb ? sb.scrollTop : 0; return renderCook(r, st); }
+    return renderDetail(r, true);
+  }
   function renderCook(r, i) {
     var n = (r.steps || []).length; if (!n) return renderDetail(r);
     i = Math.max(0, Math.min(n - 1, i));
-    app.innerHTML = '<div class="cook"><div class="cook-top"><div class="cook-title">' + esc(r.title) + '</div><button class="btn" data-act="exitcook">✕ Exit</button></div>' +
+    app.innerHTML = '<div class="cook"><div class="cook-top"><div class="cook-title">' + esc(r.title) + '</div><div class="cook-btns"><button class="btn" data-act="sheet">☰ Ingredients</button><button class="btn" data-act="exitcook">✕ Exit</button></div></div>' +
       '<div class="bar"><div style="width:' + ((i + 1) / n * 100) + '%"></div></div>' +
       '<div class="cook-body"><div class="cook-step-lbl">STEP ' + (i + 1) + ' / ' + n + '</div><div class="cook-text">' + esc(r.steps[i]) + '</div>' +
       (i < n - 1 ? '<div class="cook-next"><b>Next:</b> ' + esc(r.steps[i + 1]) + '</div>' : "") + '</div>' +
       '<div class="wake" id="wake"></div>' +
       '<div class="cook-nav"><button class="btn" data-act="cook" data-step="' + (i - 1) + '"' + (i === 0 ? " disabled" : "") + '>← Back</button>' +
-      (i < n - 1 ? '<button class="btn primary" data-act="cook" data-step="' + (i + 1) + '">Next →</button>' : '<button class="btn primary" data-act="exitcook">Done ✓</button>') + '</div></div>';
+      (i < n - 1 ? '<button class="btn primary" data-act="cook" data-step="' + (i + 1) + '">Next →</button>' : '<button class="btn primary" data-act="exitcook">Done ✓</button>') + '</div></div>' +
+      (ui.sheet ? sheetHtml(r) : "");
+    if (ui.sheet) { var sb = document.getElementById("sheetbody"); if (sb) sb.scrollTop = ui.sheetScroll || 0; }
     if (!wakeLock) requestWake(); else updateWakeLbl();
   }
 
@@ -255,7 +280,7 @@
     if (parts[0] === "r" && BY_ID[decodeURIComponent(parts[1] || "")]) {
       var r = BY_ID[decodeURIComponent(parts[1])];
       if (parts[2] === "cook") return renderCook(r, parseInt(parts[3] || "0", 10) || 0);
-      releaseWake();
+      releaseWake(); ui.sheet = false;
       return renderDetail(r);
     }
     releaseWake();
@@ -274,7 +299,7 @@
     if (t.dataset.view) { ui.view = t.dataset.view; LS.set("view", ui.view); return renderHome(); }
     if (t.dataset.tag) { var tg = t.dataset.tag, i = ui.selTags.indexOf(tg); if (i >= 0) ui.selTags.splice(i, 1); else ui.selTags.push(tg); LS.set("selTags", ui.selTags); var y = scrollY; renderHome(); scrollTo(0, y); return; }
     if (t.dataset.jump) { e.preventDefault(); var el = document.getElementById(t.dataset.jump); if (el) el.scrollIntoView({ behavior: "smooth", block: "start" }); return; }
-    if (t.dataset.tick) { var k = t.dataset.tick; if (ui.checked[k]) delete ui.checked[k]; else ui.checked[k] = true; LS.set("checked", ui.checked); return renderDetail(cur, true); }
+    if (t.dataset.tick) { var k = t.dataset.tick; if (ui.checked[k]) delete ui.checked[k]; else ui.checked[k] = true; LS.set("checked", ui.checked); return rerender(cur); }
     if (t.dataset.mult) return setMult(cur, parseFloat(t.dataset.mult));
     var a = t.dataset.act;
     if (a === "filters") { ui.showFilters = !ui.showFilters; return renderHome(); }
@@ -282,8 +307,11 @@
     if (a === "clearall") { ui.query = ""; ui.selTags = []; LS.set("selTags", []); return renderHome(); }
     if (a === "back") return go("#/");
     if (a === "cook") { var s = parseInt(t.dataset.step, 10); if (s < 0) return; requestWake(); return go("#/r/" + encodeURIComponent(cur.id) + "/cook/" + s); }
-    if (a === "exitcook") { releaseWake(); return go("#/r/" + encodeURIComponent(cur.id)); }
-    if (a === "clearticks") { Object.keys(ui.checked).forEach(function (k) { if (k.indexOf(cur.id + ":") === 0) delete ui.checked[k]; }); LS.set("checked", ui.checked); return renderDetail(cur, true); }
+    if (a === "exitcook") { releaseWake(); ui.sheet = false; return go("#/r/" + encodeURIComponent(cur.id)); }
+    if (a === "clearticks") { Object.keys(ui.checked).forEach(function (k) { if (k.indexOf(cur.id + ":") === 0) delete ui.checked[k]; }); LS.set("checked", ui.checked); return rerender(cur); }
+    if (a === "sheet" && cur) { ui.sheet = true; ui.sheetScroll = 0; return renderCook(cur, cookStep()); }
+    if (a === "closesheet" && cur) { ui.sheet = false; return renderCook(cur, cookStep()); }
+    if (a === "resetmult" && cur) return setMult(cur, 1);
     if (cur) {
       var base = baseServings(cur), m = getMult(cur);
       if (a === "plus" || a === "minus") { var st = Math.max(1, Math.round(base * m)) + (a === "plus" ? 1 : -1); return setMult(cur, Math.max(1, st) / base); }
@@ -299,7 +327,7 @@
     var r = currentRecipe(), i = parseInt(p[4] || "0", 10);
     if (e.key === "ArrowRight" && i < r.steps.length - 1) go("#/r/" + p[2] + "/cook/" + (i + 1));
     if (e.key === "ArrowLeft" && i > 0) go("#/r/" + p[2] + "/cook/" + (i - 1));
-    if (e.key === "Escape") go("#/r/" + p[2]);
+    if (e.key === "Escape") { if (ui.sheet) { ui.sheet = false; return renderCook(r, i); } go("#/r/" + p[2]); }
   });
   function currentRecipe() { var p = location.hash.replace(/^#\/?/, "").split("/"); return p[0] === "r" ? BY_ID[decodeURIComponent(p[1] || "")] || null : null; }
   window.addEventListener("hashchange", route);
