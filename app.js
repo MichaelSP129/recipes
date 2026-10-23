@@ -37,6 +37,56 @@
     if (String(q).indexOf(".") >= 0) return nums.map(function (n) { var v = n * m; return String(v >= 10 ? Math.round(v) : Math.round(v * 100) / 100); }).join("–");
     return nums.map(function (n) { return fmt(n * m); }).join("–");
   }
+  // ---------- quantities inside method steps (see #4) ----------
+  // recipes.json can link a quantity in a step with "stepQty": [{ step, text, round?, fixed? }].
+  // Linked quantities scale with the ingredient list; "fixed" ones (per-ball weights, increments) never do.
+  // Any other measured amount left in a step gets a visible "for 1×" note while scaled.
+  var QTY_RE = /(^|[^\w.])(\d+[½¼¾⅓⅔⅛]?|[½¼¾⅓⅔⅛])(?:\.\d+)?(?:\s*[–-]\s*\d+(?:\.\d+)?[½¼¾⅓⅔⅛]?)?\s*(g|kg|ml|L|l|tbsp|tsp|cups?)(?![\w])/;
+  function findQty(s, text, from) {
+    var i = s.indexOf(text, from);
+    while (i >= 0) {
+      var before = s.charAt(i - 1), after = s.charAt(i + text.length);
+      if (!/[\d.½¼¾⅓⅔⅛]/.test(before) && !/[\d]/.test(after) && !(/[a-z]$/i.test(text) && /[a-z]/i.test(after))) return i;
+      i = s.indexOf(text, i + 1);
+    }
+    return -1;
+  }
+  function scaleLinked(link, m) {
+    var mm = link.text.match(/^([\d.½¼¾⅓⅔⅛⅜⅝⅞]+(?:\s*[–-]\s*[\d.½¼¾⅓⅔⅛⅜⅝⅞]+)?)(.*)$/);
+    if (!mm) return link.text;
+    var q = mm[1], out;
+    if (link.round) {
+      var parts = q.split(/\s*[–-]\s*/).map(parseNum);
+      if (parts.some(function (n) { return n === null; })) return link.text;
+      var vals = parts.map(function (n) { return n * m; });
+      out = (vals.some(function (v) { return Math.abs(v - Math.round(v)) > 0.01; }) ? "≈" : "") + vals.map(function (v) { return Math.max(1, Math.round(v)); }).join("–");
+    } else out = scaleQty(q, m);
+    var rest = mm[2], last = parseNum(String(out).replace("≈", "").split(/\s*[–-]\s*/).pop());
+    if (last !== null && /^\s*cups?$/.test(rest)) rest = rest.replace(/cups?/, last > 1 ? "cups" : "cup");
+    return out + rest;
+  }
+  function stepParts(r, i, m) {
+    var s = String((r.steps || [])[i] || ""), hits = [];
+    if (m !== 1) (r.stepQty || []).forEach(function (l) {
+      if (l.step !== i || !l.text) return;
+      var at = findQty(s, l.text, 0);
+      while (at >= 0 && hits.some(function (h) { return at < h.end && at + l.text.length > h.start; })) at = findQty(s, l.text, at + 1);
+      if (at >= 0) hits.push({ start: at, end: at + l.text.length, link: l });
+    });
+    hits.sort(function (a, b) { return a.start - b.start; });
+    var html = "", pos = 0, rest = "";
+    hits.forEach(function (h) {
+      html += esc(s.slice(pos, h.start)); rest += s.slice(pos, h.start) + " ";
+      html += h.link.fixed ? esc(s.slice(h.start, h.end)) : '<b class="sq">' + esc(scaleLinked(h.link, m)) + '</b>';
+      pos = h.end;
+    });
+    html += esc(s.slice(pos)); rest += s.slice(pos);
+    return { html: html, unscaled: m !== 1 && QTY_RE.test(rest) };
+  }
+  function stepHtml(r, i, m, cls) {
+    var p = stepParts(r, i, m);
+    return p.html + (p.unscaled ? '<span class="' + (cls || "sqnote") + '">Amounts in this step are for the original recipe (1×).</span>' : "");
+  }
   function baseServings(r) {
     if (!r.servings || !r.servings.amount) return null;
     var p = String(r.servings.amount).split(/\s*[–-]\s*/).map(parseNum);
@@ -222,7 +272,7 @@
     h += '<div class="block"><h2>Ingredients</h2>' + scaler(r) + tickCap(r) + ingList(r) + '</div>';
     // steps
     h += '<div class="block"><h2>Method</h2>' +
-      (r.steps || []).map(function (s, i) { return '<div class="step" data-act="cook" data-step="' + i + '"><div class="num">' + (i + 1) + '</div><div>' + esc(s) + '</div></div>'; }).join("") + '</div>';
+      (r.steps || []).map(function (s, i) { return '<div class="step" data-act="cook" data-step="' + i + '"><div class="num">' + (i + 1) + '</div><div>' + stepHtml(r, i, getMult(r)) + '</div></div>'; }).join("") + '</div>';
     if (rel.length) h += '<div class="block"><h2>Goes with / see also</h2>' + rel.map(function (x) {
       var o = BY_ID[x.id]; return '<button class="relbtn" data-open="' + esc(o.id) + '"><small>' + esc(x.relation) + ' · ' + esc(o.category) + '</small>' + esc(o.title) + ' →</button>';
     }).join("") + '</div>';
@@ -264,8 +314,8 @@
     i = Math.max(0, Math.min(n - 1, i));
     app.innerHTML = '<div class="cook"><div class="cook-top"><div class="cook-title">' + esc(r.title) + '</div><div class="cook-btns"><button class="btn" data-act="sheet">☰ Ingredients</button><button class="btn" data-act="exitcook">✕ Exit</button></div></div>' +
       '<div class="bar"><div style="width:' + ((i + 1) / n * 100) + '%"></div></div>' +
-      '<div class="cook-body"><div class="cook-step-lbl">STEP ' + (i + 1) + ' / ' + n + '</div><div class="cook-text">' + esc(r.steps[i]) + '</div>' +
-      (i < n - 1 ? '<div class="cook-next"><b>Next:</b> ' + esc(r.steps[i + 1]) + '</div>' : "") + '</div>' +
+      '<div class="cook-body"><div class="cook-step-lbl">STEP ' + (i + 1) + ' / ' + n + '</div><div class="cook-text">' + stepHtml(r, i, getMult(r)) + '</div>' +
+      (i < n - 1 ? '<div class="cook-next"><b>Next:</b> ' + stepHtml(r, i + 1, getMult(r)) + '</div>' : "") + '</div>' +
       '<div class="wake" id="wake"></div>' +
       '<div class="cook-nav"><button class="btn" data-act="cook" data-step="' + (i - 1) + '"' + (i === 0 ? " disabled" : "") + '>← Back</button>' +
       (i < n - 1 ? '<button class="btn primary" data-act="cook" data-step="' + (i + 1) + '">Next →</button>' : '<button class="btn primary" data-act="exitcook">Done ✓</button>') + '</div></div>' +
