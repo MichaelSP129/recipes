@@ -107,6 +107,17 @@ ok(item(rec("harira"), "neutral oil").g === 42, "harira oil still counted at the
 ok(item(rec("sticky-lamb-chops"), "lamb chops").g === 850, "lamb chops: 10 chops (mid of 8–12)");
 ok(rec("pancakes").nutrition.servings === 14 && rec("mac-and-cheese").nutrition.servings === 7, "servings follow the recipe's own servings / mid-point");
 
+// "not counted" notes must not describe a rinse the method doesn't do (#28 integration review: #22 no-rinse + #26)
+data.recipes.forEach(function (r) {
+  var rinsesInMethod = r.steps.some(function (s) { return /\brinse/i.test(s.replace(/don't rinse|do not rinse|no rinse|not rinse/gi, "")); });
+  r.ingredients.forEach(function (g) { g.items.forEach(function (it) {
+    if (it.nc && /rins/i.test(it.nc)) ok(rinsesInMethod, r.id + ": " + it.name + " note says rinsed, but the method has no rinse step");
+  }); });
+});
+var ss = rec("sweet-and-sour-chicken");
+var velvet = ss.ingredients[0].items.filter(function (it) { return it.name === "baking soda" || it.name === "water"; });
+ok(velvet.length === 2 && velvet.every(function (it) { return it.nc && !/rins/i.test(it.nc); }), "sweet & sour: velveting notes don't claim a rinse (method-neutral)");
+
 // 5. per 100 g
 var p = api.macPer100(s4, 1000);
 K.forEach(function (k) { ok(near(p[k], s4.batch[k] / 10), "per 100 g " + k); });
