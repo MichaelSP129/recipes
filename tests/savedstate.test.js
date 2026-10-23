@@ -63,13 +63,20 @@ var cases = [
   ["mult has bad entries", "mult", '{"a":2,"b":"2","c":-1,"d":0,"e":1e9,"f":null}', '{"a":2}'],
   ["view is unknown", "view", '"grid"', undefined],
   ["view is a number", "view", "7", undefined],
+  ["bw is null", "bw", "null", undefined],
   ["bw is an array", "bw", "[]", undefined],
-  ["bw has bad entries", "bw", '{"a":{"g":800,"m":1},"b":{"g":"800"},"c":5}', '{"a":{"g":800,"m":1}}'],
+  ["bw weight is a string", "bw", '{"recipe":{"g":"800"}}', "{}"],
+  ["bw has mixed valid and bad entries", "bw", '{"a":{"g":800,"m":1},"b":{"g":"800"},"c":5,"d":null,"e":{"g":-5}}', '{"a":{"g":800,"m":1}}'],
   ["not JSON at all", "mult", "{oops", undefined]
 ];
 
-// batch weights (#26) are only checked on builds that save them
-if (!/loadSaved\("bw"\)/.test(SRC)) cases = cases.filter(function (c) { return c[1] !== "bw"; });
+// Batch weights (#26). Any build that saves them (the macros panel) must load them through loadSaved("bw"),
+// and then the bw cases are mandatory and a legitimate saved weight must survive. A build without the
+// macros panel has no bw key, so those cases do not apply there.
+var SAVES_BW = /LS\.set\("bw"/.test(SRC), LOADS_BW = /loadSaved\("bw"\)/.test(SRC);
+if (SAVES_BW && !LOADS_BW) { console.error("FAIL macros panel saves bw but does not load it with loadSaved(\"bw\")"); process.exitCode = 1; }
+if (LOADS_BW) VALID.bw = JSON.stringify((function () { var o = {}; o[RID] = { g: 812, m: 2 }; return o; })());
+else cases = cases.filter(function (c) { return c[1] !== "bw"; });
 
 var passed = 0;
 function check(name, fn) { return fn().then(function () { passed++; }, function (e) { console.error("FAIL " + name + ": " + e.message); process.exitCode = 1; }); }
@@ -112,4 +119,4 @@ chain = chain.then(function () {
     });
   });
 });
-chain.then(function () { console.log("savedstate: " + passed + " passed" + (process.exitCode ? ", some FAILED" : "")); });
+chain.then(function () { console.log("savedstate: " + passed + " passed (batch-weight cases " + (LOADS_BW ? "run" : "not applicable, no macros panel") + ")" + (process.exitCode ? ", some FAILED" : "")); });
