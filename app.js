@@ -46,7 +46,7 @@
     return (approx ? "≈" : "") + out.join("–");
   }
   // ---------- quantities inside method steps (see #4) ----------
-  // recipes.json can link a quantity in a step with "stepQty": [{ step, text, round?, fixed? }].
+  // recipes.json can link a quantity in a step with "stepQty": [{ step, text, round?, fixed?, one? }] ("one": text to show when a rounded count is exactly 1).
   // Linked quantities scale with the ingredient list; "fixed" ones (per-ball weights, increments) never do.
   // Any other measured amount left in a step gets a visible "for 1×" note while scaled.
   var QTY_RE = /(^|[^\w.])(\d+[½¼¾⅓⅔⅛]?|[½¼¾⅓⅔⅛])(?:\.\d+)?(?:\s*[–-]\s*\d+(?:\.\d+)?[½¼¾⅓⅔⅛]?)?\s*(g|kg|ml|L|l|tbsp|tsp|cups?)(?![\w])/;
@@ -68,6 +68,7 @@
       if (parts.some(function (n) { return n === null; })) return link.text;
       var vals = parts.map(function (n) { return n * m; });
       out = (vals.some(function (v) { return Math.abs(v - Math.round(v)) > 0.01; }) ? "≈" : "") + vals.map(function (v) { return Math.max(1, Math.round(v)); }).join("–");
+      if (link.one && out === "1") return link.one; // singular wording, e.g. "1 rough circle" not "1 equal rough circles"
     } else out = scaleQty(q, m);
     var rest = mm[2], last = parseNum(String(out).replace("≈", "").split(/\s*[–-]\s*/).pop());
     if (last !== null && /^\s*cups?$/.test(rest)) rest = rest.replace(/cups?/, last > 1 ? "cups" : "cup");

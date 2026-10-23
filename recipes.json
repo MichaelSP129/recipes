@@ -6741,10 +6741,22 @@
           "section": "Topping",
           "items": [
             {
-              "quantity": "",
-              "unit": "",
+              "quantity": "4",
+              "unit": "tsp",
               "name": "olive oil",
-              "note": "for the tins, drizzling and dimpling"
+              "note": "for the tins: 2 tsp per tin"
+            },
+            {
+              "quantity": "4",
+              "unit": "tsp",
+              "name": "olive oil",
+              "note": "to drizzle before the proof: 2 tsp per tin"
+            },
+            {
+              "quantity": "2",
+              "unit": "tsp",
+              "name": "olive oil",
+              "note": "final drizzle: 1 tsp per tin, plus a little for your fingers"
             },
             {
               "quantity": "",
@@ -6773,11 +6785,34 @@
         "Mixer (paddle): medium speed 5 min, rest 5 min, then 5 min more, slowly adding the remaining water and the salt. By hand: slap-and-fold, adding the rest of the water and salt gradually, until smooth and strong.",
         "Cover and rest 30 min.",
         "Fold in the bowl: lift an edge to the middle at 3, 6, 9 and 12 o'clock. Cover 30 min. Repeat for at least 3 sets in total (set a timer).",
-        "After the last rest, tip out, divide in half and shape rough circles. Place in two oiled, parchment-lined 20 cm tins.",
-        "Drizzle with oil and dimple with wet fingers. Cover and proof 20–40 min until soft and puffy.",
+        "After the last rest, tip out and shape into 2 equal rough circles. Place each in a parchment-lined 20 cm tin oiled with 2 tsp olive oil.",
+        "Drizzle each with 2 tsp oil and dimple with wet fingers. Cover and proof 20–40 min until soft and puffy.",
         "Preheat the oven to 200°C fan (a tray of water for steam is optional).",
-        "Oil your fingers and dimple again. Scatter sea salt flakes and a final dash of oil (or press in tomatoes and confit garlic).",
-        "Bake about 25 min until deep golden with crisp edges and a lightly browned base. Cool on a rack. Best eaten fresh and warm; refresh in the oven the next day."
+        "Oil your fingers and dimple again. Scatter sea salt flakes and a final 1 tsp oil per tin (or press in tomatoes and confit garlic).",
+        "Bake about 25 min until deep golden with crisp edges and a lightly browned base (with more than 2 tins, swap shelves halfway or bake in batches). Cool on a rack. Best eaten fresh and warm; refresh in the oven the next day."
+      ],
+      "stepQty": [
+        {
+          "step": 5,
+          "text": "2 equal rough circles",
+          "round": true,
+          "one": "1 rough circle"
+        },
+        {
+          "step": 5,
+          "text": "2 tsp",
+          "fixed": true
+        },
+        {
+          "step": 6,
+          "text": "2 tsp",
+          "fixed": true
+        },
+        {
+          "step": 8,
+          "text": "1 tsp",
+          "fixed": true
+        }
       ],
       "tips": [
         "Serve before a pasta dinner with green olive oil and balsamic, or use it for sandwiches.",
@@ -7330,7 +7365,7 @@
       ],
       "servings": {
         "amount": "10",
-        "text": "10 naan (about 85–90 g dough each)"
+        "text": "10 naan (about 100 g dough each)"
       },
       "scale": {
         "type": "batch",
@@ -7447,7 +7482,7 @@
         "Autolyse: rest 15 minutes before kneading.",
         "Knead 8–10 min by hand (5–6 in a mixer) until very soft, slightly tacky, smooth and elastic. If firm, add extra water 1 tbsp at a time.",
         "First rise: 1–1½ hours until doubled (or refrigerate overnight for deeper flavour).",
-        "Divide into 10 balls (about 85–90 g each). Rest 20–30 min covered.",
+        "Divide into 10 balls of about 100 g each (the dough weighs about 1 kg). Rest 20–30 min covered.",
         "Roll to 3 mm thick or stretch by hand. Press garlic/seeds onto one side if using.",
         "Heat cast iron until almost smoking. Cook naan in the dry pan 60–90 seconds until big bubbles form, flip and cook 60–90 seconds.",
         "Brush immediately with butter or ghee."
@@ -7469,8 +7504,12 @@
         },
         {
           "step": 5,
-          "text": "85–90 g",
+          "text": "100 g",
           "fixed": true
+        },
+        {
+          "step": 5,
+          "text": "1 kg"
         }
       ],
       "tips": [
