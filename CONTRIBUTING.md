@@ -18,7 +18,7 @@ Every comment starts with its author's prefix: **[ChatGPT]**, **[Claude]**, **[R
 3. One topic per PR, referencing its issue with `Fixes #N`.
 4. Don't change the quantities or methods of Michael's recipes without flagging it for his approval.
 5. Never weaken food-safety guidance.
-6. Only the Recipes bot's PRs bump `VERSION` in `sw.js`.
+6. Only the Recipes bot's PRs bump `VERSION` in `sw.js`. Bump it in every PR that changes the app shell (`index.html`, `app.js`, `app.css`, `manifest.webmanifest`, icons, `sw.js`); `recipes.json`-only changes don't need it. The **checks** GitHub Action fails a PR that changes those files without a new `VERSION`, and also validates `recipes.json` and runs any `tests/*.test.js`.
 
 ## Running locally
 No build step. Serve the folder with any static server, e.g. `python3 -m http.server 8000`, and open
