@@ -6,9 +6,38 @@
     get: function (k, d) { try { var v = localStorage.getItem("mr:" + k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
     set: function (k, v) { try { localStorage.setItem("mr:" + k, JSON.stringify(v)); } catch (e) {} }
   };
+  // ---------- saved state (#29) ----------
+  // Every saved setting is checked by type and range before anything renders. A key with the wrong shape
+  // falls back to its default, and a bad entry inside a map is dropped; valid entries and all other keys are kept.
+  // Only a key that needed fixing is rewritten in storage, so the reset notice shows once, not on every launch.
+  function isObj(v) { return v !== null && typeof v === "object" && !Array.isArray(v); }
+  function okNum(v, lo, hi) { return typeof v === "number" && isFinite(v) && v >= lo && v <= hi; }
+  function okMult(v) { return okNum(v, 1 / 64, 100); }
+  function mapOf(ok) { return function (v) { if (!isObj(v)) return null; var o = {}; Object.keys(v).forEach(function (k) { if (ok(v[k])) o[k] = v[k]; }); return o; }; }
+  var SAVED = {
+    view: { label: "list view", d: function () { return "sections"; }, fix: function (v) { return v === "sections" || v === "az" ? v : null; } },
+    selTags: { label: "filters", d: function () { return []; }, fix: function (v) { return Array.isArray(v) ? v.filter(function (t, i) { return typeof t === "string" && t !== "" && v.indexOf(t) === i; }) : null; } },
+    checked: { label: "ticked ingredients", d: function () { return {}; }, fix: mapOf(function (x) { return x === true; }) },
+    mult: { label: "servings and batch sizes", d: function () { return {}; }, fix: mapOf(okMult) },
+    // finished batch weights from the macros panel (#14/#26): { g: grams, m: multiplier when weighed }
+    bw: { label: "batch weights", d: function () { return {}; }, fix: mapOf(function (x) { return isObj(x) && okNum(x.g, 1, 100000) && (x.m === undefined || okMult(x.m)); }) }
+  };
+  var stateReset = [];
+  function loadSaved(k) {
+    var s = SAVED[k], raw = null, v, f;
+    try { raw = localStorage.getItem("mr:" + k); } catch (e) { return s.d(); }
+    if (raw === null) return s.d();
+    try { v = JSON.parse(raw); f = s.fix(v); } catch (e) { f = null; }
+    if (f === null) { stateReset.push(k); try { localStorage.removeItem("mr:" + k); } catch (e) {} return s.d(); }
+    if (JSON.stringify(f) !== JSON.stringify(v)) { stateReset.push(k); LS.set(k, f); }
+    return f;
+  }
+  function resetNotice() {
+    return "Some saved settings couldn't be read and were reset: " + stateReset.map(function (k) { return SAVED[k].label; }).join(", ") + ". Everything else was kept.";
+  }
   var ui = {
-    query: "", view: LS.get("view", "sections"), selTags: LS.get("selTags", []), showFilters: false,
-    checked: LS.get("checked", {}), mult: LS.get("mult", {}), homeScroll: 0, sheet: false, sheetScroll: 0
+    query: "", view: loadSaved("view"), selTags: loadSaved("selTags"), showFilters: false,
+    checked: loadSaved("checked"), mult: loadSaved("mult"), homeScroll: 0, sheet: false, sheetScroll: 0
   };
   var app = document.getElementById("app");
 
@@ -170,7 +199,7 @@
       (rel.length ? '<div class="rel">↔ ' + esc(rel.map(function (x) { return BY_ID[x.id].title; }).join(" · ")) + '</div>' : "") + '</button>';
   }
 
-  function getMult(r) { return ui.mult[r.id] || 1; }
+  function getMult(r) { var m = ui.mult[r.id]; return okMult(m) ? m : 1; }
   function setMult(r, m) { if (Math.abs(m - 1) < 0.001) delete ui.mult[r.id]; else ui.mult[r.id] = m; LS.set("mult", ui.mult); rerender(r); }
 
   function ingCounts(r) {
@@ -302,6 +331,7 @@
     if (t.dataset.tick) { var k = t.dataset.tick; if (ui.checked[k]) delete ui.checked[k]; else ui.checked[k] = true; LS.set("checked", ui.checked); return rerender(cur); }
     if (t.dataset.mult) return setMult(cur, parseFloat(t.dataset.mult));
     var a = t.dataset.act;
+    if (a === "resetsaved") { Object.keys(SAVED).forEach(function (k) { try { localStorage.removeItem("mr:" + k); } catch (x) {} }); return location.reload(); }
     if (a === "filters") { ui.showFilters = !ui.showFilters; return renderHome(); }
     if (a === "clearq") { ui.query = ""; return renderHome(); }
     if (a === "clearall") { ui.query = ""; ui.selTags = []; LS.set("selTags", []); return renderHome(); }
@@ -333,11 +363,18 @@
   window.addEventListener("hashchange", route);
 
   // ---------- boot ----------
+  // A failure to fetch recipes.json is a connection problem; a failure while showing them is not (see #29).
   load().then(function (d) {
-    setData(d); route();
-  }).catch(function () {
+    try { setData(d); route(); } catch (e) { return showRenderError(e); }
+    if (stateReset.length) toast(esc(resetNotice()), 6000);
+  }, function () {
     app.innerHTML = '<div class="loading">Couldn\'t load recipes. Check your connection and <a href="" onclick="location.reload();return false">try again</a>.</div>';
   });
+  function showRenderError(e) {
+    if (window.console) console.error(e);
+    app.innerHTML = '<div class="loading">Recipes loaded, but something went wrong showing them. <a href="" onclick="location.reload();return false">Reload</a>, or ' +
+      '<button type="button" class="linkbtn" data-act="resetsaved">reset saved settings</button> (ticks, servings and filters; recipes are not affected).</div>';
+  }
 
   if ("serviceWorker" in navigator) {
     window.addEventListener("load", function () {
