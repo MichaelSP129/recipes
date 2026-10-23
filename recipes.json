@@ -1654,8 +1654,8 @@
         "amount": "4",
         "text": "4 generous servings (8–10 tacos, 750 g mince)"
       },
-      "prepTime": "",
-      "cookTime": "",
+      "prepTime": "Pickled onions at least 20 min, salsa 10 min (passive, while you cook)",
+      "cookTime": "About 20 min, plus browning the mince",
       "ingredients": [
         {
           "section": "Beef",
@@ -3360,7 +3360,7 @@
         "text": "2–3 servings (500 g chicken; 3–4 with rice/naan)"
       },
       "prepTime": "1 h minimum marinating (best 6–12 h)",
-      "cookTime": "",
+      "cookTime": "About 30–45 min, plus searing the chicken",
       "ingredients": [
         {
           "section": "Chicken + marinade",
@@ -4380,7 +4380,7 @@
         "text": "2 adults + 2 kids"
       },
       "prepTime": "",
-      "cookTime": "",
+      "cookTime": "About 20–25 min",
       "ingredients": [
         {
           "section": "Curry",
@@ -5489,8 +5489,7 @@
         "Beef",
         "Italian",
         "Stovetop",
-        "Kid-friendly",
-        "Quick"
+        "Kid-friendly"
       ],
       "servings": {
         "amount": "4",
@@ -5630,8 +5629,7 @@
           "Stovetop"
         ],
         "flags": [
-          "Kid-friendly",
-          "Quick"
+          "Kid-friendly"
         ]
       },
       "related": [
@@ -6588,7 +6586,7 @@
         "amount": "9",
         "text": "8–10 generous servings (23 cm skillet)"
       },
-      "prepTime": "",
+      "prepTime": "Optional 10–15 min batter rest (medium cornmeal)",
       "cookTime": "20–25 min at 220°C + 10 min cooling",
       "ingredients": [
         {
@@ -7892,6 +7890,7 @@
         "Meat-free",
         "American",
         "No-cook",
+        "Quick",
         "Make-ahead"
       ],
       "servings": {
@@ -8001,6 +8000,7 @@
           "No-cook"
         ],
         "flags": [
+          "Quick",
           "Make-ahead"
         ]
       },
@@ -8148,7 +8148,7 @@
         "text": "about ½ cup"
       },
       "prepTime": "5 min + 10–15 min rest",
-      "cookTime": "",
+      "cookTime": "No cooking",
       "ingredients": [
         {
           "section": "Ingredients",
@@ -8502,8 +8502,8 @@
         "amount": "3",
         "text": "enough for 2–3 steaks"
       },
-      "prepTime": "",
-      "cookTime": "",
+      "prepTime": "Soak the green peppercorns 10–15 min (passive)",
+      "cookTime": "About 8–13 min, after the steaks",
       "ingredients": [
         {
           "section": "Sauce",
