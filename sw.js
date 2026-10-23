@@ -1,6 +1,6 @@
 /* Service worker: cache-first app shell, network-first recipes.json.
    Bump VERSION whenever app.js / app.css / index.html / icons change. */
-var VERSION = "v4";
+var VERSION = "v11";
 var CACHE = "recipes-" + VERSION;
 var SHELL = ["./", "index.html", "app.js", "app.css", "manifest.webmanifest", "recipes.json",
   "apple-touch-icon.png", "favicon.png", "icons/icon-180.png", "icons/icon-192.png", "icons/icon-512.png", "icons/maskable-512.png"];
