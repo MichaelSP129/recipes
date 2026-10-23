@@ -1201,7 +1201,8 @@
       "foodSafety": {
         "types": [
           "poultry"
-        ]
+        ],
+        "step": 6
       },
       "tips": [
         "Overcrowding is the #1 failure: it steams instead of browning.",
@@ -1673,7 +1674,8 @@
       "foodSafety": {
         "types": [
           "poultry"
-        ]
+        ],
+        "step": 4
       },
       "tips": [
         "Cornstarch for the batter/marinade, potato starch for the sauce slurry (glossy, silky). If you only have one, cornstarch works for both.",
@@ -2020,7 +2022,8 @@
       "foodSafety": {
         "types": [
           "ground"
-        ]
+        ],
+        "step": 4
       },
       "tips": [
         "Use freshly grated cheese; it melts better than pre-shredded.",
@@ -2233,7 +2236,8 @@
       "foodSafety": {
         "types": [
           "whole"
-        ]
+        ],
+        "step": 5
       },
       "tips": [
         "Stovetop instead: cover and simmer 1½–2 h until tender, then uncovered 15–25 min to thicken.",
@@ -3429,7 +3433,8 @@
       "foodSafety": {
         "types": [
           "whole"
-        ]
+        ],
+        "step": 6
       },
       "tips": [
         "No-tomato version: skip the tomato paste and use tamarind paste 1–2 tsp (or vinegar 1–1½ tsp) to balance.",
@@ -3688,7 +3693,8 @@
       "foodSafety": {
         "types": [
           "poultry"
-        ]
+        ],
+        "step": 6
       },
       "tips": [
         "Sauce too thick and tangy (like ganache)? Add hot water 50 ml at a time, 1 tbsp butter and ¼ tsp salt, then ¼ tsp sugar only if it's still sharp. Simmer 10 min on low.",
@@ -4161,7 +4167,8 @@
       "foodSafety": {
         "types": [
           "whole"
-        ]
+        ],
+        "step": 5
       },
       "tips": [
         "Harira thickens as it sits. Reheat with a splash of water/broth and re-check the seasoning.",
@@ -4467,7 +4474,8 @@
       "foodSafety": {
         "types": [
           "whole"
-        ]
+        ],
+        "step": 8
       },
       "tips": [
         "Watery curry: the onions weren't deep enough or too much liquid went in early. Start at 300 ml.",
@@ -4628,7 +4636,8 @@
       "foodSafety": {
         "types": [
           "poultry"
-        ]
+        ],
+        "step": 3
       },
       "tips": [
         "Paste guide (50 g pack): kid-friendly 1½ tbsp, medium 2–2½ tbsp, hot 3 tbsp+.",
@@ -5091,7 +5100,8 @@
       "foodSafety": {
         "types": [
           "ground"
-        ]
+        ],
+        "step": 3
       },
       "tips": [
         "Make the meat sauce a day ahead for better flavour. It can be assembled ahead and refrigerated; add 10–15 min to the covered bake if baking from cold."
@@ -5307,7 +5317,8 @@
       "foodSafety": {
         "types": [
           "poultry"
-        ]
+        ],
+        "step": 3
       },
       "tips": [
         "Never boil after the cheese goes in (it goes grainy).",
@@ -5491,7 +5502,8 @@
       "foodSafety": {
         "types": [
           "poultry"
-        ]
+        ],
+        "step": 2
       },
       "tips": [
         "If it splits (oil pooling, hard bubbling): take it off the heat 2–3 min, whisk in 2–3 tbsp warm pasta water, milk or cream, or blitz 5–10 sec with a hand blender. Still oily? Whisk in 1 tbsp cold butter off the heat. Don't reboil once the cheese is in.",
@@ -5765,7 +5777,8 @@
       "foodSafety": {
         "types": [
           "ground"
-        ]
+        ],
+        "step": 5
       },
       "tips": [
         "Don't add oregano, paprika, bay leaf or extra tomato on top of the jar sauce. It already has its own seasoning.",
@@ -6285,7 +6298,8 @@
       "foodSafety": {
         "types": [
           "ground"
-        ]
+        ],
+        "step": 6
       },
       "tips": [
         "The finished sauce should be thick, rich and meaty rather than watery or heavily tomato-based."

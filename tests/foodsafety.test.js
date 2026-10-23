@@ -40,7 +40,25 @@ eq(/Chef's doneness: 57°C medium-rare is below the 63°C \+ 3-min rest safe min
 eq(/Recipe target: 63°C medium \(at or above/.test(lc), true, "lamb chops 63°C medium is at the minimum");
 eq(txt(api.fsCook(R["sticky-lamb-chops"], 6)).indexOf("57°C is chef's doneness") >= 0, true, "cook mode note at the doneness step");
 eq(api.fsCook(R["sticky-lamb-chops"], 5), "", "no cook note on other steps");
-eq(/74°C/.test(txt(api.fsCook(R["butter-chicken"], R["butter-chicken"].steps.length - 1))), true, "no explicit step: note on last step");
+// exact cook-mode warning step (zero-based): the final doneness checkpoint, before assembly/serving
+var EXACT = { "chicken-shawarma": 6, "beef-tacos": 4, "butter-chicken": 6, "sweet-and-sour-chicken": 4,
+  "pepper-steak-pie": 5, "beef-curry": 6, "harira": 5, "rogan-josh": 8, "kid-friendly-green-curry": 3, "beef-lasagna": 3,
+  "chicken-bacon-mushroom-alfredo": 3, "chicken-bacon-pea-pasta": 2, "bolognese-maggi-quick": 5, "bolognese-scratch": 6 };
+Object.keys(EXACT).forEach(function (id) {
+  var r = R[id], shown = [];
+  r.steps.forEach(function (_, i) { if (api.fsCook(r, i)) shown.push(i); });
+  eq(shown.join(","), String(EXACT[id]), id + ": cook-mode note shown only at step " + (EXACT[id] + 1));
+});
+// every recipe with a cook-mode note names its step explicitly (no silent last-step default)
+data.recipes.forEach(function (r) {
+  if (!r.foodSafety || r.id === "boerie-caramelised-onions") return;
+  eq(typeof r.foodSafety.step, "number", r.id + ": explicit foodSafety.step");
+});
+// missing step: panel still shown, no cook-mode note on any step (never falls on the last step)
+var nostep = { steps: ["cook the chicken", "serve"], foodSafety: { types: ["poultry"] } };
+eq(!!api.fsPanel(nostep), true, "no step: panel still shown");
+eq(api.fsCook(nostep, 0) + api.fsCook(nostep, 1), "", "no step: no cook-mode note, not even on the last step");
+eq(R["boerie-caramelised-onions"].steps.map(function (_, i) { return api.fsCook(R["boerie-caramelised-onions"], i); }).join(""), "", "boerie onions (no meat cooked in the method): no cook-mode note");
 eq(/Recipe target: 85–90°C/.test(txt(api.fsPanel(R["bbq-wings"]))), true, "wings target shown as above minimum");
 eq(/71°C Minced/.test(txt(api.fsPanel(R["beef-tacos"]))), true, "tacos 71°C");
 eq(api.fsPanel({ steps: ["x"] }), "", "no field, no panel");

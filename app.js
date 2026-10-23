@@ -225,7 +225,7 @@
       var lo = parseFloat(String(t.c).split(/[–-]/)[0]);
       return { c: t.c, label: t.label || "", below: lo < main.c };
     });
-    return { mins: mins, main: main, targets: targets, step: typeof fs.step === "number" ? fs.step : (r.steps || []).length - 1 };
+    return { mins: mins, main: main, targets: targets, step: typeof fs.step === "number" ? fs.step : null }; // no explicit step: panel only, no cook-mode note (never default to the last step)
   }
   function minText(m) { return m.c + "°C" + (m.rest ? " + " + m.rest + "-min rest" : ""); }
   function fsPanel(r) {
