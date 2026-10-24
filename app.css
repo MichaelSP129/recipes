@@ -95,17 +95,22 @@ button{font:inherit;color:inherit}
 .block{margin-top:24px}
 .block h2{font-size:19px;margin:0 0 4px;display:flex;align-items:center;justify-content:space-between;gap:8px}
 .block .cap{font-size:14px;color:var(--muted);margin-bottom:10px}
-.scaler{display:flex;align-items:center;gap:8px;background:var(--subtle);border:1px solid var(--border);border-radius:var(--radius);padding:6px 8px 6px 14px;margin:8px 0 4px}
+.scaler{display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px;background:var(--subtle);border:1px solid var(--border);border-radius:var(--radius);padding:6px 8px 6px 14px;margin:8px 0 4px}
 .scaler .slbl{font-weight:600;margin-right:auto;min-width:0;line-height:1.25}
+/* the label wraps (or drops to its own row on narrow phones); the steppers never shrink below 44x44 */
+.scaler .slbl{flex:1 1 7.5em}
+.sctl{display:flex;align-items:center;gap:8px;flex:none;margin-left:auto}
 .scaler .val{font-size:20px;font-weight:700;min-width:54px;text-align:center}
 .scap{font-size:13px;color:var(--muted);margin:2px 2px 0}
 .linkbtn{border:0;background:none;color:var(--accent);font-weight:600;font-size:15px;min-height:44px;padding:0 6px;cursor:pointer}
 .tickcap{display:flex;align-items:center;justify-content:space-between;font-size:14px;color:var(--muted);min-height:44px;margin-top:2px}
-.round{width:44px;height:44px;border-radius:50%;font-size:24px;padding:0;display:flex;align-items:center;justify-content:center}
+.round{width:44px;height:44px;min-width:44px;min-height:44px;flex:none;border-radius:50%;font-size:24px;padding:0;display:flex;align-items:center;justify-content:center}
 .ing-sec{font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted);font-weight:600;margin:14px 0 4px}
 .ing{display:flex;gap:12px;align-items:flex-start;padding:10px 4px;border:0;border-bottom:1px solid var(--border);border-radius:0;background:none;width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer;user-select:none;-webkit-user-select:none}
 .box{width:22px;height:22px;flex:none;margin-top:1px;border-radius:6px;border:1.5px solid var(--border-strong);display:flex;align-items:center;justify-content:center;color:var(--on-accent);font-size:14px}
 .ing.on .box{background:var(--accent);border-color:var(--accent)}
+/* decorative tick drawn by CSS, not text, so screen readers never say "check mark"; the empty alt text covers browsers that expose generated content */
+.ing.on .box::after{content:"\2713";content:"\2713" / ""}
 .ing.on .txt{color:var(--faint);text-decoration:line-through}
 .ing .q{font-weight:650}.ing .n{color:var(--muted)}
 .step{display:flex;gap:14px;padding:12px 0;border:0;border-bottom:1px solid var(--border);border-radius:0;background:none;width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer}
