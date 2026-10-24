@@ -312,7 +312,7 @@
       grp.items.forEach(function (it, ii) {
         var k = r.id + ":" + gi + ":" + ii, on = !!ui.checked[k], qty = scaleQty(it.quantity, m),
           qu = qty === "pinch" ? "a pinch" : [qty, it.unit].filter(Boolean).join(" ");
-        h += '<button type="button" class="ing' + (on ? " on" : "") + '" data-tick="' + esc(k) + '" role="checkbox" aria-checked="' + on + '"><span class="box" aria-hidden="true">' + (on ? "✓" : "") + '</span><span class="txt">' +
+        h += '<button type="button" class="ing' + (on ? " on" : "") + '" data-tick="' + esc(k) + '" role="checkbox" aria-checked="' + on + '"><span class="box" aria-hidden="true"></span><span class="txt">' +
           (qu ? '<span class="q">' + esc(qu) + '</span> ' : "") + esc(it.name) + (it.note ? '<span class="n">, ' + esc(it.note) + '</span>' : "") + '</span></button>';
       });
     });
@@ -326,12 +326,12 @@
     var m = getMult(r), sc = scaleInfo(r), h = '<div class="scaler">';
     if (sc.type === "servings") {
       var st = Math.round(sc.base * m);
-      h += '<span class="slbl">Servings</span><button class="btn round" data-act="minus" aria-label="Fewer servings"' + (st <= 1 ? " disabled" : "") + '>−</button><div class="val" aria-live="polite">' + st + '</div><button class="btn round" data-act="plus" aria-label="More servings">+</button>';
+      h += '<span class="slbl">Servings</span><span class="sctl"><button class="btn round" data-act="minus" aria-label="Fewer servings"' + (st <= 1 ? " disabled" : "") + '>−</button><div class="val" aria-live="polite">' + st + '</div><button class="btn round" data-act="plus" aria-label="More servings">+</button>';
     } else {
-      h += '<span class="slbl">' + (sc.yield ? esc(yieldText(sc.yield, m)) : "Batch") + '</span><button class="btn round" data-act="pminus" aria-label="Smaller batch"' + (m <= BATCH[0] ? " disabled" : "") + '>−</button><div class="val" aria-live="polite">×' + multLabel(m) + '</div><button class="btn round" data-act="pplus" aria-label="Bigger batch"' + (m >= BATCH[BATCH.length - 1] ? " disabled" : "") + '>+</button>';
+      h += '<span class="slbl">' + (sc.yield ? esc(yieldText(sc.yield, m)) : "Batch") + '</span><span class="sctl"><button class="btn round" data-act="pminus" aria-label="Smaller batch"' + (m <= BATCH[0] ? " disabled" : "") + '>−</button><div class="val" aria-live="polite">×' + multLabel(m) + '</div><button class="btn round" data-act="pplus" aria-label="Bigger batch"' + (m >= BATCH[BATCH.length - 1] ? " disabled" : "") + '>+</button>';
     }
     if (m !== 1) h += '<button class="linkbtn" data-act="resetmult">Reset</button>';
-    h += '</div>';
+    h += '</span></div>';
     if (m !== 1) h += '<div class="scap">Scaled from ' + esc(servLabel(r)) + '. Amounts are rounded; ≈ marks a bigger rounding.</div>';
     return h;
   }
@@ -528,7 +528,7 @@
       (i < n - 1 ? '<div class="cook-next"><b>Next:</b> ' + stepHtml(r, i + 1, getMult(r)) + '</div>' : "") + '</div>' +
       '<div class="wake" id="wake"></div>' +
       '<div class="cook-nav"><button class="btn" data-act="cook" data-step="' + (i - 1) + '"' + (i === 0 ? " disabled" : "") + '>← Back</button>' +
-      (i < n - 1 ? '<button class="btn primary" data-act="cook" data-step="' + (i + 1) + '">Next →</button>' : '<button class="btn primary" data-act="exitcook">Done ✓</button>') + '</div></div>' +
+      (i < n - 1 ? '<button class="btn primary" data-act="cook" data-step="' + (i + 1) + '">Next →</button>' : '<button class="btn primary" data-act="exitcook">Done <span aria-hidden="true">✓</span></button>') + '</div></div>' +
       (ui.sheet ? sheetHtml(r) : "");
     if (ui.sheet) { var sb = document.getElementById("sheetbody"); if (sb) sb.scrollTop = ui.sheetScroll || 0; }
     if (!wakeLock) requestWake(); else updateWakeLbl();
