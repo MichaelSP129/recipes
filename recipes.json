@@ -670,6 +670,16 @@
         "Adjust: 1–2 tbsp more BBQ sauce for richness, 1 tsp vinegar if too sweet, black pepper.",
         "Slaw: mix everything and rest 10–15 min."
       ],
+      "stepQty": [
+        {
+          "step": 6,
+          "text": "1–2 tbsp"
+        },
+        {
+          "step": 6,
+          "text": "1 tsp"
+        }
+      ],
       "tips": [
         "With thighs (best): 1.2–1.5 kg, 1½ cups BBQ sauce, 60–80 ml liquid, 10 min high pressure (11–12 for large), 5 min rest, then 5–8 min reduction.",
         "Serve on toasted buns with slaw and pickles, in wraps, or over baked potatoes."
@@ -1157,6 +1167,12 @@
         "Build: warm pita, sauce, chicken, pickles, and fries if using.",
         "Optional: brush the wrap with the oil, paste and pomegranate molasses mix and toast in a pan until golden."
       ],
+      "stepQty": [
+        {
+          "step": 7,
+          "text": "1 tsp"
+        }
+      ],
       "tips": [
         "Overcrowding is the #1 failure: it steams instead of browning.",
         "Keep the acid moderate in the marinade (vinegar + zest only). Lemon juice goes on at the end."
@@ -1360,6 +1376,12 @@
         "Preheat the air fryer to 190°C. Spray both sides well with oil.",
         "Single layer: cook 8 min, turn, spray again if needed, then 6–10 min more until golden and 74°C inside.",
         "Rest on a rack 3–5 min; don't stack."
+      ],
+      "stepQty": [
+        {
+          "step": 2,
+          "text": "2–3 tbsp"
+        }
       ],
       "tips": [
         "Floury, pale coating = not enough oil spray. Spray more and continue.",
@@ -2163,6 +2185,28 @@
         "Fill with the cooled filling, brush the edge with egg, cover with puff pastry, crimp, trim and cut 2–3 slits. Egg wash the top.",
         "Bake at 200°C for 25–30 min until deeply golden and risen. Rest 10 min."
       ],
+      "stepQty": [
+        {
+          "step": 0,
+          "text": "1 tsp"
+        },
+        {
+          "step": 0,
+          "text": "1 tsp"
+        },
+        {
+          "step": 4,
+          "text": "½ tsp"
+        },
+        {
+          "step": 4,
+          "text": "1–2 tsp"
+        },
+        {
+          "step": 7,
+          "text": "1–2 tsp"
+        }
+      ],
       "tips": [
         "Stovetop instead: cover and simmer 1½–2 h until tender, then uncovered 15–25 min to thicken.",
         "Use freshly cracked pepper, not fine powder (it tastes dusty and harsh). Keep the tomato to 1 tbsp paste.",
@@ -2493,6 +2537,12 @@
         "Butter one side of each slice. On the unbuttered side: cheese, beef, more cheese (and coriander), then top with a buttered-side-out slice.",
         "Toast in a skillet over medium heat until deep golden and melted through.",
         "Serve immediately with bowls of hot dipping broth."
+      ],
+      "stepQty": [
+        {
+          "step": 5,
+          "text": "1 tsp"
+        }
       ],
       "tips": [
         "Cook to tenderness, not a temperature: 200°F internal doesn't guarantee it's shreddable.",
@@ -3092,6 +3142,12 @@
         "Return all the pork, lower to medium, add the glaze and cook 4–7 min, turning gently, until sticky and glossy. Add a splash of water if it tightens too fast.",
         "Finish with spring onions and sesame seeds. Serve with light coconut rice and something fresh."
       ],
+      "stepQty": [
+        {
+          "step": 4,
+          "text": "2 tbsp"
+        }
+      ],
       "tips": [
         "What happened on the day: at 2 h the fat was soft but the meat strands were still firm, so it needed another 20–30 min. Don't glaze until it's soft all the way through.",
         "Crackling: pat the rind dry, rub with oil and plenty of salt, and roast at 220°C for 25–40 min until puffed.",
@@ -3313,6 +3369,32 @@
         "Transfer to the slow cooker and cook LOW 3–4 hours (or LOW 3 h then WARM until dinner). Don't add extra water early; if it gets too thick later add 50–100 ml hot water.",
         "Finish: pour into a pot and boil 8–12 min until thicker and glossy. Add the remaining 1 tsp garam masala, remaining ½–1 tsp pepper, tamarind (or vinegar) gradually, optional ghee and the last curry-leaf sprig for 2 min.",
         "Rest 15–30 min if you can. Serve with rice, naan, roti or paratha."
+      ],
+      "stepQty": [
+        {
+          "step": 4,
+          "text": "½ tsp"
+        },
+        {
+          "step": 4,
+          "text": "1 tsp"
+        },
+        {
+          "step": 4,
+          "text": "3–5 tbsp"
+        },
+        {
+          "step": 6,
+          "text": "50–100 ml"
+        },
+        {
+          "step": 7,
+          "text": "1 tsp"
+        },
+        {
+          "step": 7,
+          "text": "½–1 tsp"
+        }
       ],
       "tips": [
         "No-tomato version: skip the tomato paste and use tamarind paste 1–2 tsp (or vinegar 1–1½ tsp) to balance.",
@@ -3568,6 +3650,20 @@
         "Return to low heat. Add the chicken, 200 ml cream, kasuri methi and finishing butter. Simmer gently 8–10 min until the chicken is cooked and the sauce is glossy.",
         "Adjust: if tangy, add ½ tsp sugar (max 1 tsp) and/or simmer 5–10 min longer. If too thick, add a splash of hot water/stock. Salt at the end."
       ],
+      "stepQty": [
+        {
+          "step": 6,
+          "text": "200 ml"
+        },
+        {
+          "step": 7,
+          "text": "½ tsp"
+        },
+        {
+          "step": 7,
+          "text": "1 tsp"
+        }
+      ],
       "tips": [
         "Sauce too thick and tangy (like ganache)? Add hot water 50 ml at a time, 1 tbsp butter and ¼ tsp salt, then ¼ tsp sugar only if it's still sharp. Simmer 10 min on low.",
         "Don't boil hard after the cream goes in; it can split.",
@@ -3768,6 +3864,33 @@
         "Stir in 200 ml cream, 1 tbsp sugar/honey and 1 tbsp lemon juice. Blend briefly and taste before adding more.",
         "Loosen with stock or hot water, about 100 ml at a time.",
         "Stir in the cold butter. Adjust the salt, pepper, sweetness and lemon. Serve with a swirl of the reserved cream."
+      ],
+      "stepQty": [
+        {
+          "step": 0,
+          "text": "2–3 tbsp"
+        },
+        {
+          "step": 3,
+          "text": "60 ml"
+        },
+        {
+          "step": 7,
+          "text": "200 ml"
+        },
+        {
+          "step": 7,
+          "text": "1 tbsp"
+        },
+        {
+          "step": 7,
+          "text": "1 tbsp"
+        },
+        {
+          "step": 8,
+          "text": "100 ml",
+          "fixed": true
+        }
       ],
       "tips": [
         "Serve with croutons, toasted pumpkin seeds, crispy bacon, grated mature cheddar or fresh coriander/parsley.",
@@ -4035,6 +4158,28 @@
         "Stir in most of the cilantro and parsley leaves (and the celery leaves, if you like). Taste for salt and pepper, and loosen with hot water/broth to \"hearty but spoonable\".",
         "Optional egg: turn the heat off, wait 60–90 seconds, then drizzle in the beaten egg while stirring continuously (don't boil afterwards). Optional: stir in 1 tbsp smen/butter.",
         "Serve hot with lemon wedges and the reserved herbs."
+      ],
+      "stepQty": [
+        {
+          "step": 0,
+          "text": "1 tsp"
+        },
+        {
+          "step": 0,
+          "text": "½ tsp"
+        },
+        {
+          "step": 4,
+          "text": "1.3 L"
+        },
+        {
+          "step": 6,
+          "text": "2 tbsp"
+        },
+        {
+          "step": 9,
+          "text": "1 tbsp"
+        }
       ],
       "tips": [
         "Harira thickens as it sits. Reheat with a splash of water/broth and re-check the seasoning.",
@@ -4337,6 +4482,53 @@
         "Optional rogan red oil: heat 1 tsp ghee until shimmering, take it off the heat, stir in ½ tsp Kashmiri chilli (it should fizz, not burn) and drizzle it over.",
         "Rest 20–30 min before serving with basmati, naan/roti and a cucumber yogurt."
       ],
+      "stepQty": [
+        {
+          "step": 1,
+          "text": "2 tbsp"
+        },
+        {
+          "step": 2,
+          "text": "1–2 tbsp"
+        },
+        {
+          "step": 6,
+          "text": "300 ml"
+        },
+        {
+          "step": 6,
+          "text": "½ tsp"
+        },
+        {
+          "step": 6,
+          "text": "1½ tsp"
+        },
+        {
+          "step": 7,
+          "text": "500 g"
+        },
+        {
+          "step": 8,
+          "text": "50–100 ml",
+          "fixed": true
+        },
+        {
+          "step": 9,
+          "text": "1½ tsp"
+        },
+        {
+          "step": 9,
+          "text": "1 tbsp"
+        },
+        {
+          "step": 10,
+          "text": "1 tsp"
+        },
+        {
+          "step": 10,
+          "text": "½ tsp"
+        }
+      ],
       "tips": [
         "Watery curry: the onions weren't deep enough or too much liquid went in early. Start at 300 ml.",
         "Split yogurt: the heat was too high. Keep it low and add the yogurt gradually.",
@@ -4492,6 +4684,24 @@
         "Season: ½ tbsp soy, taste, then another ½ tbsp if needed. Lime/lemon juice at the end; a pinch of sugar if it tastes spiky.",
         "Stir in the basil. Scoop out the kids' portions now, with extra sauce and rice.",
         "Adults: stir ½–1 tbsp more paste into the rest and simmer 2–3 min, or add fresh chilli/chilli oil to the bowls."
+      ],
+      "stepQty": [
+        {
+          "step": 1,
+          "text": "1½ tbsp"
+        },
+        {
+          "step": 5,
+          "text": "½ tbsp"
+        },
+        {
+          "step": 5,
+          "text": "½ tbsp"
+        },
+        {
+          "step": 7,
+          "text": "½–1 tbsp"
+        }
       ],
       "tips": [
         "Paste guide (50 g pack): kid-friendly 1½ tbsp, medium 2–2½ tbsp, hot 3 tbsp+.",
@@ -5162,6 +5372,28 @@
         "Add the pasta with a splash of pasta water and toss vigorously 30–60 sec. Add the mushrooms, bacon and chicken.",
         "Finish with parsley and a little lemon."
       ],
+      "stepQty": [
+        {
+          "step": 0,
+          "text": "1½ cups"
+        },
+        {
+          "step": 1,
+          "text": "2 tbsp"
+        },
+        {
+          "step": 3,
+          "text": "20 g"
+        },
+        {
+          "step": 4,
+          "text": "40 g"
+        },
+        {
+          "step": 4,
+          "text": "150 ml"
+        }
+      ],
       "tips": [
         "Never boil after the cheese goes in (it goes grainy).",
         "Variations: ½ tsp chilli flakes with the garlic; smoked bacon; ½ tsp Worcestershire in the cream."
@@ -5341,6 +5573,12 @@
         "Add the chicken, bacon, peas and pasta and toss, loosening with pasta water.",
         "Finish with lemon zest, parsley and black pepper. Taste before salting."
       ],
+      "stepQty": [
+        {
+          "step": 0,
+          "text": "½ cup"
+        }
+      ],
       "tips": [
         "If it splits (oil pooling, hard bubbling): take it off the heat 2–3 min, whisk in 2–3 tbsp warm pasta water, milk or cream, or blitz 5–10 sec with a hand blender. Still oily? Whisk in 1 tbsp cold butter off the heat. Don't reboil once the cheese is in.",
         "Upgrades: 200 g mushrooms browned after the bacon; ½ cup dry white wine reduced after the onion."
@@ -5455,6 +5693,12 @@
         "Add the Parmesan gradually and mix until smooth.",
         "Add the pasta and toss, adding pasta water a splash at a time until glossy and coating.",
         "Season with pepper, a little salt if needed, and lemon if you want it brighter."
+      ],
+      "stepQty": [
+        {
+          "step": 0,
+          "text": "1 cup"
+        }
       ],
       "tips": [
         "Don't boil hard after the pesto goes in. The pasta water makes it silky; use a good pesto.",
@@ -5609,6 +5853,32 @@
         "Long version: simmer very gently 30–45 min (60 min is better), stirring in the milk 15–20 min before the end. Quick version: simmer uncovered at a lively bubble 10–12 min, then lower the heat, add 80–100 ml milk and simmer uncovered 5–7 min.",
         "Taste and only now add salt if needed (or ½ tsp balsamic if it needs depth). For the quick version, stir in 5–10 g butter.",
         "Cook the spaghetti al dente, reserving some pasta water. Toss the spaghetti in the sauce over medium heat for 1–2 min, adding 1–2 tbsp pasta water if needed."
+      ],
+      "stepQty": [
+        {
+          "step": 3,
+          "text": "100 ml"
+        },
+        {
+          "step": 4,
+          "text": "400 g"
+        },
+        {
+          "step": 5,
+          "text": "80–100 ml"
+        },
+        {
+          "step": 6,
+          "text": "½ tsp"
+        },
+        {
+          "step": 6,
+          "text": "5–10 g"
+        },
+        {
+          "step": 7,
+          "text": "1–2 tbsp"
+        }
       ],
       "tips": [
         "Don't add oregano, paprika, bay leaf or extra tomato on top of the jar sauce. It already has its own seasoning.",
@@ -5770,6 +6040,16 @@
         "Over low heat, add the cream/mascarpone and Parmesan, then season.",
         "Toss in the pasta, adding pasta water gradually until glossy.",
         "Finish with herbs, more Parmesan, black pepper and a drizzle of olive oil."
+      ],
+      "stepQty": [
+        {
+          "step": 1,
+          "text": "2 tbsp"
+        },
+        {
+          "step": 2,
+          "text": "1 cup"
+        }
       ],
       "tips": [
         "Richer: 2 tbsp mascarpone + a knob of butter. Lighter: skip the cream, add extra basil and a squeeze of lemon.",
@@ -5942,6 +6222,25 @@
         "Boil the pasta in well-salted water (10 g salt per litre). Reserve at least 240 ml water.",
         "Heat the sauce in a large pan with the butter. Add the pasta and 120 ml pasta water and toss continuously, adding more until glossy and emulsified.",
         "Finish with 5 ml lemon, extra pecorino, fresh basil and a light drizzle of olive oil."
+      ],
+      "stepQty": [
+        {
+          "step": 3,
+          "text": "10 g",
+          "fixed": true
+        },
+        {
+          "step": 3,
+          "text": "240 ml"
+        },
+        {
+          "step": 4,
+          "text": "120 ml"
+        },
+        {
+          "step": 5,
+          "text": "5 ml"
+        }
       ],
       "tips": [
         "A bit acidic: a tiny pinch of sugar. Flat: more pecorino. Avoid spaghetti; the thick sauce needs ridges.",
@@ -6125,6 +6424,16 @@
         "Taste and only now adjust the salt. The sauce should be thick and meaty, not watery.",
         "Cook the spaghetti until just al dente, reserving about ½ cup pasta water. Toss the spaghetti in the sauce with a splash of pasta water for 1–2 min."
       ],
+      "stepQty": [
+        {
+          "step": 4,
+          "text": "100 ml"
+        },
+        {
+          "step": 9,
+          "text": "½ cup"
+        }
+      ],
       "tips": [
         "The finished sauce should be thick, rich and meaty rather than watery or heavily tomato-based."
       ],
@@ -6245,10 +6554,22 @@
           "section": "Topping",
           "items": [
             {
-              "quantity": "",
-              "unit": "",
+              "quantity": "4",
+              "unit": "tsp",
               "name": "olive oil",
-              "note": "for the tins, drizzling and dimpling"
+              "note": "for the tins: 2 tsp per tin"
+            },
+            {
+              "quantity": "4",
+              "unit": "tsp",
+              "name": "olive oil",
+              "note": "to drizzle before the proof: 2 tsp per tin"
+            },
+            {
+              "quantity": "2",
+              "unit": "tsp",
+              "name": "olive oil",
+              "note": "final drizzle: 1 tsp per tin, plus a little for your fingers"
             },
             {
               "quantity": "",
@@ -6277,11 +6598,34 @@
         "Mixer (paddle): medium speed 5 min, rest 5 min, then 5 min more, slowly adding the remaining water and the salt. By hand: slap-and-fold, adding the rest of the water and salt gradually, until smooth and strong.",
         "Cover and rest 30 min.",
         "Fold in the bowl: lift an edge to the middle at 3, 6, 9 and 12 o'clock. Cover 30 min. Repeat for at least 3 sets in total (set a timer).",
-        "After the last rest, tip out, divide in half and shape rough circles. Place in two oiled, parchment-lined 20 cm tins.",
-        "Drizzle with oil and dimple with wet fingers. Cover and proof 20–40 min until soft and puffy.",
+        "After the last rest, tip out and shape into 2 equal rough circles. Place each in a parchment-lined 20 cm tin oiled with 2 tsp olive oil.",
+        "Drizzle each with 2 tsp oil and dimple with wet fingers. Cover and proof 20–40 min until soft and puffy.",
         "Preheat the oven to 200°C fan (a tray of water for steam is optional).",
-        "Oil your fingers and dimple again. Scatter sea salt flakes and a final dash of oil (or press in tomatoes and confit garlic).",
-        "Bake about 25 min until deep golden with crisp edges and a lightly browned base. Cool on a rack. Best eaten fresh and warm; refresh in the oven the next day."
+        "Oil your fingers and dimple again. Scatter sea salt flakes and a final 1 tsp oil per tin (or press in tomatoes and confit garlic).",
+        "Bake about 25 min until deep golden with crisp edges and a lightly browned base (with more than 2 tins, swap shelves halfway or bake in batches). Cool on a rack. Best eaten fresh and warm; refresh in the oven the next day."
+      ],
+      "stepQty": [
+        {
+          "step": 5,
+          "text": "2 equal rough circles",
+          "round": true,
+          "one": "1 rough circle"
+        },
+        {
+          "step": 5,
+          "text": "2 tsp",
+          "fixed": true
+        },
+        {
+          "step": 6,
+          "text": "2 tsp",
+          "fixed": true
+        },
+        {
+          "step": 8,
+          "text": "1 tsp",
+          "fixed": true
+        }
       ],
       "tips": [
         "Serve before a pasta dinner with green olive oil and balsamic, or use it for sandwiches.",
@@ -6401,6 +6745,23 @@
         "Cool completely on a rack, stack with baking paper between them, wrap tightly and refrigerate (best within 2 days, or freeze).",
         "Party day: preheat to 220–240°C. Top lightly and bake 5–7 min until the cheese melts and the edges are lightly golden."
       ],
+      "stepQty": [
+        {
+          "step": 4,
+          "text": "32–35 g",
+          "fixed": true
+        },
+        {
+          "step": 4,
+          "text": "38–40 g",
+          "fixed": true
+        },
+        {
+          "step": 4,
+          "text": "40–45 g",
+          "fixed": true
+        }
+      ],
       "tips": [
         "Don't par-bake for only seconds or a minute; the bases stay doughy after refrigeration.",
         "Avoid wet toppings like thick tomato slices; mini bases go soggy.",
@@ -6443,7 +6804,7 @@
       ],
       "servings": {
         "amount": "4",
-        "text": "4 large pizzas (300 g balls) or 5 medium (240–250 g)"
+        "text": "4 large pizzas (about 330 g balls) or 5 medium (about 265 g)"
       },
       "prepTime": "About 4 h total (mix, knead, 1½–2 h bulk, 1½–2 h ball proof)",
       "cookTime": "6–9 min per pizza at 250–300°C",
@@ -6524,10 +6885,45 @@
         "Check the texture. If it's still dry or tears, add water 10 g at a time (usually about 20 g extra for Manitoba 0).",
         "Add the salt and olive oil (oil gradually if mixing by hand). Knead 8–10 min by hand or 5–7 min in a mixer until smooth, elastic and slightly tacky.",
         "Bulk rise covered at room temperature (ideally 24–27°C) for 1½–2 hours, until slightly risen and relaxed; it doesn't need to double. Check after 75–90 min in a warm kitchen.",
-        "Divide into 4 × 300 g or 5 × 240–250 g and shape tight balls. Place in lightly oiled covered containers or on a tray.",
+        "Divide into 4 × 325–335 g or 5 × 260–270 g (weigh the whole dough and divide it evenly) and shape tight balls. Place in lightly oiled covered containers or on a tray.",
         "Ball proof 1½–2 hours until puffy, relaxed and stretchable without springing back.",
         "Meanwhile preheat the oven as hot as possible (250–300°C) with a steel or stone for 45–60 min.",
         "Stretch the dough by hand (no rolling pin), top lightly with sauce, cheese and toppings, and bake 6–9 min until the base is firm, the rim browned and the slice folds without cracking."
+      ],
+      "stepQty": [
+        {
+          "step": 0,
+          "text": "460 g"
+        },
+        {
+          "step": 1,
+          "text": "10 g",
+          "fixed": true
+        },
+        {
+          "step": 1,
+          "text": "20 g"
+        },
+        {
+          "step": 4,
+          "text": "4 ×",
+          "round": true
+        },
+        {
+          "step": 4,
+          "text": "325–335 g",
+          "fixed": true
+        },
+        {
+          "step": 4,
+          "text": "5 ×",
+          "round": true
+        },
+        {
+          "step": 4,
+          "text": "260–270 g",
+          "fixed": true
+        }
       ],
       "tips": [
         "Schedule: 0:00 mix → 0:15 salt + oil, knead → 0:30–2:15 bulk → 2:15 ball → 2:15–4:00 proof → 4:00 bake.",
@@ -6759,7 +7155,7 @@
       ],
       "servings": {
         "amount": "10",
-        "text": "10 naan (about 85–90 g dough each)"
+        "text": "10 naan (about 100 g dough each)"
       },
       "prepTime": "15 min autolyse + 8–10 min knead + 1–1½ h rise + 20–30 min rest",
       "cookTime": "2–3 min per naan",
@@ -6869,10 +7265,35 @@
         "Autolyse: rest 15 minutes before kneading.",
         "Knead 8–10 min by hand (5–6 in a mixer) until very soft, slightly tacky, smooth and elastic. If firm, add extra water 1 tbsp at a time.",
         "First rise: 1–1½ hours until doubled (or refrigerate overnight for deeper flavour).",
-        "Divide into 10 balls (about 85–90 g each). Rest 20–30 min covered.",
+        "Divide into 10 balls of about 100 g each (the dough weighs about 1 kg). Rest 20–30 min covered.",
         "Roll to 3 mm thick or stretch by hand. Press garlic/seeds onto one side if using.",
         "Heat cast iron until almost smoking. Cook naan in the dry pan 60–90 seconds until big bubbles form, flip and cook 60–90 seconds.",
         "Brush immediately with butter or ghee."
+      ],
+      "stepQty": [
+        {
+          "step": 0,
+          "text": "240 ml"
+        },
+        {
+          "step": 3,
+          "text": "1 tbsp",
+          "fixed": true
+        },
+        {
+          "step": 5,
+          "text": "10 balls",
+          "round": true
+        },
+        {
+          "step": 5,
+          "text": "100 g",
+          "fixed": true
+        },
+        {
+          "step": 5,
+          "text": "1 kg"
+        }
       ],
       "tips": [
         "For extra puff, press the cooked naan briefly over an open flame (10–15 sec), or press the edges down with a spatula.",
@@ -7117,6 +7538,22 @@
         "Second rise: on a lightly oiled tray, covered, 20–30 min until puffy.",
         "Heat oil to 170–180°C (a test bit should bubble and rise in about 5 sec).",
         "Fry 2–3 at a time, 2–3 min per side until deep golden, turning once or twice. Drain on paper towel."
+      ],
+      "stepQty": [
+        {
+          "step": 1,
+          "text": "300 ml"
+        },
+        {
+          "step": 3,
+          "text": "10–12 pieces",
+          "round": true
+        },
+        {
+          "step": 3,
+          "text": "75–90 g",
+          "fixed": true
+        }
       ],
       "tips": [
         "Greasy vetkoek = oil too cool. Don't crowd the pot; don't skip the second rise; keep the dough soft.",
@@ -7522,6 +7959,12 @@
         "If it's slightly underdone, add a splash of hot stock, cover and steam 5 min more.",
         "Serve on a platter topped with the lamb, pan juices, toasted nuts and coriander."
       ],
+      "stepQty": [
+        {
+          "step": 4,
+          "text": "3 cups"
+        }
+      ],
       "tips": [],
       "sourceChat": {
         "title": "Lamb Rub and Slow Roast",
@@ -7696,6 +8139,17 @@
         "As soon as they come off the heat: a tiny pinch of sugar, then sprinkle about ¾ tsp Tajín per cob and toss gently.",
         "Mix the sauce and taste it (creamy first, citrus second). Too sharp: add 1 tbsp more mayo.",
         "Finish with feta, coriander, a light extra dust of Tajín and a tiny squeeze of lemon. Serve the sauce on the side to keep them crisp."
+      ],
+      "stepQty": [
+        {
+          "step": 3,
+          "text": "¾ tsp",
+          "fixed": true
+        },
+        {
+          "step": 4,
+          "text": "1 tbsp"
+        }
       ],
       "tips": [
         "Using lime instead: 1 tbsp lime juice max + zest of ½ lime (your Tajín already contains lime and salt).",
@@ -7979,6 +8433,17 @@
         "Refrigerate 30 min minimum (1–2 h better).",
         "Toast the buns, spread 1–2 tbsp on the bun, and put the hot smashed patty straight on. Wait 20–30 sec, then close. Cover briefly for 15–20 sec for an extra melt."
       ],
+      "stepQty": [
+        {
+          "step": 0,
+          "text": "1 tbsp"
+        },
+        {
+          "step": 4,
+          "text": "1–2 tbsp",
+          "fixed": true
+        }
+      ],
       "tips": [
         "Other cheese options: A) 120–150 g chopped American/processed burger slices (closest smashburger melt). B) 100 g Monterey/Colby Jack + 30–50 g mild cheddar + 20–30 g sharp cheddar. C) Cheddar only: 120 g mild + 30–50 g sharp + 2–4 processed slices.",
         "Sharp cheddar as the main cheese gets greasy/grainy; keep it a minor part.",
@@ -8102,6 +8567,12 @@
         "Reduce to low and cook another 25–35 min, stirring every 5–10 min, until deep golden brown. If they stick, add 1 tbsp water (not more oil).",
         "Optional: stir in the brown sugar for 2–3 min, then the balsamic for 2–3 min until glazed.",
         "Season with black pepper and taste for salt."
+      ],
+      "stepQty": [
+        {
+          "step": 3,
+          "text": "1 tbsp"
+        }
       ],
       "tips": [
         "The preferred \"traditional braai\" version is just onions, butter, oil, salt and pepper with plenty of time: no sugar, balsamic, garlic or herbs.",
@@ -8356,6 +8827,16 @@
         "Off the heat, whisk in the remaining ½ tbsp butter, then the sugar, dark soy and MSG.",
         "Taste before adding any salt."
       ],
+      "stepQty": [
+        {
+          "step": 1,
+          "text": "½ tbsp"
+        },
+        {
+          "step": 6,
+          "text": "½ tbsp"
+        }
+      ],
       "tips": [
         "Too thick: a splash of hot water. Too thin: simmer longer or add a bit more slurry. Lumpy: strain or blend.",
         "Double everything for 2 cups.",
@@ -8581,6 +9062,12 @@
         "Add the cream and simmer gently 3–5 min until it lightly coats a spoon.",
         "Off the heat, swirl in the cold butter. Taste, then add salt only if needed."
       ],
+      "stepQty": [
+        {
+          "step": 0,
+          "text": "1–2 tsp"
+        }
+      ],
       "tips": [
         "The key ratio: reduce 150 ml stock by half, then add 120 ml cream.",
         "No flour or cornflour, and no soy/Marmite needed.",
@@ -8712,6 +9199,12 @@
         "Chill at least 1 h, ideally 3–4 h.",
         "Serve spread in a shallow bowl with a swirl, olive oil and a little dill."
       ],
+      "stepQty": [
+        {
+          "step": 0,
+          "text": "¼ tsp"
+        }
+      ],
       "tips": [
         "Too loose = thin yoghurt or under-squeezed cucumber. Too thick: add 1–2 tsp cold water or oil, not lemon.",
         "Don't use parsley or low-fat yoghurt.",
@@ -8825,6 +9318,13 @@
         "Bake 30–40 min, checking from 30. Ready when the edges are set and the centre wobbles like soft jelly.",
         "Remove from the water bath, cool 1 hour at room temperature, then chill at least 4 hours (preferably overnight).",
         "Optional: sprinkle 1–2 tsp white sugar over each cold custard and torch until golden and glassy. Serve straight away."
+      ],
+      "stepQty": [
+        {
+          "step": 8,
+          "text": "1–2 tsp",
+          "fixed": true
+        }
       ],
       "tips": [
         "Gentle heat and not overbaking are what matter most. If it looks fully set in the oven, it may turn grainy.",
@@ -9044,6 +9544,12 @@
         "Add boiling water gradually, starting with about 250–260 ml. Mix with a spoon first because it's hot.",
         "Once cool enough, knead by hand 3–5 min.",
         "Add more boiling water only if it's dry or crumbly; knead in a little flour if it's sticky."
+      ],
+      "stepQty": [
+        {
+          "step": 2,
+          "text": "250–260 ml"
+        }
       ],
       "tips": [
         "Don't leave out the cream of tartar; it gives stretch and smoothness.",
