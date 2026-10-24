@@ -1,14 +1,14 @@
 /* Michael's Recipes – plain JS PWA. Data lives in recipes.json. */
 (function () {
   "use strict";
-  var DATA = null, RECIPES = [], BY_ID = {}, SECTIONS = [], TAG_GROUPS = [];
+  var DATA = null, RECIPES = [], BY_ID = {}, SECTIONS = [], TAG_GROUPS = [], FOODS = {};
   var LS = {
     get: function (k, d) { try { var v = localStorage.getItem("mr:" + k); return v === null ? d : JSON.parse(v); } catch (e) { return d; } },
     set: function (k, v) { try { localStorage.setItem("mr:" + k, JSON.stringify(v)); } catch (e) {} }
   };
   var ui = {
     query: "", view: LS.get("view", "sections"), selTags: LS.get("selTags", []), showFilters: false,
-    checked: LS.get("checked", {}), mult: LS.get("mult", {}), homeScroll: 0, sheet: false, sheetScroll: 0
+    checked: LS.get("checked", {}), mult: LS.get("mult", {}), bw: LS.get("bw", {}), macOpen: false, homeScroll: 0, sheet: false, sheetScroll: 0
   };
   var app = document.getElementById("app");
 
@@ -37,11 +37,20 @@
     if (String(q).indexOf(".") >= 0) return nums.map(function (n) { var v = n * m; return String(v >= 10 ? Math.round(v) : Math.round(v * 100) / 100); }).join("–");
     return nums.map(function (n) { return fmt(n * m); }).join("–");
   }
-  function baseServings(r) {
-    if (!r.servings || !r.servings.amount) return null;
-    var p = String(r.servings.amount).split(/\s*[–-]\s*/).map(parseNum);
-    if (p.some(function (n) { return n === null; })) return null;
-    return p.reduce(function (a, b) { return a + b; }, 0) / p.length;
+  // Scaling model (see #3): "servings" recipes step by whole servings; everything else
+  // (kg of wings, 25 mini pizzas, 3–4 servings ranges, sauces) scales as a batch: ½×, 1×, 1½×, 2×, 3×.
+  var BATCH = [0.5, 1, 1.5, 2, 3];
+  function scaleInfo(r) {
+    if (r.scale && (r.scale.type === "servings" ? r.scale.base > 0 : r.scale.type === "batch")) return r.scale;
+    // fallback for recipes without a "scale" field: a single whole number of servings, otherwise a batch
+    var s = r.servings || {}, n = parseNum(s.amount == null ? "" : s.amount);
+    if (n && n === Math.round(n) && /serv|portion|people/i.test(s.text || "")) return { type: "servings", base: n };
+    return { type: "batch" };
+  }
+  function yieldText(y, m) {
+    var amt = scaleQty(y.amount, m), v = parseNum(String(amt).split(/\s*[–-]\s*/).pop());
+    var unit = y.one && v !== null && v <= 1 ? y.one : y.unit;
+    return (y.label || "Makes") + " " + amt + " " + unit;
   }
   function servLabel(r) {
     var s = r.servings || {}, t = s.text || "";
@@ -72,7 +81,7 @@
   // ---------- data ----------
   function setData(d) {
     if (Array.isArray(d)) d = { recipes: d };
-    DATA = d; RECIPES = d.recipes || []; BY_ID = {};
+    DATA = d; RECIPES = d.recipes || []; BY_ID = {}; FOODS = d.foods || {};
     RECIPES.forEach(function (r) { BY_ID[r.id] = r; });
     SECTIONS = d.sections && d.sections.length ? d.sections : [];
     // any category not listed gets its own section automatically
@@ -170,7 +179,11 @@
       (rel.length ? '<div class="rel">↔ ' + esc(rel.map(function (x) { return BY_ID[x.id].title; }).join(" · ")) + '</div>' : "") + '</button>';
   }
 
-  function getMult(r) { return ui.mult[r.id] || 1; }
+  function getMult(r) {
+    var m = ui.mult[r.id] || 1, sc = scaleInfo(r);
+    if (sc.type === "servings") return Math.max(1, Math.round(sc.base * m)) / sc.base;
+    return BATCH.reduce(function (best, p) { return Math.abs(p - m) < Math.abs(best - m) ? p : best; }, 1);
+  }
   function setMult(r, m) { if (Math.abs(m - 1) < 0.001) delete ui.mult[r.id]; else ui.mult[r.id] = m; LS.set("mult", ui.mult); rerender(r); }
 
   function ingCounts(r) {
@@ -195,12 +208,12 @@
     return '<div class="tickcap"><span>' + c.done + ' of ' + c.total + ' ticked</span>' + (c.done ? '<button class="linkbtn" data-act="clearticks">Clear ticks</button>' : "") + '</div>';
   }
   function scaler(r) {
-    var m = getMult(r), base = baseServings(r), h = '<div class="scaler">';
-    if (base !== null) {
-      var st = Math.max(1, Math.round(base * m));
-      h += '<span class="slbl">Servings</span><button class="btn round" data-act="minus" aria-label="Fewer servings"' + (st <= 1 ? " disabled" : "") + '>−</button><div class="val">' + esc(scaleQty(r.servings.amount, m)) + '</div><button class="btn round" data-act="plus" aria-label="More servings">+</button>';
+    var m = getMult(r), sc = scaleInfo(r), h = '<div class="scaler">';
+    if (sc.type === "servings") {
+      var st = Math.round(sc.base * m);
+      h += '<span class="slbl">Servings</span><button class="btn round" data-act="minus" aria-label="Fewer servings"' + (st <= 1 ? " disabled" : "") + '>−</button><div class="val" aria-live="polite">' + st + '</div><button class="btn round" data-act="plus" aria-label="More servings">+</button>';
     } else {
-      h += '<span class="slbl">Batch</span><button class="btn round" data-act="pminus" aria-label="Smaller batch"' + (m <= 0.5 ? " disabled" : "") + '>−</button><div class="val">×' + multLabel(m) + '</div><button class="btn round" data-act="pplus" aria-label="Bigger batch"' + (m >= 3 ? " disabled" : "") + '>+</button>';
+      h += '<span class="slbl">' + (sc.yield ? esc(yieldText(sc.yield, m)) : "Batch") + '</span><button class="btn round" data-act="pminus" aria-label="Smaller batch"' + (m <= BATCH[0] ? " disabled" : "") + '>−</button><div class="val" aria-live="polite">×' + multLabel(m) + '</div><button class="btn round" data-act="pplus" aria-label="Bigger batch"' + (m >= BATCH[BATCH.length - 1] ? " disabled" : "") + '>+</button>';
     }
     if (m !== 1) h += '<button class="linkbtn" data-act="resetmult">Reset</button>';
     h += '</div>';
@@ -227,10 +240,85 @@
       var o = BY_ID[x.id]; return '<button class="relbtn" data-open="' + esc(o.id) + '"><small>' + esc(x.relation) + ' · ' + esc(o.category) + '</small>' + esc(o.title) + ' →</button>';
     }).join("") + '</div>';
     if (r.tips && r.tips.length) h += '<div class="block"><h2>Tips &amp; variations</h2>' + r.tips.map(function (t) { return '<div class="tip">' + esc(t) + '</div>'; }).join("") + '</div>';
+    if (r.category !== "Non-food") h += macPanel(r);
     h += '</div>';
     app.innerHTML = h;
     document.title = r.title + " · Recipes";
     window.scrollTo(0, keepScroll ? y : 0);
+  }
+
+  // ---------- macros (#14) ----------
+  // An estimate built from USDA FoodData Central records: recipes.json "foods" holds kcal/protein/carbs/fat per 100 g,
+  // keyed by FDC ID. Each ingredient stores its FDC ID ("fdc") and its weight in grams at 1x ("g", in the state it's
+  // weighed: raw meat, dry pasta). "opt": optional, shown separately and not in the total. "nc": deliberately not
+  // counted (to taste, garnish, no amount), and named. Anything else without data makes the total incomplete and is
+  // named; it's never counted as zero. nutrition.extra adds fat the method uses but the list doesn't quantify.
+  var MAC_KEYS = ["kcal", "p", "c", "f"];
+  function macZero() { return { kcal: 0, p: 0, c: 0, f: 0 }; }
+  function macRows(r, m, foods) {
+    var rows = [];
+    function add(name, fdc, g, extra) {
+      var row = { name: name, opt: !!extra.opt, note: extra.assumed ? extra.note : (extra.gNote || ""), assumed: !!extra.assumed };
+      if (extra.nc) row.nc = extra.nc;
+      else if (fdc && g > 0 && foods[fdc]) {
+        row.fdc = fdc; row.g = g * m; row.food = foods[fdc]; row.v = {};
+        MAC_KEYS.forEach(function (k) { row.v[k] = (Number(foods[fdc][k]) || 0) * row.g / 100; });
+      } else row.missing = fdc && g > 0 ? "no USDA data" : (extra.gNote || "no amount");
+      rows.push(row);
+    }
+    (r.ingredients || []).forEach(function (grp) { grp.items.forEach(function (it) { add(it.name, it.fdc, it.g, it); }); });
+    ((r.nutrition || {}).extra || []).forEach(function (e) { add(e.name, e.fdc, e.g, { note: e.note, assumed: true }); });
+    return rows;
+  }
+  function macCalc(r, m, foods) {
+    var nut = r.nutrition; if (!nut || !(nut.servings > 0)) return null;
+    m = m || 1; foods = foods || FOODS;
+    var rows = macRows(r, m, foods), batch = macZero(), opt = macZero(), missing = [], optNames = [];
+    rows.forEach(function (row) {
+      if (row.missing) return missing.push(row.name);
+      if (!row.v) return;
+      var into = row.opt ? opt : batch; if (row.opt) optNames.push(row.name);
+      MAC_KEYS.forEach(function (k) { into[k] += row.v[k]; });
+    });
+    var n = nut.servings * m, per = macZero(), optPer = macZero();
+    MAC_KEYS.forEach(function (k) { per[k] = batch[k] / n; optPer[k] = opt[k] / n; });
+    return { rows: rows, batch: batch, per: per, optional: opt, optPer: optPer, optNames: optNames, missing: missing,
+      incomplete: missing.length > 0, flag: missing.length ? "incomplete: " + missing.join(", ") : "", servings: n };
+  }
+  function macRound(v) { var o = {}; MAC_KEYS.forEach(function (k) { o[k] = Math.round(v[k]); }); return o; }
+  function macPer100(c, grams) { if (!c || !(grams > 0)) return null; var o = macZero(); MAC_KEYS.forEach(function (k) { o[k] = c.batch[k] / grams * 100; }); return o; }
+  function macGrid(v) {
+    v = macRound(v);
+    return '<div class="mac-grid"><div><b>' + v.kcal + '</b><span>kcal</span></div><div><b>' + v.p + ' g</b><span>protein</span></div>' +
+      '<div><b>' + v.c + ' g</b><span>carbs</span></div><div><b>' + v.f + ' g</b><span>fat</span></div></div>';
+  }
+  function macNum(v) { return v >= 10 ? String(Math.round(v)) : String(Math.round(v * 10) / 10); }
+  function macPanel(r) {
+    var nut = r.nutrition;
+    if (!nut) return '<section class="block mac" aria-labelledby="mac-h"><h2 id="mac-h">Macros</h2><p class="mac-none">Not worked out for this recipe yet.</p></section>';
+    var m = getMult(r), c = macCalc(r, m); if (!c) return "";
+    var per = nut.per || "serving", n = Math.round(c.servings * 100) / 100;
+    var h = '<section class="block mac" aria-labelledby="mac-h"><h2 id="mac-h">Macros <span class="est">Estimate</span></h2>' +
+      '<p class="mac-basis">Per ' + esc(per) + ' · 1 of ' + esc(fmt(n)) + (nut.basis ? ' (' + esc(nut.basis) + ')' : '') + '</p>' + macGrid(c.per);
+    if (c.incomplete) h += '<p class="mac-warn" role="note"><b>Incomplete: ' + esc(c.missing.join(", ")) + '.</b> No amount or USDA data for ' + (c.missing.length > 1 ? 'these' : 'this') + ', so the real numbers are higher.</p>';
+    if (c.optNames.length) h += '<p class="mac-opt">Optional extras aren\'t included: about +' + Math.round(c.optPer.kcal) + ' kcal per ' + esc(per) + ' if you use them all (' + esc(c.optNames.join(", ")) + ').</p>';
+    var bw = ui.bw[r.id], p100 = bw && bw.g > 0 ? macPer100(macCalc(r, bw.m || 1), bw.g) : null;
+    h += '<details class="mac-more"' + (ui.macOpen ? " open" : "") + '><summary>Per-ingredient breakdown</summary><div class="mac-scroll"><table class="mac-t"><thead><tr><th scope="col">Ingredient</th><th scope="col">g</th><th scope="col">kcal</th><th scope="col">P</th><th scope="col">C</th><th scope="col">F</th></tr></thead><tbody>';
+    c.rows.forEach(function (row) {
+      if (!row.v) return;
+      h += '<tr' + (row.opt ? ' class="opt"' : '') + '><th scope="row">' + esc(row.name) + (row.opt ? ' <i>(optional, not in total)</i>' : '') + (row.assumed ? ' <i>(assumed)</i>' : '') +
+        '<small><a href="https://fdc.nal.usda.gov/food-details/' + esc(row.fdc) + '/nutrients" target="_blank" rel="noopener">FDC ' + esc(row.fdc) + '</a> · ' + esc(row.food.name) + (row.note ? ' · ' + esc(row.note) : '') + '</small></th>' +
+        '<td>' + macNum(row.g) + '</td><td>' + Math.round(row.v.kcal) + '</td><td>' + macNum(row.v.p) + '</td><td>' + macNum(row.v.c) + '</td><td>' + macNum(row.v.f) + '</td></tr>';
+    });
+    var b = macRound(c.batch);
+    h += '</tbody><tfoot><tr><th scope="row">Whole batch' + (m !== 1 ? ' (×' + esc(multLabel(m)) + ')' : '') + '</th><td></td><td>' + b.kcal + '</td><td>' + b.p + '</td><td>' + b.c + '</td><td>' + b.f + '</td></tr></tfoot></table></div>';
+    var nc = c.rows.filter(function (row) { return row.nc; }), miss = c.rows.filter(function (row) { return row.missing; });
+    if (miss.length) h += '<p class="mac-warn">Missing (total incomplete): ' + esc(miss.map(function (row) { return row.name + " (" + row.missing + ")"; }).join("; ")) + '</p>';
+    if (nc.length) h += '<p class="mac-small">Not counted: ' + esc(nc.map(function (row) { return row.name + " (" + row.nc + ")"; }).join("; ")) + '</p>';
+    h += '<div class="mac-bw"><label for="mac-bw">Finished batch weight</label><input id="mac-bw" type="number" inputmode="numeric" min="1" step="1" data-bw placeholder="weigh it" value="' + (bw && bw.g > 0 ? esc(bw.g) : "") + '"> g' +
+      (p100 ? '<div class="mac-p100"><b>Per 100 g cooked</b>' + macGrid(p100) + '</div>' : '<p class="mac-small">Weigh the cooked batch (without the pot) to see macros per 100 g, so you can weigh your portion.</p>') + '</div>' +
+      '<p class="mac-small">USDA FoodData Central values, worked out from the ingredients as weighed (raw meat, dry pasta). Ranges use the mid-point (paired ranges move together) and servings match the recipe, but cooking fats and fattier meat records are counted in full, so fat errs high. Grams for spoons and "1 onion" use USDA portion weights.</p></details></section>';
+    return h;
   }
 
   // ---------- cook mode + wake lock ----------
@@ -313,12 +401,11 @@
     if (a === "closesheet" && cur) { ui.sheet = false; return renderCook(cur, cookStep()); }
     if (a === "resetmult" && cur) return setMult(cur, 1);
     if (cur) {
-      var base = baseServings(cur), m = getMult(cur);
-      if (a === "plus" || a === "minus") { var st = Math.max(1, Math.round(base * m)) + (a === "plus" ? 1 : -1); return setMult(cur, Math.max(1, st) / base); }
-      var P = [0.5, 2 / 3, 1, 1.5, 2, 3], idx = 0;
-      P.forEach(function (p, j) { if (Math.abs(p - m) < Math.abs(P[idx] - m)) idx = j; });
-      if (a === "pplus") return setMult(cur, P[Math.min(P.length - 1, idx + 1)]);
-      if (a === "pminus") return setMult(cur, P[Math.max(0, idx - 1)]);
+      var sc = scaleInfo(cur), m = getMult(cur);
+      if ((a === "plus" || a === "minus") && sc.type === "servings") { var st = Math.round(sc.base * m) + (a === "plus" ? 1 : -1); return setMult(cur, Math.max(1, st) / sc.base); }
+      var idx = BATCH.indexOf(m);
+      if (a === "pplus") return setMult(cur, BATCH[Math.min(BATCH.length - 1, idx + 1)]);
+      if (a === "pminus") return setMult(cur, BATCH[Math.max(0, idx - 1)]);
     }
     if (a === "reload") return location.reload();
   });
@@ -330,7 +417,20 @@
     if (e.key === "Escape") { if (ui.sheet) { ui.sheet = false; return renderCook(r, i); } go("#/r/" + p[2]); }
   });
   function currentRecipe() { var p = location.hash.replace(/^#\/?/, "").split("/"); return p[0] === "r" ? BY_ID[decodeURIComponent(p[1] || "")] || null : null; }
+  document.addEventListener("toggle", function (e) { if (e.target.classList && e.target.classList.contains("mac-more")) ui.macOpen = e.target.open; }, true);
+  document.addEventListener("change", function (e) {
+    if (!e.target.hasAttribute || !e.target.hasAttribute("data-bw")) return;
+    var cur = currentRecipe(); if (!cur) return;
+    var g = parseFloat(e.target.value);
+    if (g > 0) ui.bw[cur.id] = { g: Math.round(g), m: getMult(cur) }; else delete ui.bw[cur.id];
+    LS.set("bw", ui.bw); renderDetail(cur, true);
+  });
   window.addEventListener("hashchange", route);
+
+  // ---------- test hook ----------
+  // tests/load-app.js runs this file in a Node vm sandbox with window.__RECIPES_TEST__ set, and reads
+  // helpers by name, so tests don't break when code moves. Never set in the browser, so this is inert there.
+  if (window.__RECIPES_TEST__) window.__RECIPES_TEST__.get = function (name) { return eval(name); };
 
   // ---------- boot ----------
   load().then(function (d) {
