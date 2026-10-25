@@ -26,7 +26,7 @@ No build step. Serve the folder with any static server, e.g. `python3 -m http.se
 http://localhost:8000/. GitHub Pages serves `main` at https://michaelsp129.github.io/recipes/.
 
 ## Times and the "Quick" tag
-- `prepTime` and `cookTime` come only from times stated in the recipe's own method (sum of the steps, using the ranges given). If a step that matters isn't timed, leave the field blank rather than guess.
+- `prepTime` and `cookTime` come only from times stated in the recipe's own method (sum of the steps, using the ranges given). If a step that matters isn't timed, write `Not stated` rather than guess, so every recipe shows a Prep and a Cook line (a no-cook recipe says `No cooking`). Fill in a real time once Michael confirms one.
 - Passive time (marinating, brining, soaking, rising, proofing, chilling, resting, cooling) is written separately and labelled, e.g. "Pickled onions at least 20 min (passive)".
 - **Quick** = active prep + cooking adds up to **30 min or less**, using the upper end of each stated range, for the version shown first in the method. Passive time doesn't count, but a recipe that needs more than 30 min of waiting before you can eat (e.g. a 1 h minimum marinade) isn't Quick.
 - If a cooking step has no stated time (e.g. "brown the mince", "cook per packet", "per batch"), the recipe can't be judged from its text and keeps its current tag until Michael confirms.
