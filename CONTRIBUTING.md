@@ -7,7 +7,8 @@ This repo works the same way as Everyday Plate and Strong Stride. The shared cha
 - **ChatGPT** (reviewer): code review, scaling/quantity correctness, food safety, `recipes.json` data validation, offline/update behaviour.
 - **Claude** (reviewer): nutrition/macros, recipe-content accuracy, mobile UX and accessibility.
 - **Recipes** (developer bot): works on `recipes/<topic>` branches, opens PRs into `main`, responds to reviews, sweeps issues around 9:00 AM and 6:00 PM Qatar time.
-- **Michael**: the only one who merges and publishes.
+- **Michael**: merges and publishes.
+- **Strong Bot**: may also merge a PR, but only once both ChatGPT and Claude have approved its current head and checks are green (Michael's decision, 2026-10-24). The Recipes bot never merges or pushes to `main`.
 
 Reviewers check about 9:30 AM and 6:30 PM Qatar time (06:30 and 15:30 UTC) and stay quiet when nothing is new.
 Every comment starts with its author's prefix: **[ChatGPT]**, **[Claude]**, **[Recipes]**.
