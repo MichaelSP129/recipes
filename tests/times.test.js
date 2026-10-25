@@ -27,7 +27,11 @@ data.recipes.forEach(function (r) {
   if (QUICK[r.id]) eq(inFlags, true, r.id + " is Quick (" + QUICK[r.id] + ")");
   else eq(inFlags, false, r.id + " is not Quick" + (NOT[r.id] ? " (" + NOT[r.id] + ")" : ""));
   if (r.category === "Non-food") eq(inFlags, false, r.id + " non-food is never Quick");
-  ["prepTime", "cookTime"].forEach(function (k) { eq(typeof (r[k] == null ? "" : r[k]), "string", r.id + " " + k + " is a string"); });
+  ["prepTime", "cookTime"].forEach(function (k) {
+    eq(typeof r[k], "string", r.id + " " + k + " is a string");
+    // Never blank: a real time, "No cooking", or an explicit "Not stated" (#8, see CONTRIBUTING.md).
+    eq(typeof r[k] === "string" && r[k].trim().length > 0, true, r.id + " " + k + " is not blank");
+  });
 });
 Object.keys(QUICK).concat(Object.keys(NOT)).forEach(function (id) { eq(data.recipes.some(function (r) { return r.id === id; }), true, "table id exists: " + id); });
 console.log(fails ? fails + " of " + checks + " failed" : "all " + checks + " times/Quick tests passed");
